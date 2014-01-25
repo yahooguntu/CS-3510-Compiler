@@ -1,10 +1,13 @@
 package scanner;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class CMinusScanner implements Scanner
 {
 	private BufferedReader inFile;
+	//private BufferedWriter outFile;
 	private Token nextToken;
 	
 	public CMinusScanner (BufferedReader file)
@@ -31,4 +34,17 @@ public class CMinusScanner implements Scanner
 	{
 		return new Token();
 	}
+	
+	/*
+	private void writeToken()
+	{
+		try {
+			outFile.write(viewNextToken().toString());
+			outFile.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
 }
