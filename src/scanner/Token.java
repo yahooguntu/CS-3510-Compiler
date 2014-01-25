@@ -24,9 +24,9 @@ public class Token
 		RETURN,
 		
 		// math
+		PLUS,
+		MINUS,
 		MULTIPLY,
-		SUBTRACT,
-		ADD,
 		DIVIDE,
 		LESS_THAN,
 		LESS_EQUAL_THAN,
@@ -37,7 +37,7 @@ public class Token
 		
 		// grouping
 		OPEN_BRACKET,	// {
-		CLOSE_BRACKET,		// }
+		CLOSE_BRACKET,	// }
 		OPEN_PAREN,		// (
 		CLOSE_PAREN,	// )
 		OPEN_BRACE,		// [
@@ -48,8 +48,6 @@ public class Token
 		NUM,
 		ASSIGNMENT,
 		END_STATEMENT,
-		COMMENT_START,
-		COMMENT_END,
 		COMMA,
 		WHITESPACE,
 		EOF
