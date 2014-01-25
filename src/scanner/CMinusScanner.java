@@ -1,6 +1,6 @@
 package scanner;
 
-public class scannner 
+public class CMinusScanner 
 {
 	//comment
 }
