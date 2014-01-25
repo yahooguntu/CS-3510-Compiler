@@ -19,7 +19,7 @@ public class CMinusScanner implements Scanner
 	public Token getNextToken()
 	{
 		Token returnToken = nextToken;
-		if(nextToken.getType() != Token.TokenType.EOF_TOKEN)
+		if(nextToken.getType() != Token.TokenType.EOF)
 		{
 			nextToken = scanToken();
 		}
@@ -32,7 +32,7 @@ public class CMinusScanner implements Scanner
 	
 	public Token scanToken()
 	{
-		return new Token();
+		return new Token(null);
 	}
 	
 	/*
