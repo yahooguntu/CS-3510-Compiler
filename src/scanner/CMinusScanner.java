@@ -319,7 +319,7 @@ public class CMinusScanner implements Scanner
 	
 	private Token reservedWordTest(String tokenData)
 	{
-		//TODO
+		//TODO we need to add a list of reserved words
 		return new Token(TokenType.ID, tokenData);
 	}
 }
