@@ -1,31 +1,24 @@
 package scanner;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.IOException;
-
 import scanner.Token.TokenType;
-import sun.security.jgss.TokenTracker;
 
 public class CMinusScanner implements Scanner
 {
 	private Token nextToken;
 	private CharReader charReader;
+	private boolean erroredOut = false;
 	
 	private enum State {
 		DIV_OR_COMMENT,
 		COMMENT,
 		BEGIN_END_COMMENT,
 		GT_LT_HALF_COMPARE,
-		FULL_COMPARE,
 		ASSIGN_COMPARE,
 		HALF_NEQ,
 		NUM,
 		ID_RESERVED,
-		START,
-		DONE,
-		ERROR
+		START
 	}
 	
 	public CMinusScanner (File file)
@@ -51,12 +44,17 @@ public class CMinusScanner implements Scanner
 	
 	public Token scanToken()
 	{
+		if (erroredOut)
+		{
+			return new Token(TokenType.ERROR);
+		}
+		
 		State state = State.START;
 		StringBuilder tokenData = new StringBuilder();
 		
-		while (state != State.DONE)
+		char c = charReader.viewNextChar();
+		while (c != 0xFFFF)
 		{
-			char c = charReader.viewNextChar();
 			
 			switch (state)
 			{
@@ -69,7 +67,8 @@ public class CMinusScanner implements Scanner
 				}
 				else if(Character.isDigit(c))
 				{
-					state = State.NUM;tokenData.append(c);
+					state = State.NUM;
+					tokenData.append(c);
 					charReader.munchNextChar();
 					
 				}
@@ -97,14 +96,12 @@ public class CMinusScanner implements Scanner
 				}
 				else if(c == '!')
 				{
-					state = State.GT_LT_HALF_COMPARE;
-					tokenData.append(c);
+					state = State.HALF_NEQ;
 					charReader.munchNextChar();
 				}
 				else if(c == '/')
 				{
 					state = State.DIV_OR_COMMENT;
-					tokenData.append(c);
 					charReader.munchNextChar();
 				}
 				else if(c == '+')
@@ -162,9 +159,14 @@ public class CMinusScanner implements Scanner
 					charReader.munchNextChar();
 					return new Token(TokenType.CLOSE_BRACE);
 				}
+				else if(c == 0xFFFF)
+				{
+					// we've reached the end
+					return new Token(TokenType.EOF);
+				}
 				else
 				{
-					state = State.ERROR;
+					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
 				break;
@@ -177,7 +179,6 @@ public class CMinusScanner implements Scanner
 				}
 				else
 				{
-					charReader.munchNextChar();
 					return new Token(TokenType.DIVIDE);
 				}
 				break;
@@ -205,7 +206,7 @@ public class CMinusScanner implements Scanner
 					state = State.COMMENT;
 					charReader.munchNextChar();
 				}
-				else
+				else // it must be a slash
 				{
 					state = State.START;
 					charReader.munchNextChar();
@@ -218,12 +219,10 @@ public class CMinusScanner implements Scanner
 					charReader.munchNextChar();
 					if (tokenData.toString().equals("<"))
 					{
-						state = State.FULL_COMPARE;
 						return new Token(TokenType.LESS_EQUAL_THAN);
 					}
 					else if (tokenData.toString().equals(">"))
 					{
-						state = State.FULL_COMPARE;
 						return new Token(TokenType.GREATER_EQUAL_THAN);
 					}
 				}
@@ -237,37 +236,31 @@ public class CMinusScanner implements Scanner
 				}
 				else
 				{
-					state = State.ERROR;
+					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
 				
-				break;
-				
-			case FULL_COMPARE: //TODO
 				break;
 				
 			case ASSIGN_COMPARE:
 				if (c == '=')
 				{
-					state = State.FULL_COMPARE;
 					return new Token(TokenType.EQUALS);
 				}
 				else
 				{
-					state = State.ERROR;
-					return new Token(TokenType.ERROR);
+					return new Token(TokenType.ASSIGNMENT);
 				}
 				
 			case HALF_NEQ:
 				if (c == '=')
 				{
 					charReader.munchNextChar();
-					state = State.FULL_COMPARE;
 					return new Token(TokenType.NOT_EQUALS);
 				}
 				else
 				{
-					state = State.ERROR;
+					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
 				
@@ -283,7 +276,7 @@ public class CMinusScanner implements Scanner
 				}
 				else
 				{
-					state = State.ERROR;
+					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
 				break;
@@ -300,18 +293,18 @@ public class CMinusScanner implements Scanner
 				}
 				else
 				{
-					state = State.ERROR; //TODO
+					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
 				break;
-				
-			case DONE: //TODO
-				break;
-				
-			case ERROR: //TODO
-				return new Token(TokenType.ERROR);
-				
 			}
+			
+			c = charReader.viewNextChar();
+		}
+		
+		if (c == 0xFFFF)
+		{
+			return new Token(TokenType.EOF);
 		}
 		
 		return new Token(null);

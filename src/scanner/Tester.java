@@ -1,7 +1,10 @@
 package scanner;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+
+import scanner.Token.TokenType;
 
 public class Tester
 {
@@ -9,7 +12,14 @@ public class Tester
 	
 	public static void main(String[] args)
 	{
+		Scanner s = new CMinusScanner(new File("TestFile.cm"));
 		
+		Token t = s.getNextToken();
+		while (t.getType() != TokenType.EOF)
+		{
+			System.out.println(t.getType().toString() + "\t:" + t.getData());
+			t = s.getNextToken();
+		}
 	}
 	
 	private void writeToken()
