@@ -24,7 +24,8 @@ public class CMinusScanner implements Scanner
 		NUM,
 		ID_RESERVED,
 		START,
-		DONE
+		DONE,
+		ERROR
 	}
 	
 	public CMinusScanner (File file)
@@ -52,7 +53,6 @@ public class CMinusScanner implements Scanner
 	{
 		State state = State.START;
 		StringBuilder tokenData = new StringBuilder();
-		boolean saveChars = true;
 		
 		while (state != State.DONE)
 		{
@@ -163,25 +163,62 @@ public class CMinusScanner implements Scanner
 				break;
 				
 			case HALF_NEQ:
+				if (c == '=')
+				{
+					state = State.FULL_COMPARE;
+					return new Token(TokenType.NOT_EQUALS);
+				}
 				break;
 				
 			case NUM:
+				if (Character.isDigit(c))
+				{
+					tokenData.append(c);
+					charReader.munchNextChar();
+				}
+				else if (!Character.isLetter(c))
+				{
+					return new Token(TokenType.NUM, Integer.parseInt(tokenData.toString()));
+				}
+				else
+				{
+					state = State.ERROR;
+					return new Token(TokenType.ERROR);
+				}
 				break;
 				
 			case ID_RESERVED:
+				if (Character.isLetter(c))
+				{
+					tokenData.append(c);
+					charReader.munchNextChar();
+				}
+				else if (!Character.isDigit(c))
+				{
+					return reservedWordTest(tokenData.toString());
+				}
+				else
+				{
+					state = State.ERROR; //TODO
+					return new Token(TokenType.ERROR);
+				}
 				break;
 				
-			case DONE:
+			case DONE: //TODO
 				break;
 				
-			}
-			
-			if (saveChars)
-			{
-				tokenData.append(c);
+			case ERROR: //TODO
+				return new Token(TokenType.ERROR);
+				
 			}
 		}
 		
 		return new Token(null);
+	}
+	
+	private Token reservedWordTest(String tokenData)
+	{
+		//TODO
+		return new Token(TokenType.ID, tokenData);
 	}
 }
