@@ -69,7 +69,8 @@ public class CMinusScanner implements Scanner
 				}
 				else if(Character.isDigit(c))
 				{
-					state = State.NUM;tokenData.append(c);
+					state = State.NUM;
+					tokenData.append(c);
 					charReader.munchNextChar();
 					
 				}
@@ -320,6 +321,33 @@ public class CMinusScanner implements Scanner
 	private Token reservedWordTest(String tokenData)
 	{
 		//TODO we need to add a list of reserved words
-		return new Token(TokenType.ID, tokenData);
+		if(tokenData.toLowerCase().equals("if"))
+		{
+			return new Token(TokenType.IF);
+		}
+		else if(tokenData.toLowerCase().equals("else"))
+		{
+			return new Token(TokenType.ELSE);
+		}
+		else if(tokenData.toLowerCase().equals("int"))
+		{
+			return new Token(TokenType.INT);
+		}
+		else if(tokenData.toLowerCase().equals("return"))
+		{
+			return new Token(TokenType.RETURN);
+		}
+		else if(tokenData.toLowerCase().equals("while"))
+		{
+			return new Token(TokenType.WHILE);
+		}
+		else if(tokenData.toLowerCase().equals("void"))
+		{
+			return new Token(TokenType.VOID);
+		}
+		else
+		{
+			return new Token(TokenType.ID, tokenData);
+		}
 	}
 }
