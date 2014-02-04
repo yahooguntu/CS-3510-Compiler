@@ -61,6 +61,87 @@ public class CMinusScanner implements Scanner
 			switch (state)
 			{
 			case START:
+				if(Character.isLetter(c))
+				{
+					state = State.ID_RESERVED;
+				}
+				else if(Character.isDigit(c))
+				{
+					state = State.NUM;
+				}
+				else if(Character.isWhitespace(c))
+				{
+					break;
+				}
+				else if(c == '=')
+				{
+					state = State.ASSIGN_COMPARE;
+				}
+				else if(c == '<')
+				{
+					state = State.GT_LT_HALF_COMPARE;
+				}
+				else if(c == '>')
+				{
+					state = State.GT_LT_HALF_COMPARE;
+				}
+				else if(c == '!')
+				{
+					state = State.GT_LT_HALF_COMPARE;
+				}
+				else if(c == '/')
+				{
+					state = State.DIV_OR_COMMENT;
+				}
+				else if(c == '+')
+				{
+					return new Token(TokenType.PLUS);
+				}
+				else if(c == '-')
+				{
+					return new Token(TokenType.MINUS);
+				}
+				else if(c == '*')
+				{
+					return new Token(TokenType.MULTIPLY);
+				}
+				else if(c == ';')
+				{
+					return new Token(TokenType.END_STATEMENT);
+				}
+				else if(c == ',')
+				{
+					return new Token(TokenType.COMMA);
+				}
+				else if(c == '(')
+				{
+					return new Token(TokenType.OPEN_PAREN);
+				}
+				else if(c == ')')
+				{
+					return new Token(TokenType.CLOSE_PAREN);
+				}
+				else if(c == '[')
+				{
+					return new Token(TokenType.OPEN_BRACKET);
+				}
+				else if(c == ']')
+				{
+					return new Token(TokenType.CLOSE_BRACKET);
+				}
+				else if(c == '{')
+				{
+					return new Token(TokenType.OPEN_BRACE);
+				}
+				else if(c == '}')
+				{
+					return new Token(TokenType.CLOSE_BRACE);
+				}
+				else
+				{
+					state = State.ERROR;
+					return new Token(TokenType.ERROR);
+				}
 				break;
 			
 			case DIV_OR_COMMENT:
