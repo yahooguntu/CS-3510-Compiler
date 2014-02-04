@@ -199,7 +199,6 @@ public class CMinusScanner implements Scanner
 					state = State.ERROR;
 					return new Token(TokenType.ERROR);
 				}
-				break;
 				
 			case HALF_NEQ:
 				if (c == '=')
