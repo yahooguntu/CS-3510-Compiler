@@ -155,21 +155,64 @@ public class CMinusScanner implements Scanner
 				break;
 				
 			case GT_LT_HALF_COMPARE:
+				if (c == '=')
+				{
+					charReader.munchNextChar();
+					if (tokenData.toString().equals("<"))
+					{
+						state = State.FULL_COMPARE;
+						return new Token(TokenType.LESS_EQUAL_THAN);
+					}
+					else if (tokenData.toString().equals(">"))
+					{
+						state = State.FULL_COMPARE;
+						return new Token(TokenType.GREATER_EQUAL_THAN);
+					}
+				}
+				else if (tokenData.toString().equals("<"))
+				{
+					return new Token(TokenType.LESS_THAN);
+				}
+				else if (tokenData.toString().equals(">"))
+				{
+					return new Token(TokenType.GREATER_THAN);
+				}
+				else
+				{
+					state = State.ERROR;
+					return new Token(TokenType.ERROR);
+				}
+				
 				break;
 				
-			case FULL_COMPARE:
+			case FULL_COMPARE: //TODO
 				break;
 				
 			case ASSIGN_COMPARE:
+				if (c == '=')
+				{
+					state = State.FULL_COMPARE;
+					return new Token(TokenType.EQUALS);
+				}
+				else
+				{
+					state = State.ERROR;
+					return new Token(TokenType.ERROR);
+				}
 				break;
 				
 			case HALF_NEQ:
 				if (c == '=')
 				{
+					charReader.munchNextChar();
 					state = State.FULL_COMPARE;
 					return new Token(TokenType.NOT_EQUALS);
 				}
-				break;
+				else
+				{
+					state = State.ERROR;
+					return new Token(TokenType.ERROR);
+				}
 				
 			case NUM:
 				if (Character.isDigit(c))
