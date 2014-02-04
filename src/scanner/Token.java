@@ -50,7 +50,8 @@ public class Token
 		END_STATEMENT,
 		COMMA,
 		WHITESPACE,
-		EOF
+		EOF,
+		ERROR
 	}
 	
 	private TokenType tokenType;
