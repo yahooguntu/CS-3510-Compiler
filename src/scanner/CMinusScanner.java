@@ -64,77 +64,102 @@ public class CMinusScanner implements Scanner
 				if(Character.isLetter(c))
 				{
 					state = State.ID_RESERVED;
+					tokenData.append(c);
+					charReader.munchNextChar();
 				}
 				else if(Character.isDigit(c))
 				{
-					state = State.NUM;
+					state = State.NUM;tokenData.append(c);
+					charReader.munchNextChar();
+					
 				}
 				else if(Character.isWhitespace(c))
 				{
+					charReader.munchNextChar();
 					break;
 				}
 				else if(c == '=')
 				{
 					state = State.ASSIGN_COMPARE;
+					charReader.munchNextChar();
 				}
 				else if(c == '<')
 				{
 					state = State.GT_LT_HALF_COMPARE;
+					tokenData.append(c);
+					charReader.munchNextChar();
 				}
 				else if(c == '>')
 				{
 					state = State.GT_LT_HALF_COMPARE;
+					tokenData.append(c);
+					charReader.munchNextChar();
 				}
 				else if(c == '!')
 				{
 					state = State.GT_LT_HALF_COMPARE;
+					tokenData.append(c);
+					charReader.munchNextChar();
 				}
 				else if(c == '/')
 				{
 					state = State.DIV_OR_COMMENT;
+					tokenData.append(c);
+					charReader.munchNextChar();
 				}
 				else if(c == '+')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.PLUS);
 				}
 				else if(c == '-')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.MINUS);
 				}
 				else if(c == '*')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.MULTIPLY);
 				}
 				else if(c == ';')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.END_STATEMENT);
 				}
 				else if(c == ',')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.COMMA);
 				}
 				else if(c == '(')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.OPEN_PAREN);
 				}
 				else if(c == ')')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.CLOSE_PAREN);
 				}
 				else if(c == '[')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.OPEN_BRACKET);
 				}
 				else if(c == ']')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.CLOSE_BRACKET);
 				}
 				else if(c == '{')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.OPEN_BRACE);
 				}
 				else if(c == '}')
 				{
+					charReader.munchNextChar();
 					return new Token(TokenType.CLOSE_BRACE);
 				}
 				else
@@ -145,13 +170,46 @@ public class CMinusScanner implements Scanner
 				break;
 			
 			case DIV_OR_COMMENT:
-				//stuff
+				if(c == '*')
+				{
+					state = State.COMMENT;
+					charReader.munchNextChar();
+				}
+				else
+				{
+					charReader.munchNextChar();
+					return new Token(TokenType.DIVIDE);
+				}
 				break;
 				
 			case COMMENT:
+				if(c == '*')
+				{
+					charReader.munchNextChar();
+					state = State.BEGIN_END_COMMENT;
+				}
+				else
+				{
+					charReader.munchNextChar();
+					state = State.COMMENT;
+				}
 				break;
 				
 			case BEGIN_END_COMMENT:
+				if(c == '*')
+				{
+					charReader.munchNextChar();
+				}
+				else if(c != '/')
+				{
+					state = State.COMMENT;
+					charReader.munchNextChar();
+				}
+				else
+				{
+					state = State.START;
+					charReader.munchNextChar();
+				}
 				break;
 				
 			case GT_LT_HALF_COMPARE:
