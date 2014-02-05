@@ -1,3 +1,15 @@
+/**
+* @author Mitch Birti
+* @author Seth Yost
+* @version 1.0
+* File: CMinusScanner.java
+* Created: Feb 2014
+* ©Copyright the authors. All rights reserved.
+*
+* Description: Implements the Scanner interface.
+ * This is a tokenizer for the C- language.
+*/
+
 package scanner;
 
 import java.io.File;
@@ -5,10 +17,14 @@ import scanner.Token.TokenType;
 
 public class CMinusScanner implements Scanner
 {
+	// the next token that will be spit out is pre-read into this
 	private Token nextToken;
+	// this is the character source
 	private CharReader charReader;
+	// if this is true, we only return error tokens
 	private boolean erroredOut = false;
 	
+	// list of possible states we can be in
 	private enum State {
 		DIV_OR_COMMENT,
 		COMMENT,
@@ -23,42 +39,64 @@ public class CMinusScanner implements Scanner
 	
 	public CMinusScanner (File file)
 	{
+		// set up the character stream reader
 		charReader = new CharReader(file);
 		nextToken = scanToken();
 	}
 	
+	/**
+	 * Gets and consumes the next token.
+	 */
 	public Token getNextToken()
 	{
 		Token returnToken = nextToken;
+		
+		// only load up the next token if we aren't done yet and haven't errored
 		if(nextToken.getType() != Token.TokenType.EOF && nextToken.getType() != Token.TokenType.ERROR)
 		{
 			nextToken = scanToken();
 		}
+		
 		return returnToken;
 	}
 	
+	/**
+	 * Consumes the next token.
+	 */
 	public Token viewNextToken()
 	{
 		return nextToken;
 	}
 	
-	public Token scanToken()
+	/**
+	 * Deciphers the next token from the character stream.
+	 * @return
+	 */
+	private Token scanToken()
 	{
+		// we only return error tokens if we've errored out
 		if (erroredOut)
 		{
 			return new Token(TokenType.ERROR);
 		}
 		
+		// start in the start state
 		State state = State.START;
+		// this is where we store ID names, NUM chars, etc.
 		StringBuilder tokenData = new StringBuilder();
 		
 		char c = charReader.viewNextChar();
+		// while we haven't reached end-of-stream...
 		while (c != 0xFFFF)
 		{
-			
+			// state machine on state "state"
 			switch (state)
 			{
 			case START:
+				
+				/* Handles the split-offs from START,
+				 * including single-character tokens. */
+				
 				if(Character.isLetter(c))
 				{
 					state = State.ID_RESERVED;
@@ -171,6 +209,8 @@ public class CMinusScanner implements Scanner
 				}
 				break;
 			
+			/* Comment machine. */
+			
 			case DIV_OR_COMMENT:
 				if(c == '*')
 				{
@@ -212,7 +252,9 @@ public class CMinusScanner implements Scanner
 					charReader.munchNextChar();
 				}
 				break;
-				
+			
+			/* Logic for <, >, <=, >=, ==, and != */
+			
 			case GT_LT_HALF_COMPARE:
 				if (c == '=')
 				{
@@ -263,7 +305,9 @@ public class CMinusScanner implements Scanner
 					erroredOut = true;
 					return new Token(TokenType.ERROR);
 				}
-				
+			
+			/* Standard numeric and identifier tokens. */
+			
 			case NUM:
 				if (Character.isDigit(c))
 				{
@@ -289,6 +333,7 @@ public class CMinusScanner implements Scanner
 				}
 				else if (!Character.isDigit(c))
 				{
+					// runs it through the reserved word checker before returning it
 					return reservedWordTest(tokenData.toString());
 				}
 				else
@@ -299,9 +344,11 @@ public class CMinusScanner implements Scanner
 				break;
 			}
 			
+			// prep the next character for the next round through
 			c = charReader.viewNextChar();
 		}
 		
+		// if we reach the end of the stream, do not pass go. do not collect $200.
 		if (c == 0xFFFF)
 		{
 			return new Token(TokenType.EOF);
@@ -310,9 +357,12 @@ public class CMinusScanner implements Scanner
 		return new Token(null);
 	}
 	
+	/*
+	 * Checks for a reserved word. If there is one, it returns
+	 * that token. If not, it returns an ID token.
+	 */
 	private Token reservedWordTest(String tokenData)
 	{
-		//TODO we need to add a list of reserved words
 		if(tokenData.toLowerCase().equals("if"))
 		{
 			return new Token(TokenType.IF);

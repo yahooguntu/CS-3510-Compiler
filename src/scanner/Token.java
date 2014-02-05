@@ -1,10 +1,16 @@
+/**
+* @author Mitch Birti
+* @author Seth Yost
+* @version 1.0
+* File: Token.java
+* Created: Feb 2014
+* ©Copyright the authors. All rights reserved.
+*
+* Description: Represents a token.
+*/
+
 package scanner;
 
-/**
- * Represents a token.
- * @author David Birti
- *
- */
 public class Token
 {
 	/**
@@ -93,5 +99,11 @@ public class Token
 	public Object getData()
 	{
 		return tokenData;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("%-15s: " + tokenData + "\r\n", tokenType);
 	}
 }
