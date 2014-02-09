@@ -28,14 +28,9 @@ public class CharReader
 	// next char to be returned
 	private char nextChar;
 	
-	public CharReader(File in)
+	public CharReader(BufferedReader rdr)
 	{
-		try {
-			inFile = new BufferedReader(new FileReader(in));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		inFile = rdr;
 		
 		prepNextChar();
 	}

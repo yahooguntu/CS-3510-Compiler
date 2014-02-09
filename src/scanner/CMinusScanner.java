@@ -12,7 +12,9 @@
 
 package scanner;
 
+import java.io.BufferedReader;
 import java.io.File;
+
 import scanner.Token.TokenType;
 
 public class CMinusScanner implements Scanner
@@ -37,10 +39,10 @@ public class CMinusScanner implements Scanner
 		START
 	}
 	
-	public CMinusScanner (File file)
+	public CMinusScanner (BufferedReader rdr)
 	{
 		// set up the character stream reader
-		charReader = new CharReader(file);
+		charReader = new CharReader(rdr);
 		nextToken = scanToken();
 	}
 	

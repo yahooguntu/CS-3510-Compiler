@@ -3,6 +3,7 @@ package scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -29,7 +30,7 @@ public class Tester
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new CMinusScanner(new File("TestFile.cm"));
+			Scanner s = new LexCMinusScanner(new BufferedReader(new FileReader("TestFile.cm")));
 			outFile = new BufferedWriter(new FileWriter("output.txt"));
 			
 			// iterate through all the tokens
