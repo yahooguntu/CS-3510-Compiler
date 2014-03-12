@@ -36,7 +36,8 @@ public class CMinusScanner implements Scanner
 		HALF_NEQ,
 		NUM,
 		ID_RESERVED,
-		START
+		START,
+		DONE
 	}
 	
 	public CMinusScanner (BufferedReader rdr)
@@ -81,6 +82,9 @@ public class CMinusScanner implements Scanner
 		{
 			return new Token(TokenType.ERROR);
 		}
+		
+		// storage for the token that the done state will return
+		Token toReturn = null;
 		
 		// start in the start state
 		State state = State.START;
@@ -147,67 +151,80 @@ public class CMinusScanner implements Scanner
 				else if(c == '+')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.PLUS);
+					toReturn = new Token(TokenType.PLUS);
+					state = State.DONE;
 				}
 				else if(c == '-')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.MINUS);
+					toReturn = new Token(TokenType.MINUS);
+					state = State.DONE;
 				}
 				else if(c == '*')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.MULTIPLY);
+					toReturn = new Token(TokenType.MULTIPLY);
+					state = State.DONE;
 				}
 				else if(c == ';')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.END_STATEMENT);
+					toReturn = new Token(TokenType.END_STATEMENT);
+					state = State.DONE;
 				}
 				else if(c == ',')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.COMMA);
+					toReturn = new Token(TokenType.COMMA);
+					state = State.DONE;
 				}
 				else if(c == '(')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.OPEN_PAREN);
+					toReturn = new Token(TokenType.OPEN_PAREN);
+					state = State.DONE;
 				}
 				else if(c == ')')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.CLOSE_PAREN);
+					toReturn = new Token(TokenType.CLOSE_PAREN);
+					state = State.DONE;
 				}
 				else if(c == '[')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.OPEN_BRACKET);
+					toReturn = new Token(TokenType.OPEN_BRACKET);
+					state = State.DONE;
 				}
 				else if(c == ']')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.CLOSE_BRACKET);
+					toReturn = new Token(TokenType.CLOSE_BRACKET);
+					state = State.DONE;
 				}
 				else if(c == '{')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.OPEN_BRACE);
+					toReturn = new Token(TokenType.OPEN_BRACE);
+					state = State.DONE;
 				}
 				else if(c == '}')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.CLOSE_BRACE);
+					toReturn = new Token(TokenType.CLOSE_BRACE);
+					state = State.DONE;
 				}
 				else if(c == 0xFFFF)
 				{
 					// we've reached the end
-					return new Token(TokenType.EOF);
+					toReturn = new Token(TokenType.EOF);
+					state = State.DONE;
 				}
 				else
 				{
 					erroredOut = true;
-					return new Token(TokenType.ERROR);
+					toReturn = new Token(TokenType.ERROR);
+					state = State.DONE;
 				}
 				break;
 			
@@ -221,7 +238,8 @@ public class CMinusScanner implements Scanner
 				}
 				else
 				{
-					return new Token(TokenType.DIVIDE);
+					toReturn = new Token(TokenType.DIVIDE);
+					state = State.DONE;
 				}
 				break;
 				
@@ -263,25 +281,30 @@ public class CMinusScanner implements Scanner
 					charReader.munchNextChar();
 					if (tokenData.toString().equals("<"))
 					{
-						return new Token(TokenType.LESS_EQUAL_THAN);
+						toReturn = new Token(TokenType.LESS_EQUAL_THAN);
+						state = State.DONE;
 					}
 					else if (tokenData.toString().equals(">"))
 					{
-						return new Token(TokenType.GREATER_EQUAL_THAN);
+						toReturn = new Token(TokenType.GREATER_EQUAL_THAN);
+						state = State.DONE;
 					}
 				}
 				else if (tokenData.toString().equals("<"))
 				{
-					return new Token(TokenType.LESS_THAN);
+					toReturn = new Token(TokenType.LESS_THAN);
+					state = State.DONE;
 				}
 				else if (tokenData.toString().equals(">"))
 				{
-					return new Token(TokenType.GREATER_THAN);
+					toReturn = new Token(TokenType.GREATER_THAN);
+					state = State.DONE;
 				}
 				else
 				{
 					erroredOut = true;
-					return new Token(TokenType.ERROR);
+					toReturn = new Token(TokenType.ERROR);
+					state = State.DONE;
 				}
 				
 				break;
@@ -289,24 +312,30 @@ public class CMinusScanner implements Scanner
 			case ASSIGN_COMPARE:
 				if (c == '=')
 				{
-					return new Token(TokenType.EQUALS);
+					toReturn = new Token(TokenType.EQUALS);
+					state = State.DONE;
 				}
 				else
 				{
-					return new Token(TokenType.ASSIGNMENT);
+					toReturn = new Token(TokenType.ASSIGNMENT);
+					state = State.DONE;
 				}
+				break;
 				
 			case HALF_NEQ:
 				if (c == '=')
 				{
 					charReader.munchNextChar();
-					return new Token(TokenType.NOT_EQUALS);
+					toReturn = new Token(TokenType.NOT_EQUALS);
+					state = State.DONE;
 				}
 				else
 				{
 					erroredOut = true;
-					return new Token(TokenType.ERROR);
+					toReturn = new Token(TokenType.ERROR);
+					state = State.DONE;
 				}
+				break;
 			
 			/* Standard numeric and identifier tokens. */
 			
@@ -318,12 +347,14 @@ public class CMinusScanner implements Scanner
 				}
 				else if (!Character.isLetter(c))
 				{
-					return new Token(TokenType.NUM, Integer.parseInt(tokenData.toString()));
+					toReturn = new Token(TokenType.NUM, Integer.parseInt(tokenData.toString()));
+					state = State.DONE;
 				}
 				else
 				{
 					erroredOut = true;
-					return new Token(TokenType.ERROR);
+					toReturn = new Token(TokenType.ERROR);
+					state = State.DONE;
 				}
 				break;
 				
@@ -336,14 +367,19 @@ public class CMinusScanner implements Scanner
 				else if (!Character.isDigit(c))
 				{
 					// runs it through the reserved word checker before returning it
-					return reservedWordTest(tokenData.toString());
+					toReturn = reservedWordTest(tokenData.toString());
+					state = State.DONE;
 				}
 				else
 				{
 					erroredOut = true;
-					return new Token(TokenType.ERROR);
+					toReturn = new Token(TokenType.ERROR);
+					state = State.DONE;
 				}
 				break;
+				
+			case DONE:
+				return toReturn;
 			}
 			
 			// prep the next character for the next round through
