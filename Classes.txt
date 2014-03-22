@@ -8,6 +8,8 @@ Statement(abstract)
 	SelectionStatement
 	IterationStatement
 	ExpressionStatement
+	CompoundStatement
+	ReturnStatement
 Expression(abstract)
 	BinaryExpression
 	AssignExpression
