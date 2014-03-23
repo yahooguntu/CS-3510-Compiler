@@ -1,5 +1,6 @@
 package parser;
 
-public abstract class Declaration {
-
+public abstract class Declaration
+{
+	
 }
