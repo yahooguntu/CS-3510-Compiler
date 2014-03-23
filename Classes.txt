@@ -1,5 +1,5 @@
 Classes:
-Program
+Program						[Mitch]
 Declaration(abstract)
 	VariableDeclaration
 	FunctionDeclaration
