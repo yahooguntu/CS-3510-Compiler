@@ -1,8 +1,8 @@
 Classes:
 Program						[Mitch]
-Declaration(abstract)
-	VariableDeclaration
-	FunctionDeclaration
+Declaration(abstract)		[Mitch]
+	VariableDeclaration		[Mitch]
+	FunctionDeclaration		[Mitch]
 Arguments
 Statement(abstract)
 	SelectionStatement
