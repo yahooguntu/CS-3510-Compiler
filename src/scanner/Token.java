@@ -57,7 +57,8 @@ public class Token
 		COMMA,
 		WHITESPACE,
 		EOF,
-		ERROR
+		ERROR,
+		EPSILON
 	}
 	
 	private TokenType tokenType;
