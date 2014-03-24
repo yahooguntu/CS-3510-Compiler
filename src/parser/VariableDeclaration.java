@@ -45,14 +45,18 @@ public class VariableDeclaration extends Declaration
 	@Override
 	public void print(int indent)
 	{
+		String prefix = "";
 		for (int i = 0; i < indent; i++)
-			System.out.print("\t");
+			prefix += "\t";
 		
-		System.out.print("<VariableDeclaration type=\"int\"");
+		System.out.print(prefix + "<VariableDeclaration>");
+		
+		System.out.println(prefix + "\t<Name>" + id + "</Name>");
+		System.out.println(prefix + "\t<Type>" + "INT" + "</Type>");
 		
 		if (arraySize == -1)
-			System.out.print(" size=\"" + arraySize + "\"");
+			System.out.print(prefix + "\t<Size>" + arraySize + "</Size>");
 		
-		System.out.println(">" + id + "</VariableDeclaration>");
+		System.out.println("</VariableDeclaration>");
 	}
 }
