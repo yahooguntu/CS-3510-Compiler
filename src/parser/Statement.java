@@ -1,6 +1,6 @@
 package parser;
 
-public abstract class Declaration
+public abstract class Statement
 {
 	public abstract void print(int indent);
 }
