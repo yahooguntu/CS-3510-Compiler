@@ -3,7 +3,7 @@ Program						[Mitch]
 Declaration(abstract)		[Mitch]
 	VariableDeclaration		[Mitch]
 	FunctionDeclaration		[Mitch]
-Params
+Params						[Mitch]
 Statement(abstract)
 	SelectionStatement
 	IterationStatement
