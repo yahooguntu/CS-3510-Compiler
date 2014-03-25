@@ -9,9 +9,10 @@
 
 package scanner;
 
+import scanner.Token.TokenType;
+
 public interface Scanner {
 	
 	public Token getNextToken();
 	public Token viewNextToken();
-
 }
