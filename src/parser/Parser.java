@@ -201,7 +201,22 @@ public class Parser
 	{
 		ArrayList<Declaration> declList = new ArrayList<Declaration>();
 		
+		while (contains(nextTokenType(), DECLARATION[0]))
+		{
+			declList.add(parseDeclaration);
+		}
+		
+		if (!matchToken(TokenType.EOF))
+		{
+			throw new RuntimeException("parseProgram(): illegal token: " + nextTokenType().name());
+		}
+		
 		return new Program(null);
+	}
+	
+	public Declaration parseDeclaration()
+	{
+		
 	}
 	
 	private Expression parseFactor()
