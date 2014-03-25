@@ -1,5 +1,7 @@
 package parser;
 
+import parser.statement.CompoundStatement;
+
 public class FunctionDeclaration extends Declaration
 {
 	private Params parameters;

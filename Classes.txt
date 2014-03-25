@@ -5,11 +5,11 @@ Declaration(abstract)		[Mitch]
 	FunctionDeclaration		[Mitch]
 Params						[Mitch]
 Statement(abstract)
-	SelectionStatement
-	IterationStatement
-	ExpressionStatement
-	CompoundStatement
-	ReturnStatement
+	SelectionStatement		[Seth]
+	IterationStatement		[Seth]
+	ExpressionStatement		[Seth]
+	CompoundStatement		[Seth]
+	ReturnStatement			[Seth]
 Expression(abstract)		[Mitch]
 	BinaryExpression		[Mitch]
 	AssignExpression		[Mitch]
