@@ -436,7 +436,12 @@ public class Parser
 	private List<Expression> parseArgs()
 	{
 		List<Expression> args = new ArrayList<Expression>();
-		//TODO
-		return null;
+		
+		while (nextTokenType() != TokenType.CLOSE_PAREN)
+		{
+			args.add(parseExpression());
+		}
+		
+		return args;
 	}
 }
