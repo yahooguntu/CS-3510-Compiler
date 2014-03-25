@@ -96,10 +96,10 @@ DecIntegerLiteral = [0-9]+
   /* separators */
   "("                            { return new Token(TokenType.OPEN_PAREN); }
   ")"                            { return new Token(TokenType.CLOSE_PAREN); }
-  "{"                            { return new Token(TokenType.OPEN_BRACKET); }
-  "}"                            { return new Token(TokenType.CLOSE_BRACKET); }
-  "["                            { return new Token(TokenType.OPEN_BRACE); }
-  "]"                            { return new Token(TokenType.CLOSE_BRACE); }
+  "{"                            { return new Token(TokenType.OPEN_CBRACE); }
+  "}"                            { return new Token(TokenType.CLOSE_CBRACE); }
+  "["                            { return new Token(TokenType.OPEN_BRACKET); }
+  "]"                            { return new Token(TokenType.CLOSE_BRACKET); }
   ";"                            { return new Token(TokenType.END_STATEMENT); }
   ","                            { return new Token(TokenType.COMMA); }
   

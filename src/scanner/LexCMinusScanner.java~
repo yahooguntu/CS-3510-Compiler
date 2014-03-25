@@ -755,19 +755,19 @@ public class LexCMinusScanner implements Scanner {
           }
         case 37: break;
         case 9: 
-          { return new Token(TokenType.OPEN_BRACKET);
+          { return new Token(TokenType.OPEN_CBRACE);
           }
         case 38: break;
         case 10: 
-          { return new Token(TokenType.CLOSE_BRACKET);
+          { return new Token(TokenType.CLOSE_CBRACE);
           }
         case 39: break;
         case 11: 
-          { return new Token(TokenType.OPEN_BRACE);
+          { return new Token(TokenType.OPEN_BRACKET);
           }
         case 40: break;
         case 12: 
-          { return new Token(TokenType.CLOSE_BRACE);
+          { return new Token(TokenType.CLOSE_BRACKET);
           }
         case 41: break;
         case 13: 

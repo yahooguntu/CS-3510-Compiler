@@ -193,25 +193,25 @@ public class CMinusScanner implements Scanner
 				else if(c == '[')
 				{
 					charReader.munchNextChar();
-					toReturn = new Token(TokenType.OPEN_BRACKET);
+					toReturn = new Token(TokenType.OPEN_CBRACE);
 					state = State.DONE;
 				}
 				else if(c == ']')
 				{
 					charReader.munchNextChar();
-					toReturn = new Token(TokenType.CLOSE_BRACKET);
+					toReturn = new Token(TokenType.CLOSE_CBRACE);
 					state = State.DONE;
 				}
 				else if(c == '{')
 				{
 					charReader.munchNextChar();
-					toReturn = new Token(TokenType.OPEN_BRACE);
+					toReturn = new Token(TokenType.OPEN_BRACKET);
 					state = State.DONE;
 				}
 				else if(c == '}')
 				{
 					charReader.munchNextChar();
-					toReturn = new Token(TokenType.CLOSE_BRACE);
+					toReturn = new Token(TokenType.CLOSE_BRACKET);
 					state = State.DONE;
 				}
 				else if(c == 0xFFFF)

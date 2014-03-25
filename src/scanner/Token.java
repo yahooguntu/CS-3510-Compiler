@@ -42,12 +42,12 @@ public class Token
 		NOT_EQUALS,
 		
 		// grouping
-		OPEN_BRACKET,	// {
-		CLOSE_BRACKET,	// }
+		OPEN_CBRACE,	// {
+		CLOSE_CBRACE,	// }
 		OPEN_PAREN,		// (
 		CLOSE_PAREN,	// )
-		OPEN_BRACE,		// [
-		CLOSE_BRACE,	// ]
+		OPEN_BRACKET,		// [
+		CLOSE_BRACKET,	// ]
 		
 		// other
 		ID,
