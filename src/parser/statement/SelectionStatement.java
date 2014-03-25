@@ -1,6 +1,6 @@
 package parser.statement;
 
-import parser.Statement.*;
+import parser.statement.*;
 import parser.expression.*;
 
 public class SelectionStatement extends Statement{
