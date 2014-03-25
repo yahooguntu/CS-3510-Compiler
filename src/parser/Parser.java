@@ -14,77 +14,149 @@ public class Parser
 	
 	/*
 	 * First/Follow Sets
+	 * The first sub-array is the first set, the following one is the follow set.
+	 * (Makes sense, right?)
 	 */
-	private TokenType[] FIRST_PROGRAM = { TokenType.INT, TokenType.VOID };
-	private TokenType[] FIRST_DECLARATION_LIST = { TokenType.INT, TokenType.VOID };
-	private TokenType[] FIRST_DECLARATION = { TokenType.INT, TokenType.VOID };
-	private TokenType[] FIRST_DECLARATION_PRIME = { TokenType.OPEN_PAREN, TokenType.OPEN_BRACE, TokenType.END_STATEMENT };
-	private TokenType[] FIRST_VAR_DECLARATION = { TokenType.INT };
-	private TokenType[] FIRST_VAR_DECLARATION_PRIME = { TokenType.OPEN_BRACE, TokenType.END_STATEMENT };
-	private TokenType[] FIRST_FUN_DECLARATION_PRIME = { TokenType.OPEN_PAREN };
-	private TokenType[] FIRST_PARAMS = { TokenType.INT, TokenType.VOID };
-	private TokenType[] FIRST_PARAM_LIST = { TokenType.INT };
-	private TokenType[] FIRST_PARAM = { TokenType.INT };
-	private TokenType[] FIRST_COMPOUND_STMT = { TokenType.OPEN_BRACKET };
-	private TokenType[] FIRST_LOCAL_DECLARATIONS = { TokenType.INT, TokenType.EPSILON };
-	private TokenType[] FIRST_STATEMENT_LIST = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON };
-	private TokenType[] FIRST_STATEMENT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN };
-	private TokenType[] FIRST_EXPRESSION_STMT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT };
-	private TokenType[] FIRST_SELECTION_STMT = { TokenType.IF };
-	private TokenType[] FIRST_ITERATION_STMT = { TokenType.WHILE };
-	private TokenType[] FIRST_RETURN_STMT = { TokenType.RETURN };
-	private TokenType[] FIRST_EXPRESSION = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FIRST_EXPRESSION_PRIME = { TokenType. ASSIGNMENT, TokenType.OPEN_PAREN, TokenType.OPEN_BRACE, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON };
-	private TokenType[] FIRST_EXPRESSION_PRIME_PRIME = { TokenType. ASSIGNMENT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON };
-	private TokenType[] FIRST_VAR = { TokenType.OPEN_BRACE, TokenType.EPSILON };
-	private TokenType[] FIRST_SIMPLE_EXPRESSION_PRIME = { TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON };
-	private TokenType[] FIRST_RELOP = { TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS };
-	private TokenType[] FIRST_ADDITIVE_EXPRESSION = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FIRST_ADDITIVE_EXPRESSION_PRIME = { TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.EPSILON };
-	private TokenType[] FIRST_ADDOP = { TokenType.PLUS, TokenType.MINUS };
-	private TokenType[] FIRST_TERM = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FIRST_TERM_PRIME = { TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON };
-	private TokenType[] FIRST_MULOP = { TokenType.MULTIPLY, TokenType.DIVIDE };
-	private TokenType[] FIRST_FACTOR = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FIRST_VARCALL = { TokenType.EPSILON, TokenType.OPEN_BRACE, TokenType.OPEN_PAREN };
-	private TokenType[] FIRST_CALL = { TokenType.OPEN_PAREN };
-	private TokenType[] FIRST_ARGS = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.EPSILON };
-	private TokenType[] FIRST_ARG_LIST = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FOLLOW_PROGRAM = { TokenType.EOF };
-	private TokenType[] FOLLOW_DECLARATION_LIST = { TokenType.EOF };
-	private TokenType[] FOLLOW_DECLARATION = { TokenType.INT, TokenType.VOID, TokenType.EOF };
-	private TokenType[] FOLLOW_DECLARATION_PRIME = { TokenType.INT, TokenType.VOID, TokenType.EOF };
-	private TokenType[] FOLLOW_VAR_DECLARATION = { TokenType.INT, TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON };
-	private TokenType[] FOLLOW_VAR_DECLARATION_PRIME = { TokenType.INT, TokenType.VOID, TokenType.EOF };
-	private TokenType[] FOLLOW_FUN_DECLARATION_PRIME = { TokenType.INT, TokenType.VOID, TokenType.EOF };
-	private TokenType[] FOLLOW_PARAMS = { TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_PARAM_LIST = { TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_PARAM = { TokenType.COMMA, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_COMPOUND_STMT = { TokenType.INT, TokenType.VOID, TokenType.EOF, TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_LOCAL_DECLARATIONS = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON };
-	private TokenType[] FOLLOW_STATEMENT_LIST = { TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_STATEMENT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_EXPRESSION_STMT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_SELECTION_STMT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_ITERATION_STMT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_RETURN_STMT = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET };
-	private TokenType[] FOLLOW_EXPRESSION = { TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_EXPRESSION_PRIME = { TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_EXPRESSION_PRIME_PRIME = { TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_VAR = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_SIMPLE_EXPRESSION_PRIME = { TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_RELOP = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FOLLOW_ADDITIVE_EXPRESSION = { TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_ADDITIVE_EXPRESSION_PRIME = { TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_ADDOP = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FOLLOW_TERM = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_TERM_PRIME = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_MULOP = { TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID };
-	private TokenType[] FOLLOW_FACTOR = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_VARCALL = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_CALL = { TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_ARGS = { TokenType.CLOSE_PAREN };
-	private TokenType[] FOLLOW_ARG_LIST = { TokenType.CLOSE_PAREN };
+	private TokenType[][] PROGRAM = {
+			{ TokenType.INT, TokenType.VOID },
+			{ TokenType.EOF }
+	};
+	private TokenType[][] DECLARATION_LIST = {
+			{ TokenType.INT, TokenType.VOID },
+			{ TokenType.EOF }
+	};
+	private TokenType[][] DECLARATION = {
+			{ TokenType.INT, TokenType.VOID },
+			{ TokenType.INT, TokenType.VOID, TokenType.EOF }
+	};
+	private TokenType[][] DECLARATION_PRIME = {
+			{ TokenType.OPEN_PAREN, TokenType.OPEN_BRACE, TokenType.END_STATEMENT },
+			{ TokenType.INT, TokenType.VOID, TokenType.EOF }
+	};
+	private TokenType[][] VAR_DECLARATION = {
+			{ TokenType.INT },
+			{ TokenType.INT, TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.CLOSE_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON }
+	};
+	private TokenType[][] VAR_DECLARATION_PRIME = {
+			{ TokenType.OPEN_BRACE, TokenType.END_STATEMENT },
+			{ TokenType.INT, TokenType.VOID, TokenType.EOF }
+	};
+	private TokenType[][] FUN_DECLARATION_PRIME = {
+			{ TokenType.OPEN_PAREN },
+			{ TokenType.INT, TokenType.VOID, TokenType.EOF }
+	};
+	private TokenType[][] PARAMS = {
+			{ TokenType.INT, TokenType.VOID },
+			{ TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] PARAM_LIST = {
+			{ TokenType.INT },
+			{ TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] PARAM = {
+			{ TokenType.INT },
+			{ TokenType.COMMA, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] COMPOUND_STMT = {
+			{ TokenType.OPEN_BRACKET },
+			{ TokenType.INT, TokenType.VOID, TokenType.EOF, TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] LOCAL_DECLARATIONS = {
+			{ TokenType.INT, TokenType.EPSILON },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.CLOSE_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON }
+	};
+	private TokenType[][] STATEMENT_LIST = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.EPSILON },
+			{ TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] STATEMENT = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] EXPRESSION_STMT = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] SELECTION_STMT = {
+			{ TokenType.IF },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] ITERATION_STMT = {
+			{ TokenType.WHILE },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] RETURN_STMT = {
+			{ TokenType.RETURN },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.END_STATEMENT, TokenType.OPEN_BRACKET, TokenType.IF, TokenType.WHILE, TokenType.RETURN, TokenType.ELSE, TokenType.CLOSE_BRACKET }
+	};
+	private TokenType[][] EXPRESSION = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
+			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] EXPRESSION_PRIME = {
+			{ TokenType. ASSIGNMENT, TokenType.OPEN_PAREN, TokenType.OPEN_BRACE, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] EXPRESSION_PRIME_PRIME = {
+			{ TokenType. ASSIGNMENT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] VAR = {
+			{ TokenType.OPEN_BRACE, TokenType.EPSILON },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] SIMPLE_EXPRESSION_PRIME = {
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] RELOP = {
+			{ TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID }
+	};
+	private TokenType[][] ADDITIVE_EXPRESSION = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
+			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] ADDITIVE_EXPRESSION_PRIME = {
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.EPSILON },
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] ADDOP = {
+			{ TokenType.PLUS, TokenType.MINUS },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID }
+	};
+	private TokenType[][] TERM = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] TERM_PRIME = {
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] MULOP = {
+			{ TokenType.MULTIPLY, TokenType.DIVIDE },
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID }
+	};
+	private TokenType[][] FACTOR = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] VARCALL = {
+			{ TokenType.EPSILON, TokenType.OPEN_BRACE, TokenType.OPEN_PAREN },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] CALL = {
+			{ TokenType.OPEN_PAREN },
+			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACE, TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] ARGS = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID, TokenType.EPSILON },
+			{ TokenType.CLOSE_PAREN }
+	};
+	private TokenType[][] ARG_LIST = {
+			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
+			{ TokenType.CLOSE_PAREN }
+	};
 	
 	public Parser(Scanner s)
 	{
@@ -105,20 +177,41 @@ public class Parser
 		return false;
 	}
 	
+	private boolean useProduction(TokenType[][] prodSets)
+	{
+		// if it contains epsilon
+		if (contains(TokenType.EPSILON, prodSets[0]))
+		{
+			if (contains(nextTokenType(), prodSets[0]) && !contains(nextTokenType(), prodSets[1]))
+			{
+				//TODO fix this!
+			}
+		}
+		else
+		{
+			// it doesnt contain epsilon
+			
+		}
+	}
+	
+	private boolean contains(TokenType needle, TokenType[] haystack)
+	{
+		for (TokenType straw : haystack)
+		{
+			if (needle == straw)
+				return true;
+		}
+		return false;
+	}
+	
 	private TokenType nextTokenType()
 	{
 		return scanner.viewNextToken().getType();
 	}
 	
-	private boolean inSet(TokenType tt, TokenType[] searchArr)
-	{
-		for (TokenType i : searchArr)
-		{
-			if (tt == i)
-				return true;
-		}
-		return false;
-	}
+	/*
+	 * Parse methods, BEGIN!
+	 */
 	
 	public Program parseProgram()
 	{
