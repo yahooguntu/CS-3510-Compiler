@@ -273,9 +273,82 @@ public class Parser
 	private Expression parseExpression()
 	{
 		//TODO
-		return null;
+		Expression toReturn;
+		
+		if(matchToken(TokenType.OPEN_PAREN))
+		{
+			//Expression -> ( expression ) simple-expression'
+			
+		}
+		else if(nextTokenType() == TokenType.ID)
+		{
+			//Expression -> ID expression'
+			if(matchToken(TokenType.ASSIGNMENT))
+			{
+				//expression' -> = expression
+				
+			}
+			else if(matchToken(TokenType.OPEN_PAREN))
+			{
+				//expression' -> ( args ) simple-expression'
+				
+			}
+			else if(matchToken(TokenType.OPEN_BRACE))
+			{
+				//expression' -> [ expression ] expression''
+					
+					Expression exp = parseExpression();
+					Expression varExp = new VariableExpression(null, exp);
+					Expression assignExpres;
+					Expression simpleExp; 
+					
+					if(!matchToken(TokenType.CLOSE_BRACE))
+					{
+						throw new RuntimeException("parseExpression(): No ']' found after '['!");
+					}
+					
+					if(matchToken(TokenType.ASSIGNMENT))
+					{
+						//expression'' -> = expression
+						assignExpres = new AssignExpression(null, parseExpression());
+					}
+					else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
+					{
+						//expression'' -> simple-expression'
+						simpleExp = parseSimpleExpression()
+					}
+					else
+					{
+						throw new RuntimeException("parseExpression(): Illegal token following ]!");
+					}
+					
+					
+			}
+			else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
+			{
+				//expression' -> simple-expression'
+			}
+			else
+			{
+				throw new RuntimeException("parseExpression(): Illegal token following ID!");
+			}
+		}
+		else if(nextTokenType() == TokenType.NUM)
+		{
+			//Expression -> NUM simple-expression'
+		}
+		else
+		{
+			throw new RuntimeException("parseExpression(): Illegal token for Expression!");
+		}
+		return toReturn;
 	}
 	
+	private Expression parseSimpleExpression() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private List<Expression> parseArgs()
 	{
 		List<Expression> args = new ArrayList<Expression>();

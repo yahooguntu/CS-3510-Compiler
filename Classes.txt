@@ -18,20 +18,20 @@ Expression(abstract)		[Mitch]
 	NumberExpression		[Mitch]
 
 Parse Methods:
-parseProgram (and declaration-list)
+parseProgram (and declaration-list) 	[Mitch]
 parseDeclaration (and declaration')
 parseVariableDeclaration (and prime)
 parseFunctionDeclaration (prime)
 parseParams (and param-list and param)
 parseCompoundStatement (and local-declarations and statement-list)
 parseStatement
-parseExpressionStatement
+parseExpressionStatement			
 parseSelectionStatement
 parseIterationStatement
 parseReturnStatement
-parseExpression (and prime and double prime)
+parseExpression (and prime and double prime)	[Seth]
 parseSimpleExpression (prime) (things get passed in)
 parseAdditiveExpression (prime and normal)
 parseTerm (prime and normal)
-parseFactor (and varcall)
+parseFactor (and varcall)				[Mitch]
 parseArgs (and arg-list)
