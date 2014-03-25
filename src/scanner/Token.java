@@ -46,7 +46,7 @@ public class Token
 		CLOSE_CBRACE,	// }
 		OPEN_PAREN,		// (
 		CLOSE_PAREN,	// )
-		OPEN_BRACKET,		// [
+		OPEN_BRACKET,	// [
 		CLOSE_BRACKET,	// ]
 		
 		// other

@@ -4,7 +4,7 @@ OPEN_PAREN     : null
 INT            : null
 ID             : x
 CLOSE_PAREN    : null
-OPEN_BRACKET     : null
+OPEN_CBRACE    : null
 IF             : null
 OPEN_PAREN     : null
 ID             : x
@@ -25,13 +25,13 @@ ELSE           : null
 RETURN         : null
 NUM            : 1
 END_STATEMENT  : null
-CLOSE_BRACKET    : null
+CLOSE_CBRACE   : null
 VOID           : null
 ID             : main
 OPEN_PAREN     : null
 VOID           : null
 CLOSE_PAREN    : null
-OPEN_BRACKET     : null
+OPEN_CBRACE    : null
 INT            : null
 ID             : x
 END_STATEMENT  : null
@@ -55,4 +55,4 @@ ID             : x
 CLOSE_PAREN    : null
 CLOSE_PAREN    : null
 END_STATEMENT  : null
-CLOSE_BRACKET    : null
+CLOSE_CBRACE   : null

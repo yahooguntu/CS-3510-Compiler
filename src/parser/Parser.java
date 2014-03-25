@@ -281,12 +281,26 @@ public class Parser
 		return toReturn;
 	}
 	
+	/**
+	 * Parses function parameters.
+	 * @return
+	 */
 	private Params parseParams()
 	{
-		//TODO
+		List<VariableDeclaration> params = new ArrayList<VariableDeclaration>();
+		
+		while ()
+		{
+			
+		}
+		
 		return null;
 	}
 	
+	/**
+	 * Parses a CompoundStatement.
+	 * @return
+	 */
 	private CompoundStatement parseCompoundStatement()
 	{
 		//TODO
@@ -432,7 +446,7 @@ public class Parser
 		//TODO
 		return null;
 	}
-
+	
 	private List<Expression> parseArgs()
 	{
 		List<Expression> args = new ArrayList<Expression>();
