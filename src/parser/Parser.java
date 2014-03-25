@@ -210,6 +210,7 @@ public class Parser
 		
 		if (matchToken(TokenType.OPEN_PAREN))
 		{
+			// factor -> ( expression )
 			toReturn = parseExpression();
 			
 			if (!matchToken(TokenType.CLOSE_PAREN))
@@ -219,14 +220,17 @@ public class Parser
 		}
 		else if (nextTokenType() == TokenType.NUM)
 		{
+			// factor -> NUM
 			toReturn = new NumberExpression((Integer)(scanner.getNextToken().getData()));
 		}
 		else if (nextTokenType() == TokenType.ID)
 		{
+			// factor -> ID varcall
 			Token id = scanner.getNextToken();
-			// parse varcall
+			
 			if (matchToken(TokenType.OPEN_PAREN))
 			{
+				// varcall -> call -> ( args )
 				List<Expression> args = parseArgs();
 				
 				toReturn = new CallExpression((String) id.getData(), args);
@@ -238,6 +242,7 @@ public class Parser
 			}
 			else if (matchToken(TokenType.OPEN_BRACE))
 			{
+				// varcall -> var -> [ expression ]
 				Expression xpr = parseExpression();
 				toReturn = new VariableExpression((String) id.getData(), xpr);
 				
@@ -249,6 +254,7 @@ public class Parser
 			else if (contains(nextTokenType(), VARCALL[1]))
 			{
 				// next token is in $varcall
+				// varcall -> var -> EPSILON
 				toReturn = new VariableExpression((String) id.getData());
 			}
 			else
@@ -261,8 +267,7 @@ public class Parser
 			throw new RuntimeException("parseFactor(): Illegal token for factor!");
 		}
 		
-		//TODO
-		return null;
+		return toReturn;
 	}
 	
 	private Expression parseExpression()
