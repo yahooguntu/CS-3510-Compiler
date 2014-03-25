@@ -193,6 +193,15 @@ public class Parser
 		return scanner.viewNextToken().getType();
 	}
 	
+	private Token matchOrDie(TokenType tt, String msg)
+	{
+		if (scanner.viewNextToken().getType() != tt)
+		{
+			throw new RuntimeException(msg + nextTokenType().name());
+		}
+		return scanner.getNextToken();
+	}
+	
 	/*
 	 * Parse methods, BEGIN!
 	 */
@@ -203,7 +212,7 @@ public class Parser
 		
 		while (contains(nextTokenType(), DECLARATION[0]))
 		{
-			declList.add(parseDeclaration);
+			declList.add(parseDeclaration());
 		}
 		
 		if (!matchToken(TokenType.EOF))
@@ -214,11 +223,80 @@ public class Parser
 		return new Program(null);
 	}
 	
+	/**
+	 * Parses a Declaration.
+	 * @return
+	 */
 	public Declaration parseDeclaration()
 	{
+		Declaration toReturn;
+		// strip off the first two tokens
+		Token typeSpecifier = scanner.getNextToken();
+		Token identifier = scanner.getNextToken();
 		
+		if (typeSpecifier.getType() == TokenType.VOID || (typeSpecifier.getType() == TokenType.INT && nextTokenType() == TokenType.OPEN_PAREN))
+		{
+			// declaration -> void ID fun-declaration'
+			// OR  decl    -> int ID fun-declaration'
+			// this isn't exactly according to the grammar, but it's better coding practice
+			
+			matchOrDie(TokenType.OPEN_PAREN, "parseDeclaration(): parsing function, open paren expected, got ");
+			Params params = parseParams();
+			matchOrDie(TokenType.CLOSE_PAREN, "parseDeclaration(): parsing function, close paren expected, got ");
+			
+			CompoundStatement body = parseCompoundStatement();
+			
+			toReturn = new FunctionDeclaration((String) identifier.getData(), params, body);
+		}
+		else if (typeSpecifier.getType() == TokenType.INT)
+		{
+			// declaration -> int ID declaration'
+			// AND decl'   -> var-declaration'
+			
+			if (matchToken(TokenType.OPEN_BRACE))
+			{
+				Token number = matchOrDie(TokenType.NUM, "parseDeclaration(): parsing array declaration, expected NUM, got ");
+				
+				matchOrDie(TokenType.CLOSE_BRACE, "parseDeclaration(): parsing array declaration, expected ']', got " + nextTokenType().name());
+				
+				toReturn = new VariableDeclaration((String) identifier.getData(), (Integer) number.getData());
+			}
+			else if (nextTokenType() == TokenType.END_STATEMENT)
+			{
+				toReturn = new VariableDeclaration((String) identifier.getData());
+			}
+			else
+			{
+				throw new RuntimeException("parseDeclaration(): parsing variable, '[' or ';' expected, got " + nextTokenType().name());
+			}
+			
+			matchOrDie(TokenType.END_STATEMENT, "parseDeclaration(): parsing variable declaration, ';' expected, got ");
+			
+		}
+		else
+		{
+			throw new RuntimeException("parseDeclaration(): type specifier expected, received " + typeSpecifier.getType().name());
+		}
+		
+		return toReturn;
 	}
 	
+	private Params parseParams()
+	{
+		//TODO
+		return null;
+	}
+	
+	private CompoundStatement parseCompoundStatement()
+	{
+		//TODO
+		return null;
+	}
+	
+	/**
+	 * Parses a Factor.
+	 * @return
+	 */
 	private Expression parseFactor()
 	{
 		Expression toReturn;
