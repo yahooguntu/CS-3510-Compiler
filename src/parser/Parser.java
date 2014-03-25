@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import scanner.Scanner;
 import scanner.Token;
@@ -177,23 +178,6 @@ public class Parser
 		return false;
 	}
 	
-	private boolean useProduction(TokenType[][] prodSets)
-	{
-		// if it contains epsilon
-		if (contains(TokenType.EPSILON, prodSets[0]))
-		{
-			if (contains(nextTokenType(), prodSets[0]) && !contains(nextTokenType(), prodSets[1]))
-			{
-				//TODO fix this!
-			}
-		}
-		else
-		{
-			// it doesnt contain epsilon
-			
-		}
-	}
-	
 	private boolean contains(TokenType needle, TokenType[] haystack)
 	{
 		for (TokenType straw : haystack)
@@ -230,7 +214,7 @@ public class Parser
 			
 			if (!matchToken(TokenType.CLOSE_PAREN))
 			{
-				throw new RuntimeException("parseFactor(): No close paren found!");
+				throw new RuntimeException("parseFactor(): No ')' found!");
 			}
 		}
 		else if (nextTokenType() == TokenType.NUM)
@@ -243,9 +227,38 @@ public class Parser
 			// parse varcall
 			if (matchToken(TokenType.OPEN_PAREN))
 			{
-				//List<Expression> args = new List<Expression>();
-				//TODO
+				List<Expression> args = parseArgs();
+				
+				toReturn = new CallExpression((String) id.getData(), args);
+				
+				if (!matchToken(TokenType.CLOSE_PAREN))
+				{
+					throw new RuntimeException("parseFactor(): No ')' found after args in function call!");
+				}
 			}
+			else if (matchToken(TokenType.OPEN_BRACE))
+			{
+				Expression xpr = parseExpression();
+				toReturn = new VariableExpression((String) id.getData(), xpr);
+				
+				if (!matchToken(TokenType.CLOSE_BRACE))
+				{
+					throw new RuntimeException("parseFactor(): No ']' found after '['!");
+				}
+			}
+			else if (contains(nextTokenType(), VARCALL[1]))
+			{
+				// next token is in $varcall
+				toReturn = new VariableExpression((String) id.getData());
+			}
+			else
+			{
+				throw new RuntimeException("parseFactor(): Illegal token after ID!");
+			}
+		}
+		else
+		{
+			throw new RuntimeException("parseFactor(): Illegal token for factor!");
 		}
 		
 		//TODO
@@ -254,6 +267,13 @@ public class Parser
 	
 	private Expression parseExpression()
 	{
+		//TODO
+		return null;
+	}
+	
+	private List<Expression> parseArgs()
+	{
+		List<Expression> args = new ArrayList<Expression>();
 		//TODO
 		return null;
 	}
