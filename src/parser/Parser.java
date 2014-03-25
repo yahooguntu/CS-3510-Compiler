@@ -306,10 +306,7 @@ public class Parser
 			// factor -> ( expression )
 			toReturn = parseExpression();
 			
-			if (!matchToken(TokenType.CLOSE_PAREN))
-			{
-				throw new RuntimeException("parseFactor(): No ')' found!");
-			}
+			matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found, got ");
 		}
 		else if (nextTokenType() == TokenType.NUM)
 		{
@@ -328,10 +325,7 @@ public class Parser
 				
 				toReturn = new CallExpression((String) id.getData(), args);
 				
-				if (!matchToken(TokenType.CLOSE_PAREN))
-				{
-					throw new RuntimeException("parseFactor(): No ')' found after args in function call!");
-				}
+				matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found after args in function call, got ");
 			}
 			else if (matchToken(TokenType.OPEN_BRACE))
 			{
@@ -339,10 +333,7 @@ public class Parser
 				Expression xpr = parseExpression();
 				toReturn = new VariableExpression((String) id.getData(), xpr);
 				
-				if (!matchToken(TokenType.CLOSE_BRACE))
-				{
-					throw new RuntimeException("parseFactor(): No ']' found after '['!");
-				}
+				matchOrDie(TokenType.CLOSE_BRACE, "parseFactor(): No ']' found after '[', got");
 			}
 			else if (contains(nextTokenType(), VARCALL[1]))
 			{
@@ -438,8 +429,8 @@ public class Parser
 	}
 	
 	private Expression parseSimpleExpression() {
-		// TODO Auto-generated method stub
-		
+		//TODO
+		return null;
 	}
 
 	private List<Expression> parseArgs()
