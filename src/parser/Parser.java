@@ -3,6 +3,8 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Variable;
+
 import scanner.Scanner;
 import scanner.Token;
 import scanner.Token.TokenType;
@@ -331,7 +333,27 @@ public class Parser
 		while (nextTokenType() == TokenType.INT)
 		{
 			scanner.getNextToken();
-			Token id = matchOrDie(TokenType.ID, "");
+			Token id = matchOrDie(TokenType.ID, "parseCompoundStatement(): parsing variable declaration, expected identifier and got ");
+			
+			if (matchToken(TokenType.OPEN_BRACKET))
+			{
+				Token num = matchOrDie(TokenType.NUM, "parseCompoundStatement(): expected a number, but got ");
+				matchOrDie(TokenType.CLOSE_BRACKET, "parseCompoundStatement(): expected ']', but got ");
+				decls.add(new VariableDeclaration((String) id.getData(), (Integer) num.getData()));
+			}
+			else if (matchToken(TokenType.END_STATEMENT))
+			{
+				decls.add(new VariableDeclaration((String) id.getData()));
+			}
+			else
+			{
+				throw new RuntimeException("parseCompoundStatement(): expected '[' or ';', got ");
+			}
+		}
+		
+		while (contains(nextTokenType(), STATEMENT_LIST[0]) && nextTokenType() != TokenType.CLOSE_CBRACE)
+		{
+			stmts.add(parseStatement());
 		}
 		
 		matchOrDie(TokenType.CLOSE_CBRACE, "parseCompoundStatement(): expected '}', got ");
@@ -448,7 +470,7 @@ public class Parser
 					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]))
 					{
 						//expression'' -> simple-expression'
-						toReturn = parseSimpleExpression(/*that VariableExpression*/);
+						toReturn = parseSimpleExpression(null/*that VariableExpression*/);
 					}
 					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[1]))
 					{
