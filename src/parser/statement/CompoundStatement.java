@@ -5,16 +5,16 @@ import java.util.List;
 
 public class CompoundStatement extends Statement
 {
-	private Declaration locals;
+	private List<Declaration> locals;
 	private List<Statement> body;
 	
-	public CompoundStatement(Declaration locals, List<Statement> body)
+	public CompoundStatement(List<Declaration> locals, List<Statement> body)
 	{
 		locals = this.locals;
 		body = this.body;
 	}
 	
-	public Declaration getLocals()
+	public List<Declaration> getLocals()
 	{
 		return locals;
 	}
@@ -33,11 +33,14 @@ public class CompoundStatement extends Statement
 			prefix += "\t";
 		
 		System.out.println(prefix + "<CompoundStatement>");
-		System.out.println(prefix + "\t<Declaration>");
-		locals.print(indent+2);
-		System.out.println(prefix + "\t</Declaration>");
+		System.out.println(prefix + "\t<Declarations>");
+		for (Declaration decl : locals)
+		{
+			decl.print(indent+2);
+		}
+		System.out.println(prefix + "\t</Declarations>");
 		System.out.println(prefix + "\t<Statments>");
-		for(Statement temp : body)
+		for (Statement temp : body)
 		{
 			temp.print(indent+2);
 		}

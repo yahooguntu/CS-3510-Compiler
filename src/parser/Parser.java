@@ -296,6 +296,7 @@ public class Parser
 		else if (nextTokenType() == TokenType.INT)
 		{
 			// do-while will pick up the first param, then if theres a comma it will keep picking them up
+			// this do-while was proudly written by Mitch Birti
 			do {
 				matchToken(TokenType.INT);
 				Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
@@ -322,6 +323,22 @@ public class Parser
 	 * @return
 	 */
 	private CompoundStatement parseCompoundStatement()
+	{
+		matchOrDie(TokenType.OPEN_CBRACE, "parseCompoundStatement(): expected '{', got ");
+		List<Declaration> decls = new ArrayList<Declaration>();
+		List<Statement> stmts = new ArrayList<Statement>();
+		
+		while (nextTokenType() == TokenType.INT)
+		{
+			scanner.getNextToken();
+			Token id = matchOrDie(TokenType.ID, "");
+		}
+		
+		matchOrDie(TokenType.CLOSE_CBRACE, "parseCompoundStatement(): expected '}', got ");
+		return null;
+	}
+	
+	private Statement parseStatement()
 	{
 		//TODO
 		return null;
@@ -400,6 +417,8 @@ public class Parser
 		}
 		else if(nextTokenType() == TokenType.ID)
 		{
+			//TODO get the ID
+			
 			//Expression -> ID expression'
 			if(matchToken(TokenType.ASSIGNMENT))
 			{
@@ -415,32 +434,31 @@ public class Parser
 			{
 				//expression' -> [ expression ] expression''
 					
-					Expression exp = parseExpression();
-					Expression varExp = new VariableExpression(null, exp);
-					Expression assignExpres;
-					Expression simpleExp; 
+					Expression internalExpr = parseExpression();
+					Expression exprDblPrime;
 					
-					if(!matchToken(TokenType.CLOSE_BRACKET))
-					{
-						throw new RuntimeException("parseExpression(): No ']' found after '['!");
-					}
+					matchOrDie(TokenType.CLOSE_BRACKET, "parseExpression(): No ']' found after '[', got ");
+					//TODO make VariableExpression
 					
 					if(matchToken(TokenType.ASSIGNMENT))
 					{
 						//expression'' -> = expression
-						assignExpres = new AssignExpression(null, parseExpression());
+						toReturn = new AssignExpression(null, parseExpression());
 					}
-					else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
+					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]))
 					{
 						//expression'' -> simple-expression'
-						simpleExp = parseSimpleExpression();
+						toReturn = parseSimpleExpression(/*that VariableExpression*/);
+					}
+					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[1]))
+					{
+						// expression'' -> simple-expression' -> epsilon
+						toReturn = null; // that VariableExpression
 					}
 					else
 					{
 						throw new RuntimeException("parseExpression(): Illegal token following ]!");
-					}
-					
-					
+					}	
 			}
 			else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
 			{
@@ -464,7 +482,7 @@ public class Parser
 		return null;
 	}
 	
-	private Expression parseSimpleExpression() {
+	private Expression parseSimpleExpression(Expression lhs) {
 		//TODO
 		return null;
 	}
