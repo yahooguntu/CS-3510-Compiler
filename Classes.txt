@@ -22,11 +22,11 @@ parseProgram (and declaration-list) 	[Mitch]
 parseDeclaration (and declaration')		[Mitch]
 parseParams (and param-list and param)	[Mitch]
 parseCompoundStatement (and local-declarations and statement-list)	[Mitch]
-parseStatement
-parseExpressionStatement			
-parseSelectionStatement
-parseIterationStatement
-parseReturnStatement
+parseStatement							[Seth]
+parseExpressionStatement				[Seth]
+parseSelectionStatement					[Seth]
+parseIterationStatement					[Seth]
+parseReturnStatement					[Seth]
 parseExpression (and prime and double prime)	[Seth]
 parseSimpleExpression (prime) (things get passed in) [Seth]
 parseAdditiveExpression (prime and normal)	[Mitch]
