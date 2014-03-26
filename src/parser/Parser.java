@@ -383,67 +383,6 @@ public class Parser
 		return null;
 	}
 	
-	/**
-	 * Parses a Factor.
-	 * @return
-	 */
-	private Expression parseFactor()
-	{
-		Expression toReturn;
-		
-		if (matchToken(TokenType.OPEN_PAREN))
-		{
-			// factor -> ( expression )
-			toReturn = parseExpression();
-			
-			matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found, got ");
-		}
-		else if (nextTokenType() == TokenType.NUM)
-		{
-			// factor -> NUM
-			toReturn = new NumberExpression((Integer)(scanner.getNextToken().getData()));
-		}
-		else if (nextTokenType() == TokenType.ID)
-		{
-			// factor -> ID varcall
-			Token id = scanner.getNextToken();
-			
-			if (matchToken(TokenType.OPEN_PAREN))
-			{
-				// varcall -> call -> ( args )
-				List<Expression> args = parseArgs();
-				
-				toReturn = new CallExpression((String) id.getData(), args);
-				
-				matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found after args in function call, got ");
-			}
-			else if (matchToken(TokenType.OPEN_BRACKET))
-			{
-				// varcall -> var -> [ expression ]
-				Expression xpr = parseExpression();
-				toReturn = new VariableExpression((String) id.getData(), xpr);
-				
-				matchOrDie(TokenType.CLOSE_BRACKET, "parseFactor(): No ']' found after '[', got");
-			}
-			else if (contains(nextTokenType(), VARCALL[1]))
-			{
-				// next token is in $varcall
-				// varcall -> var -> EPSILON
-				toReturn = new VariableExpression((String) id.getData());
-			}
-			else
-			{
-				throw new RuntimeException("parseFactor(): Illegal token after ID!");
-			}
-		}
-		else
-		{
-			throw new RuntimeException("parseFactor(): Illegal token for factor!");
-		}
-		
-		return toReturn;
-	}
-	
 	private Expression parseExpression()
 	{
 		//TODO
@@ -524,6 +463,104 @@ public class Parser
 	private Expression parseSimpleExpression(Expression lhs) {
 		//TODO
 		return null;
+	}
+	
+	/**
+	 * Parses a term.
+	 * @return
+	 */
+	private Expression parseTerm()
+	{
+		Expression term = parseFactor();
+		
+		return parseTerm(term);
+	}
+	
+	/**
+	 * Parses the equivalent of a term'.
+	 * @param term
+	 * @return
+	 */
+	private Expression parseTerm(Expression term)
+	{
+		while (contains(nextTokenType(), MULOP[0]))
+		{
+			if (matchToken(TokenType.MULTIPLY))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MULTIPLY, parseFactor());
+			}
+			else if (matchToken(TokenType.DIVIDE))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.DIVIDE, parseFactor());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
+	}
+	
+	/**
+	 * Parses a Factor.
+	 * @return
+	 */
+	private Expression parseFactor()
+	{
+		Expression toReturn;
+		
+		if (matchToken(TokenType.OPEN_PAREN))
+		{
+			// factor -> ( expression )
+			toReturn = parseExpression();
+			
+			matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found, got ");
+		}
+		else if (nextTokenType() == TokenType.NUM)
+		{
+			// factor -> NUM
+			toReturn = new NumberExpression((Integer)(scanner.getNextToken().getData()));
+		}
+		else if (nextTokenType() == TokenType.ID)
+		{
+			// factor -> ID varcall
+			Token id = scanner.getNextToken();
+			
+			if (matchToken(TokenType.OPEN_PAREN))
+			{
+				// varcall -> call -> ( args )
+				List<Expression> args = parseArgs();
+				
+				toReturn = new CallExpression((String) id.getData(), args);
+				
+				matchOrDie(TokenType.CLOSE_PAREN, "parseFactor(): No ')' found after args in function call, got ");
+			}
+			else if (matchToken(TokenType.OPEN_BRACKET))
+			{
+				// varcall -> var -> [ expression ]
+				Expression xpr = parseExpression();
+				toReturn = new VariableExpression((String) id.getData(), xpr);
+				
+				matchOrDie(TokenType.CLOSE_BRACKET, "parseFactor(): No ']' found after '[', got");
+			}
+			else if (contains(nextTokenType(), VARCALL[1]))
+			{
+				// next token is in $varcall
+				// varcall -> var -> EPSILON
+				toReturn = new VariableExpression((String) id.getData());
+			}
+			else
+			{
+				throw new RuntimeException("parseFactor(): Illegal token after ID!");
+			}
+		}
+		else
+		{
+			throw new RuntimeException("parseFactor(): Illegal token for factor!");
+		}
+		
+		return toReturn;
 	}
 	
 	private List<Expression> parseArgs()

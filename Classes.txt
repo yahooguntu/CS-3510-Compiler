@@ -30,6 +30,6 @@ parseReturnStatement
 parseExpression (and prime and double prime)	[Seth]
 parseSimpleExpression (prime) (things get passed in)
 parseAdditiveExpression (prime and normal)
-parseTerm (prime and normal)
+parseTerm (prime and normal)			[Mitch]
 parseFactor (and varcall)				[Mitch]
 parseArgs (and arg-list)				[Mitch]
