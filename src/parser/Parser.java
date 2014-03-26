@@ -205,7 +205,6 @@ public class Parser
 	/*
 	 * Parse methods, BEGIN!
 	 */
-	
 	public Program parseProgram()
 	{
 		ArrayList<Declaration> declList = new ArrayList<Declaration>();
@@ -408,61 +407,68 @@ public class Parser
 	private Expression parseExpression()
 	{
 		//TODO
-		Expression toReturn;
+		Expression toReturn = null;
 		
 		if(matchToken(TokenType.OPEN_PAREN))
 		{
 			//Expression -> ( expression ) simple-expression'
-			
+			Expression compare = parseExpression();
+			matchOrDie(TokenType.CLOSE_PAREN, "parseExpression(): No ')' found after '(', got ");
+			toReturn = parseSimpleExpression(compare);
 		}
 		else if(nextTokenType() == TokenType.ID)
 		{
-			//TODO get the ID
+			Token ID = scanner.getNextToken();
 			
 			//Expression -> ID expression'
 			if(matchToken(TokenType.ASSIGNMENT))
 			{
 				//expression' -> = expression
-				
+				VariableExpression var = new VariableExpression(ID.toString());
+				toReturn = new AssignExpression(var, parseExpression());
 			}
 			else if(matchToken(TokenType.OPEN_PAREN))
 			{
 				//expression' -> ( args ) simple-expression'
-				
+				List<Expression> args = parseArgs();
+				Expression func = new CallExpression(ID.toString(), args);
+				matchOrDie(TokenType.CLOSE_PAREN, "parseExpression(): No ')' found after '(', got ");
+				toReturn = parseSimpleExpression(func);
 			}
 			else if(matchToken(TokenType.OPEN_BRACKET))
 			{
 				//expression' -> [ expression ] expression''
 					
 					Expression internalExpr = parseExpression();
-					Expression exprDblPrime;
 					
 					matchOrDie(TokenType.CLOSE_BRACKET, "parseExpression(): No ']' found after '[', got ");
-					//TODO make VariableExpression
+					Expression varExpression = new VariableExpression(ID.toString(), internalExpr);
 					
 					if(matchToken(TokenType.ASSIGNMENT))
 					{
 						//expression'' -> = expression
-						toReturn = new AssignExpression(null, parseExpression());
+						toReturn = new AssignExpression((VariableExpression) varExpression, parseExpression());
 					}
 					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]))
 					{
 						//expression'' -> simple-expression'
-						toReturn = parseSimpleExpression(/*that VariableExpression*/);
+						toReturn = parseSimpleExpression(varExpression);
 					}
 					else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[1]))
 					{
 						// expression'' -> simple-expression' -> epsilon
-						toReturn = null; // that VariableExpression
+						toReturn = varExpression;
 					}
 					else
 					{
 						throw new RuntimeException("parseExpression(): Illegal token following ]!");
 					}	
 			}
-			else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
+			else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]))
 			{
 				//expression' -> simple-expression'
+				Expression temp = new VariableExpression(ID.toString());
+				toReturn = parseSimpleExpression(temp);
 			}
 			else
 			{
@@ -472,14 +478,15 @@ public class Parser
 		else if(nextTokenType() == TokenType.NUM)
 		{
 			//Expression -> NUM simple-expression'
+			Token num = scanner.getNextToken();
+			Expression Num = new NumberExpression((int)num.getData());
+			toReturn = parseSimpleExpression(Num);
 		}
 		else
 		{
 			throw new RuntimeException("parseExpression(): Illegal token for Expression!");
 		}
-		//TODO
-		//return toReturn;
-		return null;
+		return toReturn;
 	}
 	
 	private Expression parseSimpleExpression(Expression lhs) {
