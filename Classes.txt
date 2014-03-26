@@ -28,7 +28,7 @@ parseSelectionStatement
 parseIterationStatement
 parseReturnStatement
 parseExpression (and prime and double prime)	[Seth]
-parseSimpleExpression (prime) (things get passed in)
+parseSimpleExpression (prime) (things get passed in) [Seth]
 parseAdditiveExpression (prime and normal)	[Mitch]
 parseTerm (prime and normal)			[Mitch]
 parseFactor (and varcall)				[Mitch]

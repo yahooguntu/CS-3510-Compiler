@@ -621,8 +621,22 @@ public class Parser
 	}
 	
 	private Expression parseSimpleExpression(Expression lhs) {
-		//TODO
-		return null;
+		Expression toReturn = null;
+		Expression left = parseAdditiveExpression(lhs);
+		
+		if(contains(nextTokenType(), RELOP[0]))
+		{
+			//match Relop
+			Token opp = scanner.getNextToken();
+			Expression right = parseAdditiveExpression();
+			toReturn = new BinaryExpression(left, null/*opp*/, right);
+		}
+		else
+		{
+			toReturn = left;
+		}
+		
+		return toReturn;
 	}
 	
 	private List<Expression> parseArgs()
