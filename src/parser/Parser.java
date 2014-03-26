@@ -3,6 +3,8 @@ package parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Variable;
+
 import scanner.Scanner;
 import scanner.Token;
 import scanner.Token.TokenType;
@@ -294,20 +296,36 @@ public class Parser
 		}
 		else if (nextTokenType() == TokenType.INT)
 		{
-			// do-while will pick up the first param, then if theres a comma it will keep picking them up
-			// this do-while was proudly written by Mitch Birti
-			do {
-				matchToken(TokenType.INT);
-				Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
+			// grab the first param
+			matchOrDie(TokenType.INT, "parseParams(): INT expected, but got ");
+			Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
+			if (matchToken(TokenType.OPEN_BRACKET))
+			{
+				params.add(new VariableDeclaration((String) id.getData(), 0));
+				matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
+			}
+			else
+			{
+				params.add(new VariableDeclaration((String) id.getData()));
+			}
+			
+			// check for other params
+			while (nextTokenType() == TokenType.COMMA)
+			{
+				scanner.getNextToken();
+				
+				matchOrDie(TokenType.INT, "parseParams(): INT expected, but got ");
+				id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
 				if (matchToken(TokenType.OPEN_BRACKET))
 				{
 					params.add(new VariableDeclaration((String) id.getData(), 0));
+					matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
 				}
 				else
 				{
 					params.add(new VariableDeclaration((String) id.getData()));
 				}
-			} while (nextTokenType() == TokenType.COMMA);
+			}
 		}
 		else
 		{
@@ -330,17 +348,130 @@ public class Parser
 		while (nextTokenType() == TokenType.INT)
 		{
 			scanner.getNextToken();
-			Token id = matchOrDie(TokenType.ID, "");
+			Token id = matchOrDie(TokenType.ID, "parseCompoundStatement(): parsing variable declaration, expected identifier and got ");
+			
+			if (matchToken(TokenType.OPEN_BRACKET))
+			{
+				Token num = matchOrDie(TokenType.NUM, "parseCompoundStatement(): expected a number, but got ");
+				matchOrDie(TokenType.CLOSE_BRACKET, "parseCompoundStatement(): expected ']', but got ");
+				matchOrDie(TokenType.END_STATEMENT, "parseCompoundStatement(): expected ';', but got ");
+				decls.add(new VariableDeclaration((String) id.getData(), (Integer) num.getData()));
+			}
+			else if (matchToken(TokenType.END_STATEMENT))
+			{
+				decls.add(new VariableDeclaration((String) id.getData()));
+			}
+			else
+			{
+				throw new RuntimeException("parseCompoundStatement(): expected '[' or ';', got ");
+			}
+		}
+		
+		while (contains(nextTokenType(), STATEMENT_LIST[0]) && nextTokenType() != TokenType.CLOSE_CBRACE)
+		{
+			stmts.add(parseStatement());
 		}
 		
 		matchOrDie(TokenType.CLOSE_CBRACE, "parseCompoundStatement(): expected '}', got ");
-		return null;
+		return new CompoundStatement(decls, stmts);
 	}
 	
 	private Statement parseStatement()
 	{
 		//TODO
 		return null;
+	}
+	
+	/**
+	 * Parses an additive-expression.
+	 * @return
+	 */
+	private Expression parseAdditiveExpression()
+	{
+		Expression term = parseTerm();
+		
+		while (contains(nextTokenType(), ADDOP[0]))
+		{
+			if (matchToken(TokenType.PLUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
+			}
+			else if (matchToken(TokenType.MINUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
+	}
+	
+	/**
+	 * Parses an additive-expression'.
+	 * @param lhs
+	 * @return
+	 */
+	private Expression parseAdditiveExpression(Expression lhs)
+	{
+		Expression term = parseTerm(lhs);
+		
+		while (contains(nextTokenType(), ADDOP[0]))
+		{
+			if (matchToken(TokenType.PLUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
+			}
+			else if (matchToken(TokenType.MINUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
+	}
+	
+	/**
+	 * Parses a term.
+	 * @return
+	 */
+	private Expression parseTerm()
+	{
+		Expression term = parseFactor();
+		
+		return parseTerm(term);
+	}
+	
+	/**
+	 * Parses the equivalent of a term'.
+	 * @param term
+	 * @return
+	 */
+	private Expression parseTerm(Expression term)
+	{
+		while (contains(nextTokenType(), MULOP[0]))
+		{
+			if (matchToken(TokenType.MULTIPLY))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MULTIPLY, parseFactor());
+			}
+			else if (matchToken(TokenType.DIVIDE))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.DIVIDE, parseFactor());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
 	}
 	
 	/**
