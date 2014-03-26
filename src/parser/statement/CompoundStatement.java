@@ -10,8 +10,8 @@ public class CompoundStatement extends Statement
 	
 	public CompoundStatement(List<Declaration> locals, List<Statement> body)
 	{
-		locals = this.locals;
-		body = this.body;
+		this.locals = locals;
+		this.body = body;
 	}
 	
 	public List<Declaration> getLocals()

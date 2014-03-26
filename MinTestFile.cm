@@ -1,1 +1,13 @@
 int x;
+int y;
+
+void myFunc(void)
+{
+	int q[4];
+	int z;
+}
+
+int otherFunc(int param[], int other[])
+{
+	int w;
+}

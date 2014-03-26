@@ -41,10 +41,9 @@ public class FunctionDeclaration extends Declaration
 		
 		System.out.println(prefix + "\t<Name>" + name + "</Name>");
 		
-		System.out.println(prefix + "\t<Parameters>");
-		parameters.print(indent + 2);
-		System.out.println(prefix + "\t</Parameters>");
+		parameters.print(indent + 1);
 		
 		body.print(indent + 1);
+		System.out.println(prefix + "</FunctionDeclaration>");
 	}
 }

@@ -297,20 +297,36 @@ public class Parser
 		}
 		else if (nextTokenType() == TokenType.INT)
 		{
-			// do-while will pick up the first param, then if theres a comma it will keep picking them up
-			// this do-while was proudly written by Mitch Birti
-			do {
-				matchToken(TokenType.INT);
-				Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
+			// grab the first param
+			matchOrDie(TokenType.INT, "parseParams(): INT expected, but got ");
+			Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
+			if (matchToken(TokenType.OPEN_BRACKET))
+			{
+				params.add(new VariableDeclaration((String) id.getData(), 0));
+				matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
+			}
+			else
+			{
+				params.add(new VariableDeclaration((String) id.getData()));
+			}
+			
+			// check for other params
+			while (nextTokenType() == TokenType.COMMA)
+			{
+				scanner.getNextToken();
+				
+				matchOrDie(TokenType.INT, "parseParams(): INT expected, but got ");
+				id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
 				if (matchToken(TokenType.OPEN_BRACKET))
 				{
 					params.add(new VariableDeclaration((String) id.getData(), 0));
+					matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
 				}
 				else
 				{
 					params.add(new VariableDeclaration((String) id.getData()));
 				}
-			} while (nextTokenType() == TokenType.COMMA);
+			}
 		}
 		else
 		{
@@ -339,6 +355,7 @@ public class Parser
 			{
 				Token num = matchOrDie(TokenType.NUM, "parseCompoundStatement(): expected a number, but got ");
 				matchOrDie(TokenType.CLOSE_BRACKET, "parseCompoundStatement(): expected ']', but got ");
+				matchOrDie(TokenType.END_STATEMENT, "parseCompoundStatement(): expected ';', but got ");
 				decls.add(new VariableDeclaration((String) id.getData(), (Integer) num.getData()));
 			}
 			else if (matchToken(TokenType.END_STATEMENT))
@@ -357,7 +374,7 @@ public class Parser
 		}
 		
 		matchOrDie(TokenType.CLOSE_CBRACE, "parseCompoundStatement(): expected '}', got ");
-		return null;
+		return new CompoundStatement(decls, stmts);
 	}
 	
 	private Statement parseStatement()
