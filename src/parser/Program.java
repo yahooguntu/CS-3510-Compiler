@@ -26,7 +26,7 @@ public class Program
 		System.out.println(prefix + "<Program>");
 		
 		for (Declaration decl : declarations)
-			decl.print(indent++);
+			decl.print(indent + 1);
 		
 		System.out.println(prefix + "</Program>");
 	}

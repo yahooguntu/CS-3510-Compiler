@@ -26,7 +26,7 @@ public class Params
 		
 		for (VariableDeclaration varDec : paramList)
 		{
-			varDec.print(indent++);
+			varDec.print(indent + 1);
 		}
 		
 		System.out.println(prefix + "</Params>");

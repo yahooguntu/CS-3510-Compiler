@@ -220,7 +220,7 @@ public class Parser
 			throw new RuntimeException("parseProgram(): illegal token: " + nextTokenType().name());
 		}
 		
-		return new Program(null);
+		return new Program(declList);
 	}
 	
 	/**

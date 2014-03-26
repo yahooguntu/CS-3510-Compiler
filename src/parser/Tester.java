@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import scanner.CMinusScanner;
+import scanner.LexCMinusScanner;
 import scanner.Scanner;
 import scanner.Token;
 import scanner.Token.TokenType;
@@ -31,16 +31,12 @@ public class Tester
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("TestFile.cm")));
+			Scanner s = new LexCMinusScanner(new BufferedReader(new FileReader("MinTestFile.cm")));
 			outFile = new BufferedWriter(new FileWriter("output.txt"));
 			
-			// iterate through all the tokens
-			Token t = s.getNextToken();
-			while (t.getType() != TokenType.EOF)
-			{
-				writeToken(t);
-				t = s.getNextToken();
-			}
+			Parser parser = new Parser(s);
+			Program prog = parser.parseProgram();
+			prog.print(0);
 			
 			// flush and close the output file
 			outFile.flush();
@@ -50,18 +46,6 @@ public class Tester
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Writes a token to standard out and the output file.
-	 * @param t
-	 * @throws IOException
-	 */
-	public static void writeToken(Token t) throws IOException
-	{
-		String output = t.toString();
-		outFile.write(output);
-		System.out.print(output);
 	}
 	
 	

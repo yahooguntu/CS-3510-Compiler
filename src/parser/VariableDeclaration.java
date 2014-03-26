@@ -49,14 +49,14 @@ public class VariableDeclaration extends Declaration
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.print(prefix + "<VariableDeclaration>");
+		System.out.println(prefix + "<VariableDeclaration>");
 		
 		System.out.println(prefix + "\t<Name>" + id + "</Name>");
 		System.out.println(prefix + "\t<Type>" + "INT" + "</Type>");
 		
-		if (arraySize == -1)
-			System.out.print(prefix + "\t<Size>" + arraySize + "</Size>");
+		if (arraySize != -1)
+			System.out.println(prefix + "\t<Size>" + arraySize + "</Size>");
 		
-		System.out.println("</VariableDeclaration>");
+		System.out.println(prefix + "</VariableDeclaration>");
 	}
 }

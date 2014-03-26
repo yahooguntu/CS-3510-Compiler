@@ -45,6 +45,6 @@ public class FunctionDeclaration extends Declaration
 		parameters.print(indent + 2);
 		System.out.println(prefix + "\t</Parameters>");
 		
-		body.print(indent++);
+		body.print(indent + 1);
 	}
 }

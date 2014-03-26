@@ -30,7 +30,7 @@ public class Tester
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new LexCMinusScanner(new BufferedReader(new FileReader("TestFile.cm")));
+			Scanner s = new LexCMinusScanner(new BufferedReader(new FileReader("MinTestFile.cm")));
 			outFile = new BufferedWriter(new FileWriter("output.txt"));
 			
 			// iterate through all the tokens

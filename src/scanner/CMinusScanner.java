@@ -93,7 +93,7 @@ public class CMinusScanner implements Scanner
 		
 		char c = charReader.viewNextChar();
 		// while we haven't reached end-of-stream...
-		while (c != 0xFFFF)
+		while (c != 0xFFFF || toReturn != null)
 		{
 			// state machine on state "state"
 			switch (state)
