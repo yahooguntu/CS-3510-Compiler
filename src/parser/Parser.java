@@ -504,34 +504,7 @@ public class Parser
 		matchOrDie(TokenType.END_STATEMENT, "parseReturnStatement(): Did not recieve ';', got");
 		return new ReturnStatement(body);
 	}
-	
-	/**
-	 * Parses an additive-expression.
-	 * @return
-	 */
-	private Expression parseAdditiveExpression()
-	{
-		Expression term = parseTerm();
 		
-		while (contains(nextTokenType(), ADDOP[0]))
-		{
-			if (matchToken(TokenType.PLUS))
-			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
-			}
-			else if (matchToken(TokenType.MINUS))
-			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
-			}
-			else
-			{
-				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
-			}
-		}
-		
-		return term;
-	}
-	
 	/**
 	 * Parses an additive-expression'.
 	 * @param lhs
@@ -539,23 +512,28 @@ public class Parser
 	 */
 	
 	/**
-	 * Parses Additive Expression Prime
+	 * Parses Additive-Expression and Additive-Expression'
 	 * @param lhs
 	 * @return
 	 */
 	private Expression parseAdditiveExpression(Expression lhs)
 	{
-		Expression term = parseTerm(lhs);
+		Expression term = null;
+		if(lhs == null)
+		{
+			term = parseTerm(null);
+		}
+		else
+		{
+			term = parseTerm(lhs);
+		}
+		
 		
 		while (contains(nextTokenType(), ADDOP[0]))
 		{
-			if (matchToken(TokenType.PLUS))
+			if (nextTokenType() == TokenType.PLUS||nextTokenType() == TokenType.MINUS)
 			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
-			}
-			else if (matchToken(TokenType.MINUS))
-			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
+				term = new BinaryExpression(term, scanner.getNextToken().getType(), parseTerm(null));
 			}
 			else
 			{
@@ -565,36 +543,27 @@ public class Parser
 		
 		return term;
 	}
-	
-	
-	/**
-	 * Parses a term.
-	 * @return
-	 */
-	private Expression parseTerm()
-	{
-		Expression term = parseFactor();
 		
-		return parseTerm(term);
-	}
+
 	
 	
 	/**
-	 * Parses the equivalent of a term'.
+	 * Parses term and  term'.
 	 * @param term
 	 * @return
 	 */
 	private Expression parseTerm(Expression term)
 	{
+		if(term == null)
+		{
+			term = parseFactor();
+		}
+		
 		while (contains(nextTokenType(), MULOP[0]))
 		{
-			if (matchToken(TokenType.MULTIPLY))
+			if (nextTokenType() == TokenType.MULTIPLY||nextTokenType() == TokenType.DIVIDE)
 			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.MULTIPLY, parseFactor());
-			}
-			else if (matchToken(TokenType.DIVIDE))
-			{
-				term = new BinaryExpression(term, BinaryExpression.Operator.DIVIDE, parseFactor());
+				term = new BinaryExpression(term, scanner.getNextToken().getType(), parseFactor());
 			}
 			else
 			{
@@ -666,6 +635,7 @@ public class Parser
 		
 		return toReturn;
 	}
+	
 	
 	/**
 	 * Parses Expression, Expression', and Expression''
@@ -769,10 +739,10 @@ public class Parser
 		if(contains(nextTokenType(), RELOP[0]))
 		{
 			//match Relop
-			Token opp = scanner.getNextToken();
+			TokenType opp = scanner.getNextToken().getType();
 			
-			Expression right = parseAdditiveExpression();
-			toReturn = new BinaryExpression(left, null/*opp*/, right);
+			Expression right = parseAdditiveExpression(null);
+			toReturn = new BinaryExpression(left, opp, right);
 		}
 		else
 		{

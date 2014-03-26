@@ -1,18 +1,14 @@
 package parser.expression;
 
+import scanner.Token.TokenType;
+
 public class BinaryExpression extends Expression
 {
-	public enum Operator {
-		PLUS,
-		MINUS,
-		MULTIPLY,
-		DIVIDE
-	};
 	private Expression leftSide;
 	private Expression rightSide;
-	private Operator operand;
+	private TokenType operand;
 	
-	public BinaryExpression(Expression lhs, Operator op, Expression rhs)
+	public BinaryExpression(Expression lhs, TokenType op, Expression rhs)
 	{
 		leftSide = lhs;
 		operand = op;
@@ -29,7 +25,7 @@ public class BinaryExpression extends Expression
 		return rightSide;
 	}
 	
-	public Operator getOperand()
+	public TokenType getOperand()
 	{
 		return operand;
 	}
