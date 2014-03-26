@@ -466,6 +466,61 @@ public class Parser
 	}
 	
 	/**
+	 * Parses an additive-expression.
+	 * @return
+	 */
+	private Expression parseAdditiveExpression()
+	{
+		Expression term = parseTerm();
+		
+		while (contains(nextTokenType(), ADDOP[0]))
+		{
+			if (matchToken(TokenType.PLUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
+			}
+			else if (matchToken(TokenType.MINUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
+	}
+	
+	/**
+	 * Parses an additive-expression'.
+	 * @param lhs
+	 * @return
+	 */
+	private Expression parseAdditiveExpression(Expression lhs)
+	{
+		Expression term = parseTerm(lhs);
+		
+		while (contains(nextTokenType(), ADDOP[0]))
+		{
+			if (matchToken(TokenType.PLUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.PLUS, parseTerm());
+			}
+			else if (matchToken(TokenType.MINUS))
+			{
+				term = new BinaryExpression(term, BinaryExpression.Operator.MINUS, parseTerm());
+			}
+			else
+			{
+				throw new RuntimeException("parseTerm(): '*' or '/' expected, but got ");
+			}
+		}
+		
+		return term;
+	}
+	
+	/**
 	 * Parses a term.
 	 * @return
 	 */
