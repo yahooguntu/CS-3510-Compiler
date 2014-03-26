@@ -628,6 +628,7 @@ public class Parser
 		{
 			//match Relop
 			Token opp = scanner.getNextToken();
+			
 			Expression right = parseAdditiveExpression();
 			toReturn = new BinaryExpression(left, null/*opp*/, right);
 		}
