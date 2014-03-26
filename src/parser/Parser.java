@@ -291,10 +291,11 @@ public class Parser
 		
 		if (matchToken(TokenType.VOID))
 		{
-			//do nothing
+			//do nothing, since there's no parameters
 		}
 		else if (nextTokenType() == TokenType.INT)
 		{
+			// do-while will pick up the first param, then if theres a comma it will keep picking them up
 			do {
 				matchToken(TokenType.INT);
 				Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
@@ -304,7 +305,7 @@ public class Parser
 				}
 				else
 				{
-					params.add(new VariableDeclaration((String) id.getData(), 0));
+					params.add(new VariableDeclaration((String) id.getData()));
 				}
 			} while (nextTokenType() == TokenType.COMMA);
 		}
@@ -432,7 +433,7 @@ public class Parser
 					else if(nextTokenType() == TokenType.DIVIDE || nextTokenType() == TokenType.MULTIPLY)
 					{
 						//expression'' -> simple-expression'
-						simpleExp = parseSimpleExpression()
+						simpleExp = parseSimpleExpression();
 					}
 					else
 					{
@@ -458,7 +459,9 @@ public class Parser
 		{
 			throw new RuntimeException("parseExpression(): Illegal token for Expression!");
 		}
-		return toReturn;
+		//TODO
+		//return toReturn;
+		return null;
 	}
 	
 	private Expression parseSimpleExpression() {
