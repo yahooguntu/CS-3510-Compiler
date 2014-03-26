@@ -289,12 +289,31 @@ public class Parser
 	{
 		List<VariableDeclaration> params = new ArrayList<VariableDeclaration>();
 		
-		while ()
+		if (matchToken(TokenType.VOID))
 		{
-			
+			//do nothing
+		}
+		else if (nextTokenType() == TokenType.INT)
+		{
+			do {
+				matchToken(TokenType.INT);
+				Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
+				if (matchToken(TokenType.OPEN_BRACKET))
+				{
+					params.add(new VariableDeclaration((String) id.getData(), 0));
+				}
+				else
+				{
+					params.add(new VariableDeclaration((String) id.getData(), 0));
+				}
+			} while (nextTokenType() == TokenType.COMMA);
+		}
+		else
+		{
+			throw new RuntimeException("parseParams(): expected 'void' or 'int', got " + nextTokenType().name());
 		}
 		
-		return null;
+		return new Params(params);
 	}
 	
 	/**
