@@ -2,7 +2,7 @@ package parser.statement;
 
 import parser.expression.*;
 
-public class IterationStatement {
+public class IterationStatement extends Statement{
 
 	private Expression compare;
 	private Statement body;

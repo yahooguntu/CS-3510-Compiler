@@ -180,6 +180,12 @@ public class Parser
 		return false;
 	}
 	
+	/**
+	 * Searches First/Follow Sets
+	 * @param needle
+	 * @param haystack
+	 * @return
+	 */
 	private boolean contains(TokenType needle, TokenType[] haystack)
 	{
 		for (TokenType straw : haystack)
@@ -190,11 +196,21 @@ public class Parser
 		return false;
 	}
 	
+	/**
+	 * Views the next token type (look ahead character)
+	 * @return
+	 */
 	private TokenType nextTokenType()
 	{
 		return scanner.viewNextToken().getType();
 	}
 	
+	/**
+	 * Matches (and munches) a Token or throws the passed message
+	 * @param tt
+	 * @param msg
+	 * @return
+	 */
 	private Token matchOrDie(TokenType tt, String msg)
 	{
 		if (scanner.viewNextToken().getType() != tt)
@@ -206,6 +222,11 @@ public class Parser
 	
 	/*
 	 * Parse methods, BEGIN!
+	 */
+	
+	/**
+	 * Parses Program
+	 * @return
 	 */
 	public Program parseProgram()
 	{
@@ -376,10 +397,112 @@ public class Parser
 		return new CompoundStatement(decls, stmts);
 	}
 	
+	/**
+	 * Parses Statement
+	 * @return
+	 */
 	private Statement parseStatement()
 	{
-		//TODO
-		return null;
+		Statement toReturn = null;
+		if(nextTokenType() == TokenType.IF)
+		{
+			//if ( expression ) statement [ else statement ]
+			toReturn = parseSelectionStatement();
+		}
+		else if(nextTokenType() == TokenType.WHILE)
+		{
+			//while ( expression ) statement
+			toReturn = parseIterationStatement();
+		}
+		else if(nextTokenType() == TokenType.RETURN)
+		{
+			//return [expression] ;
+			toReturn = parseReturnStatement();
+		}
+		else if(nextTokenType() == TokenType.OPEN_CBRACE)
+		{
+			//{ local-declarations statement-list }
+			toReturn = parseCompoundStatement();
+		}
+		else if(contains(nextTokenType(), EXPRESSION[0]))
+		{
+			//[expression] ;
+			toReturn = parseExpressionStatement();
+		}
+		else
+		{
+			throw new RuntimeException("parseStatement(): Invalid token for statement, got ");
+		}
+		return toReturn;
+	}
+	
+	/**
+	 * Parses an Expression Statement
+	 * @return 
+	 */
+	private Statement parseExpressionStatement()
+	{
+		//[expression] ;
+		Expression body = null;
+		if(contains(nextTokenType(), EXPRESSION[0]))
+		{
+			body = parseExpression();
+		}
+		matchOrDie(TokenType.END_STATEMENT, "parseReturnStatement(): Did not recieve ';', got");
+		return new ExpressionStatement(body);
+	}
+	
+	/**
+	 * Parses a SelectionStatement
+	 * @return
+	 */
+	private Statement parseSelectionStatement()
+	{
+		//if ( expression ) statement [ else statement ]
+		Statement else_part = null;
+		matchOrDie(TokenType.IF,  "parseSelectionStatement(): Did not recieve 'IF', got");
+		matchOrDie(TokenType.OPEN_PAREN, "parseSelectionStatement(): Did not recieve '(', got");
+		Expression compare = parseExpression();
+		matchOrDie(TokenType.CLOSE_PAREN, "parseSelectionStatement(): Did not recieve ')' after '(', got");
+		Statement body = parseStatement();
+		if(nextTokenType() == TokenType.ELSE)
+		{
+			matchOrDie(TokenType.ELSE, "parseSelectionStatement(): Did not recieve 'else' after 'if', got");
+			else_part = parseStatement();
+		}
+		return new SelectionStatement(compare, body, else_part);
+	}
+	
+	/**
+	 * Parses Iteration Statement
+	 * @return
+	 */
+	private Statement parseIterationStatement()
+	{
+		//while ( expression ) statement
+		matchOrDie(TokenType.OPEN_PAREN, "parseSelectionStatement(): Did not recieve '(', got");
+		Expression compare = parseExpression();
+		matchOrDie(TokenType.CLOSE_PAREN, "parseSelectionStatement(): Did not recieve ')' after '(', got");
+		Statement body = parseStatement();
+		
+		return new IterationStatement(compare, body);
+	}
+	
+	/**
+	 * Parses Return Statement
+	 * @return
+	 */
+	private Statement parseReturnStatement()
+	{
+		//return [expression] ;
+		Expression body = null;
+		matchOrDie(TokenType.RETURN, "parseReturnStatement(): Did not recieve 'RETURN', got");
+		if(contains(nextTokenType(), EXPRESSION[0]))
+		{
+			body = parseExpression();
+		}
+		matchOrDie(TokenType.END_STATEMENT, "parseReturnStatement(): Did not recieve ';', got");
+		return new ReturnStatement(body);
 	}
 	
 	/**
@@ -414,6 +537,12 @@ public class Parser
 	 * @param lhs
 	 * @return
 	 */
+	
+	/**
+	 * Parses Additive Expression Prime
+	 * @param lhs
+	 * @return
+	 */
 	private Expression parseAdditiveExpression(Expression lhs)
 	{
 		Expression term = parseTerm(lhs);
@@ -437,6 +566,7 @@ public class Parser
 		return term;
 	}
 	
+	
 	/**
 	 * Parses a term.
 	 * @return
@@ -447,6 +577,7 @@ public class Parser
 		
 		return parseTerm(term);
 	}
+	
 	
 	/**
 	 * Parses the equivalent of a term'.
@@ -473,6 +604,7 @@ public class Parser
 		
 		return term;
 	}
+	
 	
 	/**
 	 * Parses a Factor.
@@ -535,9 +667,13 @@ public class Parser
 		return toReturn;
 	}
 	
+	/**
+	 * Parses Expression, Expression', and Expression''
+	 * @return
+	 */
+	
 	private Expression parseExpression()
 	{
-		//TODO
 		Expression toReturn = null;
 		
 		if(matchToken(TokenType.OPEN_PAREN))
@@ -620,6 +756,12 @@ public class Parser
 		return toReturn;
 	}
 	
+	/**
+	 * Parses Simple-Expression'
+	 * @param lhs
+	 * @return
+	 */
+	
 	private Expression parseSimpleExpression(Expression lhs) {
 		Expression toReturn = null;
 		Expression left = parseAdditiveExpression(lhs);
@@ -639,6 +781,11 @@ public class Parser
 		
 		return toReturn;
 	}
+	
+	/**
+	 * Parses Args and Arg-list
+	 * @return
+	 */
 	
 	private List<Expression> parseArgs()
 	{
