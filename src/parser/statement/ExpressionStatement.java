@@ -8,7 +8,7 @@ public class ExpressionStatement extends Statement{
 	
 	public ExpressionStatement(Expression data)
 	{
-		data = this.data;
+		this.data = data;
 	}
 	
 	public Expression getData()

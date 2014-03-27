@@ -26,7 +26,7 @@ public class AssignExpression extends Expression
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
-			prefix = "\t";
+			prefix += "\t";
 		
 		System.out.println(prefix + "<AssignExpression>");
 		

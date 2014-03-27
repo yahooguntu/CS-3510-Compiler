@@ -8,7 +8,7 @@ public class ReturnStatement extends Statement{
 	
 	public ReturnStatement(Expression body)
 	{
-		body = this.body;		
+		this.body = body;		
 	}
 	
 	public Expression getBody()

@@ -9,8 +9,8 @@ public class IterationStatement extends Statement{
 	
 	public IterationStatement(Expression compare, Statement body)
 	{
-		compare = this.compare;
-		body = this.body;
+		this.compare = compare;
+		this.body = body;
 	}
 	
 	public Expression getCompare()

@@ -449,7 +449,8 @@ public class Parser
 			body = parseExpression();
 		}
 		matchOrDie(TokenType.END_STATEMENT, "parseReturnStatement(): Did not recieve ';', got");
-		return new ExpressionStatement(body);
+		Statement toReturn = new ExpressionStatement(body);
+		return toReturn;
 	}
 	
 	/**
@@ -661,14 +662,14 @@ public class Parser
 			if(matchToken(TokenType.ASSIGNMENT))
 			{
 				//expression' -> = expression
-				VariableExpression var = new VariableExpression(ID.toString());
+				VariableExpression var = new VariableExpression((String)ID.getData());
 				toReturn = new AssignExpression(var, parseExpression());
 			}
 			else if(matchToken(TokenType.OPEN_PAREN))
 			{
 				//expression' -> ( args ) simple-expression'
 				List<Expression> args = parseArgs();
-				Expression func = new CallExpression(ID.toString(), args);
+				Expression func = new CallExpression((String)ID.getData(), args);
 				matchOrDie(TokenType.CLOSE_PAREN, "parseExpression(): No ')' found after '(', got ");
 				toReturn = parseSimpleExpression(func);
 			}
@@ -679,7 +680,7 @@ public class Parser
 					Expression internalExpr = parseExpression();
 					
 					matchOrDie(TokenType.CLOSE_BRACKET, "parseExpression(): No ']' found after '[', got ");
-					Expression varExpression = new VariableExpression(ID.toString(), internalExpr);
+					Expression varExpression = new VariableExpression((String)ID.getData(), internalExpr);
 					
 					if(matchToken(TokenType.ASSIGNMENT))
 					{

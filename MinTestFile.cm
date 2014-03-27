@@ -5,6 +5,8 @@ void myFunc(void)
 {
 	int q[4];
 	int z;
+	
+	z = 3;
 }
 
 int otherFunc(int param[], int other[])

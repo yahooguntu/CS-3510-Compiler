@@ -11,9 +11,9 @@ public class SelectionStatement extends Statement{
 	
 	public SelectionStatement(Expression compare, Statement body, Statement else_part)
 	{
-		compare = this.compare;
-		body = this.body;
-		else_part = this.else_part;
+		this.compare = compare;
+		this.body = body;
+		this.else_part = else_part;
 	}
 	
 	public Expression getCompare() {

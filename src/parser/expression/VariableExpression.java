@@ -42,10 +42,12 @@ public class VariableExpression extends Expression
 		System.out.println(prefix + "<VariableExpression>");
 		
 		System.out.println(prefix + "\t<Identifier>" + identifier + "</Identifier>");
-		
-		System.out.println(prefix + "\t<Index>");
-		index.print(indent + 2);
-		System.out.println(prefix + "\t</Index>");
+		if(index != null)
+		{
+			System.out.println(prefix + "\t<Index>");
+			index.print(indent + 2);
+			System.out.println(prefix + "\t</Index>");
+		}
 		
 		System.out.println(prefix + "</VariableExpression>");
 	}
