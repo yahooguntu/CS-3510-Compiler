@@ -24,29 +24,19 @@ import scanner.Token.TokenType;
 
 public class Tester
 {
-	private static BufferedWriter outFile;
 	
 	public static void main(String[] args)
 	{
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("tests/testcode.cm")));
-			outFile = new BufferedWriter(new FileWriter("output.xml"));
+			String baseName = "TestFile";
+			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("tests/" + baseName + ".cm")));
 			
-			Parser parser = new Parser(s);
-			Program prog = parser.parseProgram();
-			try{
-				prog.print(0, outFile);
-			} 
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
+			Parser parser = new CMinusParser(s);
 			
-			// flush and close the output file
-			outFile.flush();
-			outFile.close();
+			parser.parse();
+			parser.printTree("tests/" + baseName + ".xml");
 		}
 		catch (Exception e)
 		{
