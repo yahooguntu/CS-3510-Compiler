@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import scanner.LexCMinusScanner;
+import scanner.CMinusScanner;
 import scanner.Scanner;
 import scanner.Token;
 import scanner.Token.TokenType;
@@ -31,7 +31,7 @@ public class Tester
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new LexCMinusScanner(new BufferedReader(new FileReader("MinTestFile.cm")));
+			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("MinTestFile.cm")));
 			outFile = new BufferedWriter(new FileWriter("output.txt"));
 			
 			Parser parser = new Parser(s);
