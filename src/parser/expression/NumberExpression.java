@@ -1,5 +1,8 @@
 package parser.expression;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class NumberExpression extends Expression
 {
 	private int value;
@@ -15,12 +18,12 @@ public class NumberExpression extends Expression
 	}
 	
 	@Override
-	public void print(int index)
+	public void print(int index, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < index; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<NumberExpression>" + value + "</NumberExpression>");
+		out.write(prefix + "<NumberExpression>" + value + "</NumberExpression>\n");
 	}
 }

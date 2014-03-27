@@ -1,5 +1,7 @@
 package parser.expression;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class CallExpression extends Expression
@@ -24,22 +26,22 @@ public class CallExpression extends Expression
 	}
 	
 	@Override
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<CallExpression>");
+		out.write(prefix + "<CallExpression>\n");
 		
-		System.out.println(prefix + "\t<FunctionName>" + functionName + "</FunctionName>");
+		out.write(prefix + "\t<FunctionName>" + functionName + "</FunctionName>\n");
 		
-		System.out.println(prefix + "\t<Arguments>");
+		out.write(prefix + "\t<Arguments>\n");
 		
 		for (Expression arg : arguments)
-			arg.print(indent + 2);
+			arg.print(indent + 2, out);
 		
-		System.out.println(prefix + "\t</Arguments>");
-		System.out.println(prefix + "</CallExpression>");
+		out.write(prefix + "\t</Arguments>\n");
+		out.write(prefix + "</CallExpression>\n");
 	}
 }

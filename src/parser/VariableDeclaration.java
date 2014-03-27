@@ -1,5 +1,8 @@
 package parser;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class VariableDeclaration extends Declaration
 {
 	private String id;
@@ -43,20 +46,20 @@ public class VariableDeclaration extends Declaration
 	}
 	
 	@Override
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<VariableDeclaration>");
+		out.write(prefix + "<VariableDeclaration>\n");
 		
-		System.out.println(prefix + "\t<Name>" + id + "</Name>");
-		System.out.println(prefix + "\t<Type>" + "INT" + "</Type>");
+		out.write(prefix + "\t<Name>" + id + "</Name>\n");
+		out.write(prefix + "\t<Type>" + "INT" + "</Type>\n");
 		
 		if (arraySize != -1)
-			System.out.println(prefix + "\t<Size>" + arraySize + "</Size>");
+			out.write(prefix + "\t<Size>" + arraySize + "</Size>\n");
 		
-		System.out.println(prefix + "</VariableDeclaration>");
+		out.write(prefix + "</VariableDeclaration>\n");
 	}
 }

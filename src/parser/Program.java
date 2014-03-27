@@ -1,5 +1,7 @@
 package parser;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +19,17 @@ public class Program
 		return declarations;
 	}
 	
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<Program>");
+		out.write(prefix + "<Program>\n");
 		
 		for (Declaration decl : declarations)
-			decl.print(indent + 1);
+			decl.print(indent + 1, out);
 		
-		System.out.println(prefix + "</Program>");
+		out.write(prefix + "</Program>\n");
 	}
 }

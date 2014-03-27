@@ -12,4 +12,6 @@ void myFunc(void)
 int otherFunc(int param[], int other[])
 {
 	int w;
+	
+	w = myFunc();
 }

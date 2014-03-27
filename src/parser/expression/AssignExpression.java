@@ -1,5 +1,8 @@
 package parser.expression;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class AssignExpression extends Expression
 {
 	private VariableExpression variable;
@@ -21,23 +24,22 @@ public class AssignExpression extends Expression
 		return rightSide;
 	}
 	
-	@Override
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<AssignExpression>");
+		out.write(prefix + "<AssignExpression>\n");
 		
-		System.out.println(prefix + "\t<Variable>");
-		variable.print(indent + 2);
-		System.out.println(prefix + "\t</Variable>");
+		out.write(prefix + "\t<Variable>\n");
+		variable.print(indent + 2, out);
+		out.write(prefix + "\t</Variable>\n");
 		
-		System.out.println(prefix + "\t<Value>");
-		rightSide.print(indent + 2);
-		System.out.println(prefix + "\t</Value>");
+		out.write(prefix + "\t<Value>\n");
+		rightSide.print(indent + 2, out);
+		out.write(prefix + "\t</Value>\n");
 		
-		System.out.println(prefix + "</AssignExpression>");
+		out.write(prefix + "</AssignExpression>\n");
 	}
 }

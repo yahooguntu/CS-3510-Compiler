@@ -1,5 +1,7 @@
 package parser;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Params
@@ -16,19 +18,19 @@ public class Params
 		return paramList;
 	}
 	
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<Params>");
+		out.write(prefix + "<Params>\n");
 		
 		for (VariableDeclaration varDec : paramList)
 		{
-			varDec.print(indent + 1);
+			varDec.print(indent + 1, out);
 		}
 		
-		System.out.println(prefix + "</Params>");
+		out.write(prefix + "</Params>\n");
 	}
 }

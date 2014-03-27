@@ -36,7 +36,13 @@ public class Tester
 			
 			Parser parser = new Parser(s);
 			Program prog = parser.parseProgram();
-			prog.print(0);
+			try{
+				prog.print(0, outFile);
+			} 
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
 			
 			// flush and close the output file
 			outFile.flush();

@@ -1,5 +1,8 @@
 package parser;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import parser.statement.CompoundStatement;
 
 public class FunctionDeclaration extends Declaration
@@ -31,19 +34,19 @@ public class FunctionDeclaration extends Declaration
 	}
 	
 	@Override
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<FunctionDeclaration>");
+		out.write(prefix + "<FunctionDeclaration>\n");
 		
-		System.out.println(prefix + "\t<Name>" + name + "</Name>");
+		out.write(prefix + "\t<Name>" + name + "</Name>\n");
 		
-		parameters.print(indent + 1);
+		parameters.print(indent + 1, out);
 		
-		body.print(indent + 1);
-		System.out.println(prefix + "</FunctionDeclaration>");
+		body.print(indent + 1, out);
+		out.write(prefix + "</FunctionDeclaration>\n");
 	}
 }

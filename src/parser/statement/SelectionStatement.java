@@ -1,5 +1,8 @@
 package parser.statement;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import parser.statement.*;
 import parser.expression.*;
 
@@ -28,29 +31,30 @@ public class SelectionStatement extends Statement{
 		return else_part;
 	}
 
-	public void print(int indent){
+	public void print(int indent, BufferedWriter out) throws IOException 
+	{
 		String prefix = "";
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.print(prefix + "<SelectionStatement>");
+		out.write(prefix + "<SelectionStatement>\n");
 		
-		System.out.println(prefix + "\t<Expression>");
-		compare.print(indent+2);
-		System.out.println(prefix + "\t</Expression>");
+		out.write(prefix + "\t<Expression>\n");
+		compare.print(indent+2, out);
+		out.write(prefix + "\t</Expression>\n");
 		
-		System.out.println(prefix + "\t<Then>");
-		body.print(indent+2);
-		System.out.println(prefix + "\t</Then>");
+		out.write(prefix + "\t<Then>\n");
+		body.print(indent+2, out);
+		out.write(prefix + "\t</Then>\n");
 		
 		if(else_part == null)
 		{
-			System.out.println(prefix + "\t<Else>");
-			else_part.print(indent+2);
-			System.out.println(prefix + "\t</Else>");
+			out.write(prefix + "\t<Else>\n");
+			else_part.print(indent+2, out);
+			out.write(prefix + "\t</Else>\n");
 		}
 		
-		System.out.println(prefix + "</SelectionStatment>");		
+		out.write(prefix + "</SelectionStatment>\n");		
 	}
 
 }

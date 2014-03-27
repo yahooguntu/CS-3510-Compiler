@@ -1,5 +1,8 @@
 package parser.statement;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import parser.expression.*;
 
 public class ReturnStatement extends Statement{
@@ -16,16 +19,16 @@ public class ReturnStatement extends Statement{
 		return body;
 	}
 	
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for(int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<ReturnStatemnt>");
-		System.out.println(prefix + "\t<Expression>");
-		body.print(indent+2);
-		System.out.println(prefix + "\t</Expression>");
-		System.out.println(prefix + "</ReturnStatement>");
+		out.write(prefix + "<ReturnStatemnt>\n");
+		out.write(prefix + "\t<Expression>\n");
+		body.print(indent+2, out);
+		out.write(prefix + "\t</Expression>\n");
+		out.write(prefix + "</ReturnStatement>\n");
 	}
 }

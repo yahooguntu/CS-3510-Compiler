@@ -1,5 +1,8 @@
 package parser.statement;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import parser.expression.*;
 
 public class IterationStatement extends Statement{
@@ -23,19 +26,19 @@ public class IterationStatement extends Statement{
 		return body;
 	}
 	
-	public void print(int indent)
+	public void print(int indent, BufferedWriter out) throws IOException
 	{
 		String prefix = "";
 		for(int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		System.out.println(prefix + "<IterationStatement>");
-		System.out.println(prefix + "\t<Expression>");
-		compare.print(indent+2);
-		System.out.println(prefix + "\t</Expression>");
-		System.out.println(prefix + "\t<Then>");
-		body.print(indent+2);
-		System.out.println(prefix + "\t</Then>");
-		System.out.println(prefix + "</IterationStatement>");
+		out.write(prefix + "<IterationStatement>\n");
+		out.write(prefix + "\t<Expression>\n");
+		compare.print(indent+2, out);
+		out.write(prefix + "\t</Expression>\n");
+		out.write(prefix + "\t<Then>\n");
+		body.print(indent+2, out);
+		out.write(prefix + "\t</Then>\n");
+		out.write(prefix + "</IterationStatement>\n");
 	}
 }
