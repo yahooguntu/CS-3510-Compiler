@@ -30,6 +30,9 @@
 							<Variable>
 								<VariableExpression>
 									<Identifier>z</Identifier>
+									<Index>
+										<NumberExpression>2</NumberExpression>
+									</Index>
 								</VariableExpression>
 							</Variable>
 							<Value>

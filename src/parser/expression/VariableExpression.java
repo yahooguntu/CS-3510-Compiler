@@ -49,7 +49,7 @@ public class VariableExpression extends Expression
 		{
 			out.write(prefix + "\t<Index>\n");
 			index.print(indent + 2, out);
-			out.write(prefix + "\t</Index>");
+			out.write(prefix + "\t</Index>\n");
 		}
 		
 		out.write(prefix + "</VariableExpression>\n");
