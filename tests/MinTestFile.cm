@@ -1,0 +1,5 @@
+
+int otherFunc(int param[], int other[])
+{
+	c = addThem(1, 5);
+}

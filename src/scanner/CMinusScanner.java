@@ -313,6 +313,7 @@ public class CMinusScanner implements Scanner
 				if (c == '=')
 				{
 					toReturn = new Token(TokenType.EQUALS);
+					charReader.munchNextChar();
 					state = State.DONE;
 				}
 				else

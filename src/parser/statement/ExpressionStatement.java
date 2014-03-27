@@ -26,9 +26,7 @@ public class ExpressionStatement extends Statement{
 			prefix += "\t";
 		
 		out.write(prefix + "<ExpressionStatement>\n");
-		out.write(prefix + "\t<Expression>\n");
-		data.print(indent+2, out);
-		out.write(prefix + "\t</Expression>\n");
+		data.print(indent+1, out);
 		out.write(prefix + "</ExpressionStatement>\n");
 	}
 	

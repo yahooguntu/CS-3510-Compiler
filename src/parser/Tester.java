@@ -31,8 +31,8 @@ public class Tester
 		try
 		{
 			// set up the scanner and the output file
-			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("MinTestFile.cm")));
-			outFile = new BufferedWriter(new FileWriter("output.txt"));
+			Scanner s = new CMinusScanner(new BufferedReader(new FileReader("tests/testcode.cm")));
+			outFile = new BufferedWriter(new FileWriter("output.xml"));
 			
 			Parser parser = new Parser(s);
 			Program prog = parser.parseProgram();

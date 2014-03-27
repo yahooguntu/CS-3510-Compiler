@@ -25,10 +25,13 @@ public class ReturnStatement extends Statement{
 		for(int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		out.write(prefix + "<ReturnStatemnt>\n");
-		out.write(prefix + "\t<Expression>\n");
-		body.print(indent+2, out);
-		out.write(prefix + "\t</Expression>\n");
-		out.write(prefix + "</ReturnStatement>\n");
+		out.write(prefix + "<ReturnStatement>");
+		if (body != null)
+		{
+			out.write("\n" + prefix + "\t<Expression>\n");
+			body.print(indent+2, out);
+			out.write(prefix + "\t</Expression>\n" + prefix);
+		}
+		out.write("</ReturnStatement>\n");
 	}
 }

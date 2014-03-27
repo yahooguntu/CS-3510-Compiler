@@ -40,18 +40,18 @@ public class BinaryExpression extends Expression
 		for (int i = 0; i < indent; i++)
 			prefix += "\t";
 		
-		out.write(prefix + "<BinaryExpression>");
+		out.write(prefix + "<BinaryExpression>\n");
 		
-		out.write(prefix + "\t<Operand>" + operand.name() + "</Operand>");
+		out.write(prefix + "\t<Operand>" + operand.name() + "</Operand>\n");
 		
-		out.write(prefix + "\t<LeftSide>");
+		out.write(prefix + "\t<LeftSide>\n");
 		leftSide.print(indent + 2, out);
-		out.write(prefix + "\t</LeftSide>");
+		out.write(prefix + "\t</LeftSide>\n");
 		
-		out.write(prefix + "\t<RightSide>");
+		out.write(prefix + "\t<RightSide>\n");
 		rightSide.print(indent + 2, out);
-		out.write(prefix + "\t</RightSide>");
+		out.write(prefix + "\t</RightSide>\n");
 		
-		out.write(prefix + "</BinaryExpression>");
+		out.write(prefix + "</BinaryExpression>\n");
 	}
 }

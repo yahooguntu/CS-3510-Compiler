@@ -97,11 +97,11 @@ public class Parser
 			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] EXPRESSION_PRIME = {
-			{ TokenType. ASSIGNMENT, TokenType.OPEN_PAREN, TokenType.OPEN_BRACKET, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType. ASSIGNMENT, TokenType.OPEN_PAREN, TokenType.OPEN_BRACKET, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.PLUS, TokenType.MINUS, TokenType.EPSILON },
 			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] EXPRESSION_PRIME_PRIME = {
-			{ TokenType. ASSIGNMENT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType. ASSIGNMENT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.PLUS, TokenType.MINUS, TokenType.EPSILON },
 			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] VAR = {
@@ -109,7 +109,7 @@ public class Parser
 			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] SIMPLE_EXPRESSION_PRIME = {
-			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.PLUS, TokenType.MINUS, TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.EPSILON },
 			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] RELOP = {
@@ -121,8 +121,8 @@ public class Parser
 			{ TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] ADDITIVE_EXPRESSION_PRIME = {
-			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.EPSILON },
-			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
+			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.PLUS, TokenType.MINUS, TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.EPSILON },
+			{ TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] ADDOP = {
 			{ TokenType.PLUS, TokenType.MINUS },
@@ -130,7 +130,7 @@ public class Parser
 	};
 	private TokenType[][] TERM = {
 			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
-			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
+			{ TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] TERM_PRIME = {
 			{ TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EPSILON },
@@ -142,7 +142,7 @@ public class Parser
 	};
 	private TokenType[][] FACTOR = {
 			{ TokenType.OPEN_PAREN, TokenType.NUM, TokenType.ID },
-			{ TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
+			{ TokenType.LESS_EQUAL_THAN, TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.GREATER_EQUAL_THAN, TokenType.EQUALS, TokenType.NOT_EQUALS, TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.END_STATEMENT, TokenType.COMMA, TokenType.CLOSE_PAREN, TokenType.CLOSE_BRACKET, TokenType.CLOSE_PAREN }
 	};
 	private TokenType[][] VARCALL = {
 			{ TokenType.EPSILON, TokenType.OPEN_BRACKET, TokenType.OPEN_PAREN },
@@ -268,7 +268,7 @@ public class Parser
 			
 			CompoundStatement body = parseCompoundStatement();
 			
-			toReturn = new FunctionDeclaration((String) identifier.getData(), params, body);
+			toReturn = new FunctionDeclaration(typeSpecifier.getType(), (String) identifier.getData(), params, body);
 		}
 		else if (typeSpecifier.getType() == TokenType.INT)
 		{
@@ -481,9 +481,10 @@ public class Parser
 	private Statement parseIterationStatement()
 	{
 		//while ( expression ) statement
-		matchOrDie(TokenType.OPEN_PAREN, "parseSelectionStatement(): Did not recieve '(', got");
+		matchOrDie(TokenType.WHILE, "parseIterationStatement(): Did not receive WHILE token, got ");
+		matchOrDie(TokenType.OPEN_PAREN, "parseIterationStatement(): Did not recieve '(', got ");
 		Expression compare = parseExpression();
-		matchOrDie(TokenType.CLOSE_PAREN, "parseSelectionStatement(): Did not recieve ')' after '(', got");
+		matchOrDie(TokenType.CLOSE_PAREN, "parseIterationStatement(): Did not recieve ')' after '(', got");
 		Statement body = parseStatement();
 		
 		return new IterationStatement(compare, body);
@@ -631,7 +632,7 @@ public class Parser
 		}
 		else
 		{
-			throw new RuntimeException("parseFactor(): Illegal token for factor!");
+			throw new RuntimeException("parseFactor(): Illegal token for factor, got " + nextTokenType().name());
 		}
 		
 		return toReturn;
@@ -702,27 +703,27 @@ public class Parser
 						throw new RuntimeException("parseExpression(): Illegal token following ]!");
 					}	
 			}
-			else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]))
+			else if(contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[0]) || contains(nextTokenType(), SIMPLE_EXPRESSION_PRIME[1]))
 			{
 				//expression' -> simple-expression'
-				Expression temp = new VariableExpression(ID.toString());
+				Expression temp = new VariableExpression((String) ID.getData());
 				toReturn = parseSimpleExpression(temp);
 			}
 			else
 			{
-				throw new RuntimeException("parseExpression(): Illegal token following ID!");
+				throw new RuntimeException("parseExpression(): Illegal token following " + ID.getType().name() + ":" + ID.getData() + ", got " + nextTokenType());
 			}
 		}
 		else if(nextTokenType() == TokenType.NUM)
 		{
 			//Expression -> NUM simple-expression'
 			Token num = scanner.getNextToken();
-			Expression Num = new NumberExpression((int)num.getData());
+			Expression Num = new NumberExpression((Integer)num.getData());
 			toReturn = parseSimpleExpression(Num);
 		}
 		else
 		{
-			throw new RuntimeException("parseExpression(): Illegal token for Expression!");
+			throw new RuntimeException("parseExpression(): Illegal token for Expression, got " + nextTokenType());
 		}
 		return toReturn;
 	}
@@ -765,6 +766,11 @@ public class Parser
 		while (nextTokenType() != TokenType.CLOSE_PAREN)
 		{
 			args.add(parseExpression());
+			
+			if (nextTokenType() != TokenType.CLOSE_PAREN)
+			{
+				matchOrDie(TokenType.COMMA, "parseArgs(): We didn't match the comma?? Instead we found a ");
+			}
 		}
 		
 		return args;

@@ -47,14 +47,14 @@ public class SelectionStatement extends Statement{
 		body.print(indent+2, out);
 		out.write(prefix + "\t</Then>\n");
 		
-		if(else_part == null)
+		if(else_part != null)
 		{
 			out.write(prefix + "\t<Else>\n");
 			else_part.print(indent+2, out);
 			out.write(prefix + "\t</Else>\n");
 		}
 		
-		out.write(prefix + "</SelectionStatment>\n");		
+		out.write(prefix + "</SelectionStatement>\n");		
 	}
 
 }

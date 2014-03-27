@@ -48,6 +48,6 @@ public class CompoundStatement extends Statement
 			temp.print(indent+2, out);
 		}
 		out.write(prefix + "\t</Statments>\n");
-		out.write(prefix + "</CompoundStatment>\n");
+		out.write(prefix + "</CompoundStatement>\n");
 	}
 }
