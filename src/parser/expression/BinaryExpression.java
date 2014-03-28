@@ -5,10 +5,16 @@ import java.io.IOException;
 
 import scanner.Token.TokenType;
 
+/**
+ * Represents a binary expression.
+ */
 public class BinaryExpression extends Expression
 {
+	// the left side of the expression
 	private Expression leftSide;
+	// the right side of the expression
 	private Expression rightSide;
+	// the operator: anything in relop, addop, mulop
 	private TokenType operand;
 	
 	public BinaryExpression(Expression lhs, TokenType op, Expression rhs)

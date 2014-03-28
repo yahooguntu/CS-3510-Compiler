@@ -6,11 +6,18 @@ import java.io.IOException;
 import parser.statement.CompoundStatement;
 import scanner.Token.TokenType;
 
+/**
+ * Represents a function declaration.
+ */
 public class FunctionDeclaration extends Declaration
 {
+	// the function's return type (INT or VOID)
 	private TokenType returnType;
+	// expected parameters
 	private Params parameters;
+	// function name
 	private String name;
+	// function body
 	private CompoundStatement body;
 	
 	public FunctionDeclaration(TokenType returnType, String functionName, Params params, CompoundStatement body)

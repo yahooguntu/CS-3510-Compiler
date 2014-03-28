@@ -5,9 +5,14 @@ import java.io.IOException;
 
 import parser.expression.*;
 
-public class IterationStatement extends Statement{
-
+/**
+ * Represents a while loop.
+ */
+public class IterationStatement extends Statement
+{
+	// the deciding expression
 	private Expression compare;
+	// the code to execute in the loop
 	private Statement body;
 	
 	public IterationStatement(Expression compare, Statement body)
@@ -36,9 +41,9 @@ public class IterationStatement extends Statement{
 		out.write(prefix + "\t<Expression>\n");
 		compare.print(indent+2, out);
 		out.write(prefix + "\t</Expression>\n");
-		out.write(prefix + "\t<Then>\n");
+		out.write(prefix + "\t<Do>\n");
 		body.print(indent+2, out);
-		out.write(prefix + "\t</Then>\n");
+		out.write(prefix + "\t</Do>\n");
 		out.write(prefix + "</IterationStatement>\n");
 	}
 }

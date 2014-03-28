@@ -6,10 +6,16 @@ import java.io.IOException;
 import parser.statement.*;
 import parser.expression.*;
 
-public class SelectionStatement extends Statement{
-	
+/**
+ * Represents an if statement.
+ */
+public class SelectionStatement extends Statement
+{
+	// the decision expession
 	private Expression compare;
+	// the body to be executed if the expression is 1
 	private Statement body;
+	// the optional else statement
 	private Statement else_part;
 	
 	public SelectionStatement(Expression compare, Statement body, Statement else_part)

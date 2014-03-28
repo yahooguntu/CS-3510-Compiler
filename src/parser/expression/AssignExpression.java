@@ -3,9 +3,14 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+/**
+ * Represents assigning a value to a variable.
+ */
 public class AssignExpression extends Expression
 {
+	// the variable being written to
 	private VariableExpression variable;
+	// the value to assign to the variable
 	private Expression rightSide;
 	
 	public AssignExpression(VariableExpression var, Expression rhs)

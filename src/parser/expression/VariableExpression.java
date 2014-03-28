@@ -3,6 +3,9 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+/**
+ * Represents an expression consisting of a single variable.
+ */
 public class VariableExpression extends Expression
 {
 	private String identifier;

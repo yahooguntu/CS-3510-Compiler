@@ -5,8 +5,12 @@ import java.io.IOException;
 
 import parser.expression.*;
 
-public class ReturnStatement extends Statement{
-
+/**
+ * Represents a return from a function.
+ */
+public class ReturnStatement extends Statement
+{
+	// optional expression to evaluate and return
 	private Expression body;
 	
 	public ReturnStatement(Expression body)

@@ -3,8 +3,13 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+/**
+ * Represents a numerical value.
+ * e.g. '5'
+ */
 public class NumberExpression extends Expression
 {
+	// the numerical value
 	private int value;
 	
 	public NumberExpression(int val)

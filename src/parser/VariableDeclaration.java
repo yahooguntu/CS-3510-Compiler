@@ -3,10 +3,16 @@ package parser;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+/**
+ * Represents a variable declaration.
+ */
 public class VariableDeclaration extends Declaration
 {
+	// the name of the variable
 	private String id;
+	
 	// -1 indicates this isn't an array
+	// 0 indicates unknown size (for function params)
 	private int arraySize;
 	
 	/**

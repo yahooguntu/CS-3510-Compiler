@@ -5,8 +5,14 @@ import java.io.IOException;
 
 import parser.expression.*;
 
-public class ExpressionStatement extends Statement{
-
+/**
+ * Represents an expression statement.
+ * e.g. 'func();'
+ * or 'A + B;' (though I don't know why you'd want to do that)
+ */
+public class ExpressionStatement extends Statement
+{
+	// the expression
 	private Expression data;
 	
 	public ExpressionStatement(Expression data)

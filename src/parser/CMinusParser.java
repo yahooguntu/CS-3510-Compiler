@@ -171,6 +171,9 @@ public class CMinusParser implements Parser
 		scanner = s;
 	}
 	
+	/**
+	 * Satisfies the Parse interface.
+	 */
 	@Override
 	public Program parse()
 	{
@@ -181,6 +184,10 @@ public class CMinusParser implements Parser
 		return parsedProgram;
 	}
 	
+	/**
+	 * Prints out the parsed program.
+	 * A call to parse() must precede this call.
+	 */
 	@Override
 	public void printTree(String outFile)
 	{
@@ -202,8 +209,8 @@ public class CMinusParser implements Parser
 		}
 	}
 	
-	/*
-	 * Matches and consumes the given token.
+	/**
+	 * Matches and consumes the given token, if it is present.
 	 * @returns True if matched, false if the next token isn't the one we are looking for.
 	 */
 	private boolean matchToken(TokenType t)
@@ -217,7 +224,7 @@ public class CMinusParser implements Parser
 	}
 	
 	/**
-	 * Searches First/Follow Sets
+	 * Searches First/Follow sets for the given token.
 	 * @param needle
 	 * @param haystack
 	 * @return
@@ -233,7 +240,7 @@ public class CMinusParser implements Parser
 	}
 	
 	/**
-	 * Views the next token type (look ahead character)
+	 * Views the next token type (look ahead).
 	 * @return
 	 */
 	private TokenType nextTokenType()
@@ -242,7 +249,8 @@ public class CMinusParser implements Parser
 	}
 	
 	/**
-	 * Matches (and munches) a Token or throws the passed message
+	 * Matches (and munches) a Token or throws
+	 * an exception with the given message.
 	 * @param tt
 	 * @param msg
 	 * @return
@@ -261,7 +269,7 @@ public class CMinusParser implements Parser
 	 */
 	
 	/**
-	 * Parses Program
+	 * Parses a Program
 	 * @return
 	 */
 	public Program parseProgram()
@@ -542,12 +550,6 @@ public class CMinusParser implements Parser
 		matchOrDie(TokenType.END_STATEMENT, "parseReturnStatement(): Did not recieve ';', got");
 		return new ReturnStatement(body);
 	}
-		
-	/**
-	 * Parses an additive-expression'.
-	 * @param lhs
-	 * @return
-	 */
 	
 	/**
 	 * Parses Additive-Expression and Additive-Expression'
@@ -581,9 +583,6 @@ public class CMinusParser implements Parser
 		
 		return term;
 	}
-		
-
-	
 	
 	/**
 	 * Parses term and  term'.
@@ -611,7 +610,6 @@ public class CMinusParser implements Parser
 		
 		return term;
 	}
-	
 	
 	/**
 	 * Parses a Factor.
@@ -674,12 +672,10 @@ public class CMinusParser implements Parser
 		return toReturn;
 	}
 	
-	
 	/**
 	 * Parses Expression, Expression', and Expression''
 	 * @return
 	 */
-	
 	private Expression parseExpression()
 	{
 		Expression toReturn = null;
@@ -769,7 +765,6 @@ public class CMinusParser implements Parser
 	 * @param lhs
 	 * @return
 	 */
-	
 	private Expression parseSimpleExpression(Expression lhs) {
 		Expression toReturn = null;
 		Expression left = parseAdditiveExpression(lhs);
@@ -794,7 +789,6 @@ public class CMinusParser implements Parser
 	 * Parses Args and Arg-list
 	 * @return
 	 */
-	
 	private List<Expression> parseArgs()
 	{
 		List<Expression> args = new ArrayList<Expression>();

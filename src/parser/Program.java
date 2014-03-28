@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a program in a single file.
+ */
 public class Program
 {
+	// the top-level declarations in this program (var and func)
 	private List<Declaration> declarations;
 	
 	public Program(List<Declaration> decls)
@@ -14,7 +18,7 @@ public class Program
 		declarations = decls;
 	}
 	
-	public List<Declaration> getProgram()
+	public List<Declaration> getDeclarations()
 	{
 		return declarations;
 	}

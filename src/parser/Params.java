@@ -4,8 +4,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Represents parameters for a function definition.
+ */
 public class Params
 {
+	// the parameters
 	List<VariableDeclaration> paramList;
 	
 	public Params(List<VariableDeclaration> list)

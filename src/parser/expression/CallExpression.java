@@ -4,9 +4,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Represents a function call.
+ */
 public class CallExpression extends Expression
 {
+	// the name of the function
 	String functionName;
+	// the arguments being passed to the function
 	List<Expression> arguments;
 	
 	public CallExpression(String funcName, List<Expression> args)

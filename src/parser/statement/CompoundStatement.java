@@ -6,9 +6,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Represents a group of declarations and statements
+ * that are enclosed in curly braces.
+ */
 public class CompoundStatement extends Statement
 {
+	// the local declarations
 	private List<Declaration> locals;
+	// the statements to be executed in this block
 	private List<Statement> body;
 	
 	public CompoundStatement(List<Declaration> locals, List<Statement> body)
