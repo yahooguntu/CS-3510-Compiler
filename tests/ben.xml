@@ -138,7 +138,7 @@
 											</RightSide>
 										</BinaryExpression>
 									</Expression>
-									<Then>
+									<Do>
 										<CompoundStatement>
 											<Declarations>
 											</Declarations>
@@ -230,7 +230,7 @@
 																			</RightSide>
 																		</BinaryExpression>
 																	</Expression>
-																	<Then>
+																	<Do>
 																		<CompoundStatement>
 																			<Declarations>
 																			</Declarations>
@@ -259,7 +259,7 @@
 																				</ExpressionStatement>
 																			</Statments>
 																		</CompoundStatement>
-																	</Then>
+																	</Do>
 																</IterationStatement>
 															</Statments>
 														</CompoundStatement>
@@ -267,7 +267,7 @@
 												</SelectionStatement>
 											</Statments>
 										</CompoundStatement>
-									</Then>
+									</Do>
 								</IterationStatement>
 							</Statments>
 						</CompoundStatement>
@@ -310,7 +310,7 @@
 											</RightSide>
 										</BinaryExpression>
 									</Expression>
-									<Then>
+									<Do>
 										<CompoundStatement>
 											<Declarations>
 											</Declarations>
@@ -331,7 +331,7 @@
 															</RightSide>
 														</BinaryExpression>
 													</Expression>
-													<Then>
+													<Do>
 														<CompoundStatement>
 															<Declarations>
 															</Declarations>
@@ -360,11 +360,11 @@
 																</ExpressionStatement>
 															</Statments>
 														</CompoundStatement>
-													</Then>
+													</Do>
 												</IterationStatement>
 											</Statments>
 										</CompoundStatement>
-									</Then>
+									</Do>
 								</IterationStatement>
 							</Statments>
 						</CompoundStatement>

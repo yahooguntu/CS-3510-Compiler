@@ -192,7 +192,7 @@
 							</RightSide>
 						</BinaryExpression>
 					</Expression>
-					<Then>
+					<Do>
 						<CompoundStatement>
 							<Declarations>
 							</Declarations>
@@ -245,7 +245,7 @@
 								</ExpressionStatement>
 							</Statments>
 						</CompoundStatement>
-					</Then>
+					</Do>
 				</IterationStatement>
 				<ExpressionStatement>
 					<AssignExpression>
