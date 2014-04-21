@@ -3,6 +3,8 @@ package parser;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
+
 /**
  * Represents a variable declaration.
  */
@@ -67,5 +69,14 @@ public class VariableDeclaration extends Declaration
 			out.write(prefix + "\t<Size>" + arraySize + "</Size>\n");
 		
 		out.write(prefix + "</VariableDeclaration>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.Declaration#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

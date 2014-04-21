@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+import lowlevel.CodeItem;
+
 /**
  * Represents parameters for a function definition.
  */
@@ -36,5 +38,10 @@ public class Params
 		}
 		
 		out.write(prefix + "</Params>\n");
+	}
+	
+	public CodeItem genLLCode() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

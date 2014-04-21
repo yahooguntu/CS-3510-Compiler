@@ -3,6 +3,8 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
+
 /**
  * Represents assigning a value to a variable.
  */
@@ -46,5 +48,14 @@ public class AssignExpression extends Expression
 		out.write(prefix + "\t</Value>\n");
 		
 		out.write(prefix + "</AssignExpression>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,6 +3,7 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
 import scanner.Token.TokenType;
 
 /**
@@ -59,5 +60,14 @@ public class BinaryExpression extends Expression
 		out.write(prefix + "\t</RightSide>\n");
 		
 		out.write(prefix + "</BinaryExpression>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

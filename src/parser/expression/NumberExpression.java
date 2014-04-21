@@ -3,6 +3,8 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
+
 /**
  * Represents a numerical value.
  * e.g. '5'
@@ -30,5 +32,14 @@ public class NumberExpression extends Expression
 			prefix += "\t";
 		
 		out.write(prefix + "<NumberExpression>" + value + "</NumberExpression>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }
