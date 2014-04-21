@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+import lowlevel.*;
+
 /**
  * Represents a function call.
  */
@@ -48,5 +50,14 @@ public class CallExpression extends Expression
 		
 		out.write(prefix + "\t</Arguments>\n");
 		out.write(prefix + "</CallExpression>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

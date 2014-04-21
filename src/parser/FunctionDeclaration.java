@@ -3,6 +3,7 @@ package parser;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.Function;
 import parser.statement.CompoundStatement;
 import scanner.Token.TokenType;
 
@@ -59,5 +60,11 @@ public class FunctionDeclaration extends Declaration
 		
 		body.print(indent + 1, out);
 		out.write(prefix + "</FunctionDeclaration>\n");
+	}
+
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,6 +3,7 @@ package parser.statement;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
 import parser.statement.*;
 import parser.expression.*;
 
@@ -61,6 +62,15 @@ public class SelectionStatement extends Statement
 		}
 		
 		out.write(prefix + "</SelectionStatement>\n");		
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

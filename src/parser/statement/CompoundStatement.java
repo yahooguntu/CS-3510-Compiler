@@ -6,6 +6,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+import lowlevel.*;
+
 /**
  * Represents a group of declarations and statements
  * that are enclosed in curly braces.
@@ -55,5 +57,14 @@ public class CompoundStatement extends Statement
 		}
 		out.write(prefix + "\t</Statments>\n");
 		out.write(prefix + "</CompoundStatement>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

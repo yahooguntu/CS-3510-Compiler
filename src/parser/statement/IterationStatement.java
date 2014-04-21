@@ -3,6 +3,7 @@ package parser.statement;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
 import parser.expression.*;
 
 /**
@@ -45,5 +46,14 @@ public class IterationStatement extends Statement
 		body.print(indent+2, out);
 		out.write(prefix + "\t</Do>\n");
 		out.write(prefix + "</IterationStatement>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,6 +3,8 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import lowlevel.*;
+
 /**
  * Represents an expression consisting of a single variable.
  */
@@ -56,5 +58,14 @@ public class VariableExpression extends Expression
 		}
 		
 		out.write(prefix + "</VariableExpression>\n");
+	}
+
+	/* (non-Javadoc)
+	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
+	 */
+	@Override
+	public void genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
 	}
 }
