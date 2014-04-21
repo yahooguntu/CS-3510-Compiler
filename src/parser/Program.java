@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lowlevel.CodeItem;
+
 /**
  * Represents a program in a single file.
  */
@@ -35,5 +37,10 @@ public class Program
 			decl.print(indent + 1, out);
 		
 		out.write(prefix + "</Program>\n");
+	}
+
+	public CodeItem genLLCode() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
