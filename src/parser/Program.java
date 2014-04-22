@@ -39,8 +39,29 @@ public class Program
 		out.write(prefix + "</Program>\n");
 	}
 
-	public CodeItem genLLCode() {
-		// TODO Auto-generated method stub
-		return null;
+	public CodeItem genLLCode()
+	{
+		for (Declaration decl : declarations)
+		{
+			CodeItem head;
+			CodeItem tail;
+			//TODO do global variables
+			if (decl instanceof FunctionDeclaration)
+			{
+				CodeItem next = decl.genLLCode();
+				if (head == null)
+				{
+					head = next;
+					tail = next;
+				}
+				else
+				{
+					tail.setNextItem(next);
+					tail = next;
+				}
+			}
+			
+			return head;
+		}
 	}
 }
