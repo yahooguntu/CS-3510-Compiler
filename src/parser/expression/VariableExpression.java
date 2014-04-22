@@ -64,8 +64,8 @@ public class VariableExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
+	public CodeItem genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

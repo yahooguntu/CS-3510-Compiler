@@ -10,5 +10,5 @@ import lowlevel.*;
 public abstract class Declaration
 {
 	public abstract void print(int indent, BufferedWriter out) throws IOException;
-	public abstract void genLLCode(Function parent);
+	public abstract CodeItem genLLCode();
 }

@@ -52,8 +52,8 @@ public class IterationStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
+	public CodeItem genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

@@ -3,7 +3,7 @@ package parser;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import lowlevel.Function;
+import lowlevel.*;
 import parser.statement.CompoundStatement;
 import scanner.Token.TokenType;
 
@@ -63,8 +63,8 @@ public class FunctionDeclaration extends Declaration
 	}
 
 	@Override
-	public void genLLCode(Function parent) {
+	public CodeItem genLLCode() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

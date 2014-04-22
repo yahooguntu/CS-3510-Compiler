@@ -75,8 +75,8 @@ public class VariableDeclaration extends Declaration
 	 * @see parser.Declaration#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
+	public CodeItem genLLCode() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }
