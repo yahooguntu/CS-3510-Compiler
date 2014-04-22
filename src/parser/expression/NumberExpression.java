@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import lowlevel.*;
+import lowlevel.Operation.OperationType;
+import lowlevel.Operand.OperandType;
 
 /**
  * Represents a numerical value.
@@ -39,6 +41,15 @@ public class NumberExpression extends Expression
 	 */
 	@Override
 	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
+				
+		int regNum = parent.getNewRegNum();
+		Operation op = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
+		Operand destReg = new Operand(OperandType.REGISTER, regNum);
+		Operand sorcReg = new Operand(OperandType.INTEGER, value);
+		
+		op.setDestOperand(0, destReg);
+		op.setSrcOperand(0, sorcReg);
+		parent.getCurrBlock().appendOper(op);
+		this.setRegisterNum(regNum);
 	}
 }

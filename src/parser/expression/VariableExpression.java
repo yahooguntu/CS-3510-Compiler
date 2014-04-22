@@ -2,6 +2,7 @@ package parser.expression;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import compiler.CMinusCompiler;
 
 import lowlevel.*;
 
@@ -65,6 +66,19 @@ public class VariableExpression extends Expression
 	 */
 	@Override
 	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
+		
+		if(parent.getTable().containsKey(identifier))
+		{
+			int me = (Integer) parent.getTable().get(identifier);
+			this.setRegisterNum(me);
+		}
+		else if(CMinusCompiler.globalHash.containsKey(identifier))
+		{
+			//TODO global variable
+		}
+		else
+		{
+			throw new RuntimeException("Illegal Varible Expression: " + identifier);
+		}
 	}
 }
