@@ -73,7 +73,7 @@ public class VariableDeclaration extends Declaration
 
 	public CodeItem genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		
+		// Seth
 		// we are a function variable
 		
 		return null;
