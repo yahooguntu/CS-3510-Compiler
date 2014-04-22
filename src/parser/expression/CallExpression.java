@@ -56,8 +56,7 @@ public class CallExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public CodeItem genLLCode(Function parent) {
+	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 }

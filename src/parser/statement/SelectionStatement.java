@@ -68,7 +68,7 @@ public class SelectionStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public CodeItem genLLCode(Function parent) {
+	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
 		
 		// make 2-3 blocks THEN, [ELSE], POST
@@ -84,8 +84,6 @@ public class SelectionStatement extends Statement
 		//		add jump to POST in ELSE block
 		//		append ELSE to unconnected chain
 		// cb = POST
-		
-		return null;
 	}
 
 }

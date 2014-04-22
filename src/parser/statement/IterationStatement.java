@@ -52,7 +52,7 @@ public class IterationStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public CodeItem genLLCode(Function parent) {
+	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
 		
 		// make two blocks LOOP and POST
@@ -66,6 +66,5 @@ public class IterationStatement extends Statement
 		// append POST
 		// cb = POST
 		
-		return null;
 	}
 }

@@ -10,7 +10,7 @@ public abstract class Expression
 {
 	private int registerNum;
 	public abstract void print(int indent, BufferedWriter out) throws IOException;
-	public abstract CodeItem genLLCode(Function parent);
+	public abstract void genLLCode(Function parent);
 	
 	/**
 	 * @return the registerNum
