@@ -41,10 +41,10 @@ public class Program
 
 	public CodeItem genLLCode()
 	{
+		CodeItem head = null;
+		CodeItem tail = null;
 		for (Declaration decl : declarations)
 		{
-			CodeItem head;
-			CodeItem tail;
 			//TODO do global variables
 			if (decl instanceof FunctionDeclaration)
 			{
@@ -60,8 +60,7 @@ public class Program
 					tail = next;
 				}
 			}
-			
-			return head;
 		}
+		return head;
 	}
 }
