@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 import scanner.Token.TokenType;
 
 /**
@@ -66,7 +68,45 @@ public class BinaryExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
+	public void genLLCode(Function parent)
+	{
+		setRegisterNum(parent.getNewRegNum());
+		
+		leftSide.genLLCode(parent);
+		rightSide.genLLCode(parent);
+		
+		Operation op;
+		
+		switch (operand)
+		{
+		case PLUS:
+			op = new Operation(OperationType.ADD_I, parent.getCurrBlock());
+			break;
+			
+		case MINUS:
+			op = new Operation(OperationType.SUB_I, parent.getCurrBlock());
+			break;
+			
+		case DIVIDE:
+			op = new Operation(OperationType.DIV_I, parent.getCurrBlock());
+			break;
+			
+		case MULTIPLY:
+			op = new Operation(OperationType.MUL_I, parent.getCurrBlock());
+			break;
+			
+		default:
+			throw new RuntimeException("Illegal operand for BinaryExpression: " + operand.name());
+		}
+		
+		Operand destReg = new Operand(OperandType.REGISTER, getRegisterNum());
+		Operand addItemOne = new Operand(OperandType.REGISTER, leftSide.getRegisterNum());
+		Operand addItemTwo = new Operand(OperandType.REGISTER, rightSide.getRegisterNum());
+		
+		op.setDestOperand(0, destReg);
+		op.setSrcOperand(0, addItemOne);
+		op.setSrcOperand(1, addItemTwo);
+		
+		parent.getCurrBlock().appendOper(op);
 	}
 }
