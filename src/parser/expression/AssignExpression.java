@@ -58,9 +58,8 @@ public class AssignExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
-		
+	public void genLLCode(Function parent)
+	{
 		setRegisterNum(parent.getNewRegNum());
 		rightSide.genLLCode(parent);
 		
