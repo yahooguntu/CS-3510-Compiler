@@ -70,6 +70,21 @@ public class SelectionStatement extends Statement
 	@Override
 	public CodeItem genLLCode(Function parent) {
 		// TODO Auto-generated method stub
+		
+		// make 2-3 blocks THEN, [ELSE], POST
+		// gencode the condition
+		// gencode the branch
+		// append THEN block
+		// cb = THEN
+		// gencode THEN statements
+		// append POST
+		// if else block
+		//		cb = ELSE
+		//		gencode ELSE statements
+		//		add jump to POST in ELSE block
+		//		append ELSE to unconnected chain
+		// cb = POST
+		
 		return null;
 	}
 

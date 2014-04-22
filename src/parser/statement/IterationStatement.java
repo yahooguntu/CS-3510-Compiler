@@ -54,6 +54,18 @@ public class IterationStatement extends Statement
 	@Override
 	public CodeItem genLLCode(Function parent) {
 		// TODO Auto-generated method stub
+		
+		// make two blocks LOOP and POST
+		// gencode condition
+		// gencode branch
+		// append LOOP
+		// cb = LOOP
+		// gencode LOOP
+		// gencode condition
+		// gencode branch
+		// append POST
+		// cb = POST
+		
 		return null;
 	}
 }
