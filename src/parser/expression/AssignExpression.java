@@ -3,7 +3,11 @@ package parser.expression;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import compiler.CMinusCompiler;
+
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 
 /**
  * Represents assigning a value to a variable.
@@ -54,8 +58,35 @@ public class AssignExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public CodeItem genLLCode(Function parent) {
+	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		setRegisterNum(parent.getNewRegNum());
+		rightSide.genLLCode(parent);
+		
+		Operation op = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
+		
+		Operand srcReg = new Operand(OperandType.REGISTER, rightSide.getRegisterNum());
+		Operand destReg = null;
+		
+		if (parent.getTable().containsKey(variable.getIdentifier()))
+		{
+			//TODO handle arrays
+			int regNum = (Integer) parent.getTable().get(variable.getIdentifier());
+			destReg = new Operand(OperandType.REGISTER, regNum);
+		}
+		else
+		{
+			//TODO handle arrays
+			if (CMinusCompiler.globalHash.containsKey(variable.getIdentifier()))
+			{
+				//TODO handle global vars
+			}
+		}
+		
+		op.setSrcOperand(0, srcReg);
+		op.setDestOperand(0, destReg);
+		
+		parent.getCurrBlock().appendOper(op);
 	}
 }

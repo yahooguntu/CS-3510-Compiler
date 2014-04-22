@@ -71,12 +71,20 @@ public class VariableDeclaration extends Declaration
 		out.write(prefix + "</VariableDeclaration>\n");
 	}
 
-	/* (non-Javadoc)
-	 * @see parser.Declaration#genLLCode(lowlevel.Function)
-	 */
+	public CodeItem genLLCode(Function parent) {
+		// TODO Auto-generated method stub
+		
+		// we are a function variable
+		
+		return null;
+	}
+	
 	@Override
 	public CodeItem genLLCode() {
 		// TODO Auto-generated method stub
+		
+		// we are a global variable
+		
 		return null;
 	}
 }
