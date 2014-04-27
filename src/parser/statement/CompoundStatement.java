@@ -66,5 +66,6 @@ public class CompoundStatement extends Statement
 	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
 		// Seth
+		
 	}
 }
