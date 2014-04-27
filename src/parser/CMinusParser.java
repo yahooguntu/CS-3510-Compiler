@@ -325,11 +325,11 @@ public class CMinusParser implements Parser
 				
 				matchOrDie(TokenType.CLOSE_BRACKET, "parseDeclaration(): parsing array declaration, expected ']', got " + nextTokenType().name());
 				
-				toReturn = new VariableDeclaration((String) identifier.getData(), (Integer) number.getData());
+				toReturn = new VariableDeclaration(TokenType.INT, (String) identifier.getData(), (Integer) number.getData());
 			}
 			else if (nextTokenType() == TokenType.END_STATEMENT)
 			{
-				toReturn = new VariableDeclaration((String) identifier.getData());
+				toReturn = new VariableDeclaration(TokenType.INT, (String) identifier.getData());
 			}
 			else
 			{
@@ -366,12 +366,12 @@ public class CMinusParser implements Parser
 			Token id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
 			if (matchToken(TokenType.OPEN_BRACKET))
 			{
-				params.add(new VariableDeclaration((String) id.getData(), 0));
+				params.add(new VariableDeclaration(TokenType.INT, (String) id.getData(), 0));
 				matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
 			}
 			else
 			{
-				params.add(new VariableDeclaration((String) id.getData()));
+				params.add(new VariableDeclaration(TokenType.INT, (String) id.getData()));
 			}
 			
 			// check for other params
@@ -383,12 +383,12 @@ public class CMinusParser implements Parser
 				id = matchOrDie(TokenType.ID, "parseParams(): identifier expected, got ");
 				if (matchToken(TokenType.OPEN_BRACKET))
 				{
-					params.add(new VariableDeclaration((String) id.getData(), 0));
+					params.add(new VariableDeclaration(TokenType.INT, (String) id.getData(), 0));
 					matchOrDie(TokenType.CLOSE_BRACKET, "parseParams(): expected ']', but got ");
 				}
 				else
 				{
-					params.add(new VariableDeclaration((String) id.getData()));
+					params.add(new VariableDeclaration(TokenType.INT, (String) id.getData()));
 				}
 			}
 		}
@@ -420,11 +420,11 @@ public class CMinusParser implements Parser
 				Token num = matchOrDie(TokenType.NUM, "parseCompoundStatement(): expected a number, but got ");
 				matchOrDie(TokenType.CLOSE_BRACKET, "parseCompoundStatement(): expected ']', but got ");
 				matchOrDie(TokenType.END_STATEMENT, "parseCompoundStatement(): expected ';', but got ");
-				decls.add(new VariableDeclaration((String) id.getData(), (Integer) num.getData()));
+				decls.add(new VariableDeclaration(TokenType.INT, (String) id.getData(), (Integer) num.getData()));
 			}
 			else if (matchToken(TokenType.END_STATEMENT))
 			{
-				decls.add(new VariableDeclaration((String) id.getData()));
+				decls.add(new VariableDeclaration(TokenType.INT, (String) id.getData()));
 			}
 			else
 			{

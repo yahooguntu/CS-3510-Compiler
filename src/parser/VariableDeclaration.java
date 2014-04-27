@@ -3,6 +3,7 @@ package parser;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import scanner.Token.TokenType;
 import lowlevel.*;
 
 /**
@@ -12,6 +13,7 @@ public class VariableDeclaration extends Declaration
 {
 	// the name of the variable
 	private String id;
+	private TokenType type;
 	
 	// -1 indicates this isn't an array
 	// 0 indicates unknown size (for function params)
@@ -21,9 +23,10 @@ public class VariableDeclaration extends Declaration
 	 * Makes a variable of type int.
 	 * @param id
 	 */
-	public VariableDeclaration(String id)
+	public VariableDeclaration(TokenType type, String id)
 	{
 		this.id = id;
+		this.type = type;
 		arraySize = -1;
 	}
 	
@@ -32,8 +35,9 @@ public class VariableDeclaration extends Declaration
 	 * @param id
 	 * @param size
 	 */
-	public VariableDeclaration(String id, int size)
+	public VariableDeclaration(TokenType type, String id, int size)
 	{
+		this.type = type;
 		this.id = id;
 		arraySize = size;
 	}
@@ -43,12 +47,17 @@ public class VariableDeclaration extends Declaration
 		return id;
 	}
 	
+	public TokenType getType()
+	{
+		return type;
+	}
+	
 	/**
 	 * Gets the size of this variable array.
 	 * -1 indicates it is not an array.
 	 * @return
 	 */
-	public int arraySize()
+	public int getArraySize()
 	{
 		return arraySize;
 	}
