@@ -64,8 +64,18 @@ public class CompoundStatement extends Statement
 	 */
 	@Override
 	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
 		// Seth
+		int regNum = parent.getNewRegNum();
+		setRegisterNum(regNum);
 		
+		for(int i = 0; i < locals.size(); i++)
+		{
+			locals.get(i).genLLCode(parent);
+		}
+		
+		for(int i = 0; i < body.size(); i++)
+		{
+			body.get(i).genLLCode(parent);
+		}
 	}
 }
