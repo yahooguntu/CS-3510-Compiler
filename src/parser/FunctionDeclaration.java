@@ -2,6 +2,7 @@ package parser;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Iterator;
 
 import lowlevel.*;
 import parser.statement.CompoundStatement;
@@ -63,9 +64,74 @@ public class FunctionDeclaration extends Declaration
 	}
 
 	@Override
-	public CodeItem genLLCode() {
-		// TODO Auto-generated method stub
-		// Mitch
-		return null;
+	public CodeItem genLLCode()
+	{
+		int funcReturnType = convertType(returnType);
+		
+		Function myFunc;
+		
+		if (parameters.paramList.size() == 0)
+		{
+			// function has no parameters
+			myFunc = new Function(funcReturnType, name);
+		}
+		else
+		{
+			// function has parameters
+			Iterator<VariableDeclaration> it = parameters.paramList.iterator();
+			VariableDeclaration curr = it.next();
+			FuncParam head = buildFuncParam(curr);
+			FuncParam tail = head;
+			
+			while (it.hasNext())
+			{
+				FuncParam nxt = buildFuncParam(it.next());
+				tail.setNextParam(nxt);
+				tail = tail.getNextParam();
+			}
+			
+			myFunc = new Function(funcReturnType, name, head);
+		}
+		
+		myFunc.createBlock0();
+		
+		body.genLLCode(myFunc);
+		
+		return myFunc;
+	}
+	
+	public static FuncParam buildFuncParam(VariableDeclaration varDecl)
+	{
+		FuncParam toReturn;
+		int paramType = convertType(varDecl.getType());
+		
+		if (varDecl.getArraySize() == -1)
+		{
+			// not an array
+			toReturn = new FuncParam(paramType, varDecl.getId());
+		}
+		else
+		{
+			// this is an array
+			toReturn = new FuncParam(paramType, varDecl.getId(), true);
+		}
+		
+		return toReturn;
+	}
+	
+	public static int convertType(TokenType type)
+	{
+		int toReturn;
+		
+		if (type == TokenType.INT)
+		{
+			toReturn = Data.TYPE_INT;
+		}
+		else
+		{
+			toReturn = Data.TYPE_VOID;
+		}
+		
+		return toReturn;
 	}
 }
