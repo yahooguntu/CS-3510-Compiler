@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 import parser.statement.*;
 import parser.expression.*;
 
@@ -70,10 +72,16 @@ public class SelectionStatement extends Statement
 	@Override
 	public void genLLCode(Function parent) {
 		// TODO Auto-generated method stub
-		
+		int regNum = parent.getNewRegNum();
 		// make 2-3 blocks THEN, [ELSE], POST
+		BasicBlock Then = new BasicBlock(parent);
+		BasicBlock Else = new BasicBlock(parent);
+		BasicBlock Post = new BasicBlock(parent);
+		Operation op = new Operation(OperationType.BEQ, parent.getCurrBlock());
 		// gencode the condition
+		compare.genLLCode(parent);
 		// gencode the branch
+		Operand srcReg = new Operand(OperandType.REGISTER, "RetReg");
 		// append THEN block
 		// cb = THEN
 		// gencode THEN statements

@@ -2,9 +2,15 @@ package parser;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
+
+import compiler.CMinusCompiler;
 
 import scanner.Token.TokenType;
 import lowlevel.*;
+import lowlevel.Data;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 
 /**
  * Represents a variable declaration.
@@ -84,6 +90,11 @@ public class VariableDeclaration extends Declaration
 		// TODO Auto-generated method stub
 		// Seth
 		// we are a function variable
+		int regNum = parent.getNewRegNum();
+		setRegisterNum(regNum);
+		
+		HashMap<String, Integer> symbol = parent.getTable();
+		symbol.put(id, regNum);
 		
 		return null;
 	}
@@ -93,7 +104,31 @@ public class VariableDeclaration extends Declaration
 		// TODO Auto-generated method stub
 		
 		// we are a global variable
-		
-		return null;
+		HashMap global =  CMinusCompiler.globalHash;
+		Data var = null;
+		if(arraySize == -1)
+		{
+			if(type.compareTo(TokenType.INT) == 0)
+			{
+				var = new Data(Data.TYPE_INT, id);
+			}
+			else
+			{
+				var = new Data(Data.TYPE_VOID, id);
+			}
+		}
+		else
+		{
+			if(type.compareTo(TokenType.INT) == 0)
+			{
+				var = new Data(Data.TYPE_INT, id, true, arraySize);
+			}
+			else
+			{
+				var = new Data(Data.TYPE_VOID, id, true, arraySize);
+			}
+		}
+		global.put(id, var);
+		return var;
 	}
 }
