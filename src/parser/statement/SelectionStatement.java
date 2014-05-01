@@ -71,11 +71,13 @@ public class SelectionStatement extends Statement
 	 */
 	@Override
 	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
-		int regNum = parent.getNewRegNum();
 		// make 2-3 blocks THEN, [ELSE], POST
 		BasicBlock Then = new BasicBlock(parent);
-		BasicBlock Else = new BasicBlock(parent);
+		BasicBlock Else = null;
+		if(else_part != null)
+		{
+			Else = new BasicBlock(parent);
+		}
 		BasicBlock Post = new BasicBlock(parent);
 		Operation op = new Operation(OperationType.BEQ, parent.getCurrBlock());
 		// gencode the condition
@@ -83,15 +85,29 @@ public class SelectionStatement extends Statement
 		// gencode the branch
 		Operand srcReg = new Operand(OperandType.REGISTER, "RetReg");
 		// append THEN block
+		parent.appendBlock(Then);
 		// cb = THEN
+		parent.setCurrBlock(Then);
 		// gencode THEN statements
+		body.genLLCode(parent);
 		// append POST
+		parent.appendBlock(Post);
 		// if else block
+		if(else_part != null)
+		{
 		//		cb = ELSE
+				parent.setCurrBlock(Else);
 		//		gencode ELSE statements
+				else_part.genLLCode(parent);
 		//		add jump to POST in ELSE block
+				Operation op2 = new Operation(OperationType.JMP, parent.getCurrBlock());
+				Operand srcBlock = new Operand(OperandType.BLOCK, Post);
+				op2.setSrcOperand(0, srcBlock);
 		//		append ELSE to unconnected chain
+				parent.appendUnconnectedBlock(Else);
+		}
 		// cb = POST
+		parent.setCurrBlock(Post);
 	}
 
 }

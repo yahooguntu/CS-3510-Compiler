@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 import parser.expression.*;
 
 /**
@@ -52,19 +54,31 @@ public class IterationStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
-		
+	public void genLLCode(Function parent) {			
 		// make two blocks LOOP and POST
+		BasicBlock Loop = new BasicBlock(parent);
+		BasicBlock Post = new BasicBlock(parent);
 		// gencode condition
+		compare.genLLCode(parent);
 		// gencode branch
+		Operation op = new Operation(OperationType.BEQ, parent.getCurrBlock());
+		Operand srcReg = new Operand(OperandType.MACRO, "RetReg");
+		op.setSrcOperand(0, srcReg);
 		// append LOOP
+		parent.appendBlock(Loop);
 		// cb = LOOP
+		parent.setCurrBlock(Loop);
 		// gencode LOOP
+		body.genLLCode(parent);
 		// gencode condition
+		compare.genLLCode(parent);
 		// gencode branch
+		Operation op2 = new Operation(OperationType.BNE, parent.getCurrBlock());
+		Operand srcReg2 = new Operand(OperandType.MACRO, "RetReg");
 		// append POST
+		parent.appendBlock(Post);
 		// cb = POST
+		parent.setCurrBlock(Post);
 		
 	}
 }
