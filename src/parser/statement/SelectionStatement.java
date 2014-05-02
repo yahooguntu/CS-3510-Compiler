@@ -108,6 +108,7 @@ public class SelectionStatement extends Statement
 				Operation op2 = new Operation(OperationType.JMP, parent.getCurrBlock());
 				Operand srcBlock = new Operand(OperandType.BLOCK, Post);
 				op2.setSrcOperand(0, srcBlock);
+				parent.getCurrBlock().appendOper(op2);
 		//		append ELSE to unconnected chain
 				parent.appendUnconnectedBlock(Else);
 		}
