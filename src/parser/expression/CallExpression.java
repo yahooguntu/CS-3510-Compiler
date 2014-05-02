@@ -60,7 +60,7 @@ public class CallExpression extends Expression
 	@Override
 	public void genLLCode(Function parent)
 	{
-		for (int i = arguments.size(); i >= 0; i--)
+		for (int i = arguments.size()-1; i >= 0; i--)
 		{
 			Expression param = arguments.get(i);
 			param.genLLCode(parent);
