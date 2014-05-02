@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 
 /**
  * Represents a function call.
@@ -56,8 +58,20 @@ public class CallExpression extends Expression
 	 * @see parser.expression.Expression#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
-		// Mitch
+	public void genLLCode(Function parent)
+	{
+		for (int i = arguments.size(); i >= 0; i++)
+		{
+			Expression param = arguments.get(i);
+			param.genLLCode(parent);
+			
+			Operation passOp = new Operation(OperationType.PASS, parent.getCurrBlock());
+			Operand target = new Operand(OperandType.REGISTER, param.getRegisterNum());
+			parent.getCurrBlock().appendOper(passOp);
+		}
+		
+		Operation callOp = new Operation(OperationType.CALL, parent.getCurrBlock());
+		Operand funcName = new Operand(OperandType.STRING, functionName);
+		parent.getCurrBlock().appendOper(callOp);
 	}
 }
