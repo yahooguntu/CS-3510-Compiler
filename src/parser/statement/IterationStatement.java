@@ -62,8 +62,12 @@ public class IterationStatement extends Statement
 		compare.genLLCode(parent);
 		// gencode branch
 		Operation op = new Operation(OperationType.BEQ, parent.getCurrBlock());
-		Operand srcReg = new Operand(OperandType.MACRO, "RetReg");
-		op.setSrcOperand(0, srcReg);
+		Operand srcReg1 = new Operand(OperandType.REGISTER, compare.getRegisterNum());
+		Operand srcReg2 = new Operand(OperandType.INTEGER, 0);
+		Operand srcReg3 = new Operand(OperandType.BLOCK, Post.getBlockNum());
+		op.setSrcOperand(0, srcReg1);
+		op.setSrcOperand(1, srcReg2);
+		op.setSrcOperand(2, srcReg3);
 		parent.getCurrBlock().appendOper(op);
 		// append LOOP
 		parent.appendToCurrentBlock(Loop);
@@ -75,7 +79,13 @@ public class IterationStatement extends Statement
 		compare.genLLCode(parent);
 		// gencode branch
 		Operation op2 = new Operation(OperationType.BNE, parent.getCurrBlock());
-		Operand srcReg2 = new Operand(OperandType.MACRO, "RetReg");
+		Operand srcReg4 = new Operand(OperandType.REGISTER, compare.getRegisterNum());
+		Operand srcReg5 = new Operand(OperandType.INTEGER, 0);
+		Operand srcReg6 = new Operand(OperandType.BLOCK, Loop.getBlockNum());
+		op2.setSrcOperand(0, srcReg4);
+		op2.setSrcOperand(1, srcReg5);
+		op2.setSrcOperand(2, srcReg6);
+		
 		parent.getCurrBlock().appendOper(op2);
 		// append POST
 		parent.appendToCurrentBlock(Post);
