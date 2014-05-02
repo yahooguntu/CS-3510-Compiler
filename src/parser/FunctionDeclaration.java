@@ -102,11 +102,15 @@ public class FunctionDeclaration extends Declaration
 		myFunc.setCurrBlock(myFunc.getFirstBlock());
 		
 		body.genLLCode(myFunc);
-		BasicBlock lastConnected = myFunc.getLastBlock();
-		lastConnected.setNextBlock(myFunc.getFirstUnconnectedBlock());
 		
 		BasicBlock return_block = myFunc.getReturnBlock();
 		myFunc.appendBlock(return_block);
+		
+		if (myFunc.getFirstUnconnectedBlock() != null)
+		{
+			myFunc.appendBlock(myFunc.getFirstUnconnectedBlock());
+		}
+		
 		return myFunc;
 	}
 	
