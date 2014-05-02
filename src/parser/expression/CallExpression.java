@@ -67,6 +67,7 @@ public class CallExpression extends Expression
 			
 			Operation passOp = new Operation(OperationType.PASS, parent.getCurrBlock());
 			Operand target = new Operand(OperandType.REGISTER, param.getRegisterNum());
+			passOp.setSrcOperand(0, target);
 			parent.getCurrBlock().appendOper(passOp);
 		}
 		
