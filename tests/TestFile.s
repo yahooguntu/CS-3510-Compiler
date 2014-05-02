@@ -30,6 +30,12 @@ main_bb3:
 	movl	$3, %ESI
 	call	fact
 	movl	%EAX, %ESI
+	movl	$48, %EAX
+	addl	%ESI, %EAX
+	movl	%EAX, %ESI
+	call	putchar
+	movl	$10, %EAX
+	movl	%EAX, %ESI
 	call	putchar
 main_bb1:
 	ret

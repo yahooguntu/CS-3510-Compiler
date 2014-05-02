@@ -11,5 +11,6 @@ void main (void)
 	int x;
     x = 3;
 	x = fact(x);
-	putchar(x);
+	putchar(48+x);
+	putchar(10);
 }     
