@@ -280,9 +280,6 @@ main_bb18:
 main_bb20:
 	movl	$10, %EAX
 	movl	%EAX, %R15D
-	movl	$84, %EAX
-	movl	%EAX, %EDI
-	call	putchar
 main_bb22:
 	jmp	main_bb13
 main_bb15:
