@@ -54,15 +54,17 @@ public class ReturnStatement extends Statement
 		if (body != null)
 		{
 			body.genLLCode(parent);
+			
+			//puts the registered return statement into the retreg 
+			Operation op2 = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
+			Operand srcReg = new Operand(OperandType.REGISTER, body.getRegisterNum());
+			Operand desReg = new Operand(OperandType.MACRO, "RetReg");
+			op2.setSrcOperand(0, srcReg);
+			op2.setDestOperand(0, desReg);
+			
+			parent.getCurrBlock().appendOper(op2);
 		}
 		
-		//puts the registered return statement into the retreg 
-		Operation op2 = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
-		Operand srcReg = new Operand(OperandType.REGISTER, body.getRegisterNum());
-		Operand desReg = new Operand(OperandType.MACRO, "RetReg");
-		op2.setSrcOperand(0, srcReg);
-		op2.setDestOperand(0, desReg);
-		
-		parent.getCurrBlock().appendOper(op2);
+		Operation retOp = new Operation(OperationType.RETURN);
 	}
 }
