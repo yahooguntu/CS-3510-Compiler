@@ -1,4 +1,4 @@
-(FUNCTION  fact  []
+(FUNCTION  fact  [(int x)]
   (BB 2
     (OPER 3 Func_Entry []  [])
   )

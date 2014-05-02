@@ -4,6 +4,7 @@
 fact:
 fact_bb2:
 	pushq	%R15
+	movl	%EDI, %R15D
 fact_bb3:
 	movl	$1, %EAX
 	cmpl	%EAX, %R15D

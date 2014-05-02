@@ -87,6 +87,6 @@ public class Params
 			}
 			
 		}
-		
+		parent.setFirstParam(start);
 	}
 }
