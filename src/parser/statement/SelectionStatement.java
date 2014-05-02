@@ -85,10 +85,19 @@ public class SelectionStatement extends Statement
 		// gencode the branch
 		Operand srcReg1 = new Operand(OperandType.REGISTER, compare.getRegisterNum());
 		Operand srcReg2 = new Operand(OperandType.INTEGER, 0);
-		Operand srcReg3 = new Operand(OperandType.BLOCK, Else);
+		Operand srcReg3 = null;
+		if(Else != null)
+		{
+			srcReg3 = new Operand(OperandType.BLOCK, Else.getBlockNum());
+		}
+		else
+		{
+			srcReg3 = new Operand(OperandType.BLOCK, Post.getBlockNum());
+		}
 		op.setSrcOperand(0, srcReg1);
 		op.setSrcOperand(1, srcReg2);
 		op.setSrcOperand(2, srcReg3);
+		parent.getCurrBlock().appendOper(op);
 		// append THEN block
 		parent.appendBlock(Then);
 		// cb = THEN
@@ -106,7 +115,7 @@ public class SelectionStatement extends Statement
 				else_part.genLLCode(parent);
 		//		add jump to POST in ELSE block
 				Operation op2 = new Operation(OperationType.JMP, parent.getCurrBlock());
-				Operand srcBlock = new Operand(OperandType.BLOCK, Post);
+				Operand srcBlock = new Operand(OperandType.BLOCK, Post.getBlockNum());
 				op2.setSrcOperand(0, srcBlock);
 				parent.getCurrBlock().appendOper(op2);
 		//		append ELSE to unconnected chain

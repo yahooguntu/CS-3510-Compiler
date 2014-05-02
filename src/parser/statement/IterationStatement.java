@@ -64,6 +64,7 @@ public class IterationStatement extends Statement
 		Operation op = new Operation(OperationType.BEQ, parent.getCurrBlock());
 		Operand srcReg = new Operand(OperandType.MACRO, "RetReg");
 		op.setSrcOperand(0, srcReg);
+		parent.getCurrBlock().appendOper(op);
 		// append LOOP
 		parent.appendBlock(Loop);
 		// cb = LOOP
@@ -75,6 +76,7 @@ public class IterationStatement extends Statement
 		// gencode branch
 		Operation op2 = new Operation(OperationType.BNE, parent.getCurrBlock());
 		Operand srcReg2 = new Operand(OperandType.MACRO, "RetReg");
+		parent.getCurrBlock().appendOper(op2);
 		// append POST
 		parent.appendBlock(Post);
 		// cb = POST
