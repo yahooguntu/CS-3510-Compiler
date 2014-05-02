@@ -67,6 +67,7 @@ public class CallExpression extends Expression
 			
 			Operation passOp = new Operation(OperationType.PASS, parent.getCurrBlock());
 			Operand target = new Operand(OperandType.REGISTER, param.getRegisterNum());
+			passOp.addAttribute(new Attribute("PARAM_NUM", Integer.toString(i+1)));
 			passOp.setSrcOperand(0, target);
 			parent.getCurrBlock().appendOper(passOp);
 		}
@@ -75,7 +76,7 @@ public class CallExpression extends Expression
 		Operand funcName = new Operand(OperandType.STRING, functionName);
 		callOp.setSrcOperand(0, funcName);
 		parent.getCurrBlock().appendOper(callOp);
-		callOp.addAttribute(new Attribute("PARAM_NUM", Integer.toString(arguments.size())));
+		callOp.addAttribute(new Attribute("numParams", Integer.toString(arguments.size())));
 		
 		int retVal = parent.getNewRegNum();
 		Operation mvRetVal = new Operation(OperationType.ASSIGN, parent.getCurrBlock());

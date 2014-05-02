@@ -1,0 +1,52 @@
+(FUNCTION  fact  []
+  (BB 2
+    (OPER 5 Mov [(r 4)]  [(i 1)])
+    (OPER 21 Cmp [(m Flags)]  [(r 1)(r 4)])
+    (OPER 22 BLE []  [(bb 4)(m Flags)])
+  )
+  (BB 3
+    (OPER 7 Mov [(r 8)]  [(i 1)])
+    (OPER 23 Mov [(r 7)]  [(r 1)])
+    (OPER 8 Sub_I [(r 7)]  [(r 7)(r 8)])
+    (OPER 24 Mov [(m ESI)]  [(r 7)])
+    (OPER 10 JSR []  [(s fact)(m EDI)])
+    (OPER 11 Mov [(r 9)]  [(m EAX)])
+    (OPER 25 Mov [(m EAX)]  [(r 1)])
+    (OPER 12 Mul [(m EAX)(m EDX)]  [(m EAX)(r 9)])
+    (OPER 26 Mov [(r 6)]  [(m EAX)])
+    (OPER 13 Mov [(r 5)]  [(r 6)])
+    (OPER 14 Mov [(m EAX)]  [(r 5)])
+    (OPER 15 Return []  [(m EAX)])
+  )
+  (BB 1
+    (OPER 2 Return []  [(m EAX)])
+  )
+  (BB 4
+    (OPER 16 Mov [(r 11)]  [(i 1)])
+    (OPER 17 Mov [(r 10)]  [(r 11)])
+    (OPER 18 Mov [(m EAX)]  [(r 10)])
+    (OPER 19 Return []  [(m EAX)])
+    (OPER 20 Jmp []  [(bb 1)])
+  )
+)
+(FUNCTION  main  []
+  (BB 2
+    (OPER 4 JSR []  [(s read)])
+    (OPER 5 Mov [(r 4)]  [(m EAX)])
+    (OPER 6 Mov [(r 2)]  [(r 4)])
+    (OPER 8 Mov [(r 6)]  [(i 0)])
+    (OPER 16 Cmp [(m Flags)]  [(r 2)(r 6)])
+    (OPER 17 BLE []  [(bb 1)(m Flags)])
+  )
+  (BB 3
+    (OPER 18 Mov [(m ESI)]  [(r 2)])
+    (OPER 11 JSR []  [(s fact)(m EDI)])
+    (OPER 12 Mov [(r 7)]  [(m EAX)])
+    (OPER 19 Mov [(m ESI)]  [(r 7)])
+    (OPER 14 JSR []  [(s write)(m EDI)])
+    (OPER 15 Mov [(r 8)]  [(m EAX)])
+  )
+  (BB 1
+    (OPER 2 Return []  [(m EAX)])
+  )
+)
