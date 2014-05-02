@@ -4,10 +4,11 @@
 fact:
 fact_bb2:
 	pushq	%R15
+fact_bb3:
 	movl	$1, %EAX
 	cmpl	%EAX, %R15D
-	jle	fact_bb4
-fact_bb3:
+	jle	fact_bb5
+fact_bb4:
 	movl	$1, %ESI
 	movl	%R15D, %EDX
 	subl	%ESI, %EDX
@@ -19,12 +20,13 @@ fact_bb3:
 fact_bb1:
 	popq	%R15
 	ret
-fact_bb4:
+fact_bb5:
 	movl	$1, %EAX
 	jmp	fact_bb1
 .globl  main
 main:
 main_bb2:
+main_bb3:
 	movl	$3, %ESI
 	call	fact
 	movl	%EAX, %ESI

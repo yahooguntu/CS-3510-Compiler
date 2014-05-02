@@ -99,7 +99,9 @@ public class FunctionDeclaration extends Declaration
 		}
 		
 		myFunc.createBlock0();
-		myFunc.setCurrBlock(myFunc.getFirstBlock());
+		BasicBlock newBlock = new BasicBlock(myFunc);
+		myFunc.appendBlock(newBlock);
+		myFunc.setCurrBlock(newBlock);
 		
 		body.genLLCode(myFunc);
 		
