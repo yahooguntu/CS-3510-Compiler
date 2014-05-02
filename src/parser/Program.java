@@ -45,20 +45,16 @@ public class Program
 		CodeItem tail = null;
 		for (Declaration decl : declarations)
 		{
-			//TODO do global variables
-			if (decl instanceof FunctionDeclaration)
+			CodeItem next = decl.genLLCode();
+			if (head == null)
 			{
-				CodeItem next = decl.genLLCode();
-				if (head == null)
-				{
-					head = next;
-					tail = next;
-				}
-				else
-				{
-					tail.setNextItem(next);
-					tail = next;
-				}
+				head = next;
+				tail = next;
+			}
+			else
+			{
+				tail.setNextItem(next);
+				tail = next;
 			}
 		}
 		return head;
