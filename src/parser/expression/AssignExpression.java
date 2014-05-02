@@ -60,8 +60,8 @@ public class AssignExpression extends Expression
 	@Override
 	public void genLLCode(Function parent)
 	{
-		setRegisterNum(parent.getNewRegNum());
 		rightSide.genLLCode(parent);
+		setRegisterNum(rightSide.getRegisterNum());
 		
 		if (parent.getTable().containsKey(variable.getIdentifier()))
 		{

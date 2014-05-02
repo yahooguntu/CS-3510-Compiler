@@ -256,6 +256,10 @@ public class Function extends CodeItem {
    * @return int
    */
   public int getNewRegNum () {
+	  if(maxRegNum == 7)
+	  {
+		  int i = 5;
+	  }
     return ++maxRegNum;
   }
 
