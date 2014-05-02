@@ -72,6 +72,18 @@ public class CallExpression extends Expression
 		
 		Operation callOp = new Operation(OperationType.CALL, parent.getCurrBlock());
 		Operand funcName = new Operand(OperandType.STRING, functionName);
+		callOp.setSrcOperand(0, funcName);
 		parent.getCurrBlock().appendOper(callOp);
+		
+		int retVal = parent.getNewRegNum();
+		Operation mvRetVal = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
+		Operand src = new Operand(OperandType.MACRO, "RetReg");
+		Operand dest = new Operand(OperandType.REGISTER, retVal);
+		
+		mvRetVal.setSrcOperand(0, src);
+		mvRetVal.setDestOperand(0, dest);
+		parent.getCurrBlock().appendOper(mvRetVal);
+		
+		setRegisterNum(retVal);
 	}
 }
