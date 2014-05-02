@@ -9,6 +9,9 @@ fact_bb3:
 	cmpl	%EAX, %R15D
 	jle	fact_bb5
 fact_bb4:
+	movl	$48, %EDI
+	addl	%R15D, %EDI
+	call	putchar
 	movl	$1, %EDI
 	movl	%R15D, %ESI
 	subl	%EDI, %ESI
@@ -17,10 +20,19 @@ fact_bb4:
 	movl	%EAX, %EDI
 	movl	%R15D, %EAX
 	imull	%EDI, %EAX
+	movl	%EAX, %R15D
+	movl	$48, %EAX
+	addl	%R15D, %EAX
+	movl	%EAX, %EDI
+	call	putchar
+	movl	%R15D, %EAX
 fact_bb1:
 	popq	%R15
 	ret
 fact_bb5:
+	movl	$49, %EAX
+	movl	%EAX, %EDI
+	call	putchar
 	movl	$1, %EAX
 	jmp	fact_bb1
 .globl  main

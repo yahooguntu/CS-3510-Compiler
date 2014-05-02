@@ -1,9 +1,17 @@
 int fact( int x )
 /* recursive factorial function */
-{ if (x > 1)
-	return x * fact(x-1);
+{ int y;
+if (x > 1) {
+    putchar(48+x);
+	y = x * fact(x-1);
+	putchar(48+y);
+	return y;
+	}
 else
+{
+	putchar(49);
     return 1;
+	}
 }
 
 void main (void)
