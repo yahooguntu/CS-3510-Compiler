@@ -85,7 +85,7 @@ public class FunctionDeclaration extends Declaration
 			FuncParam tail = head;
 			myFunc = new Function(funcReturnType, name, head);
 			HashMap table = myFunc.getTable();
-			table.put(curr.getId(), curr);
+			table.put(curr.getId(), curr.getRegisterNum());
 			
 			while (it.hasNext())
 			{
