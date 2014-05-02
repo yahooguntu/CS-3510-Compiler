@@ -14,7 +14,6 @@ public abstract class Declaration
 	public abstract void print(int indent, BufferedWriter out) throws IOException;
 	public abstract CodeItem genLLCode();
 	public CodeItem genLLCode(Function parent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	/**

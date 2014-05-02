@@ -87,7 +87,6 @@ public class VariableDeclaration extends Declaration
 	}
 
 	public CodeItem genLLCode(Function parent) {
-		// TODO Auto-generated method stub
 		// Seth
 		// we are a function variable
 		int regNum = parent.getNewRegNum();
@@ -100,9 +99,7 @@ public class VariableDeclaration extends Declaration
 	}
 	
 	@Override
-	public CodeItem genLLCode() {
-		// TODO Auto-generated method stub
-		
+	public CodeItem genLLCode() {		
 		// we are a global variable
 		HashMap global =  CMinusCompiler.globalHash;
 		Data var = null;

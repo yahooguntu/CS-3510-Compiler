@@ -99,13 +99,13 @@ public class SelectionStatement extends Statement
 		op.setSrcOperand(2, srcReg3);
 		parent.getCurrBlock().appendOper(op);
 		// append THEN block
-		parent.appendBlock(Then);
+		parent.appendToCurrentBlock(Then);
 		// cb = THEN
 		parent.setCurrBlock(Then);
 		// gencode THEN statements
 		body.genLLCode(parent);
 		// append POST
-		parent.appendBlock(Post);
+		parent.appendToCurrentBlock(Post);
 		// if else block
 		if(else_part != null)
 		{

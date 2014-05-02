@@ -4,7 +4,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+import scanner.Token.TokenType;
+
 import lowlevel.CodeItem;
+import lowlevel.Data;
+import lowlevel.FuncParam;
+import lowlevel.Function;
 
 /**
  * Represents parameters for a function definition.
@@ -40,8 +45,48 @@ public class Params
 		out.write(prefix + "</Params>\n");
 	}
 	
-	public CodeItem genLLCode() {
-		// TODO Auto-generated method stub
-		return null;
+	public void genLLCode(Function parent) 
+	{
+		FuncParam start = null;
+		FuncParam tail = null;
+		
+		for(int i = 0; i < paramList.size(); i++)
+		{
+			VariableDeclaration me = paramList.get(i);
+			me.genLLCode(parent);
+			FuncParam head = null;
+			int type = -1;
+			
+			if(me.getType() == TokenType.INT)
+			{
+				type = Data.TYPE_INT;
+			}
+			else
+			{
+				type = Data.TYPE_VOID;
+			}
+			
+			if(me.getArraySize() != -1)
+			{
+				head = new FuncParam(type, me.getId(), true);
+			}
+			else
+			{
+				head = new FuncParam(type,me.getId());
+			}
+			
+			if(i == 0)
+			{
+				start = head;
+				tail = head;
+			}
+			else
+			{
+				tail.setNextParam(head);
+				tail = head;
+			}
+			
+		}
+		
 	}
 }

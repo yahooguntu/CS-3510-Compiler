@@ -79,7 +79,9 @@ public class FunctionDeclaration extends Declaration
 		else
 		{
 			// function has parameters
-			Iterator<VariableDeclaration> it = parameters.paramList.iterator();
+			myFunc = new Function(funcReturnType, name);
+			parameters.genLLCode(myFunc);
+			/*Iterator<VariableDeclaration> it = parameters.paramList.iterator();
 			VariableDeclaration curr = it.next();
 			FuncParam head = buildFuncParam(curr);
 			FuncParam tail = head;
@@ -93,9 +95,7 @@ public class FunctionDeclaration extends Declaration
 				table.put(nxt.getName(), nxt);
 				tail.setNextParam(nxt);
 				tail = tail.getNextParam();
-			}
-			
-			
+			}*/			
 		}
 		
 		myFunc.createBlock0();
