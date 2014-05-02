@@ -85,7 +85,6 @@ public class Params
 				tail.setNextParam(head);
 				tail = head;
 			}
-			
 		}
 		parent.setFirstParam(start);
 	}

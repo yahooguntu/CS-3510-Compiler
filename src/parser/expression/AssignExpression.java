@@ -63,27 +63,34 @@ public class AssignExpression extends Expression
 		setRegisterNum(parent.getNewRegNum());
 		rightSide.genLLCode(parent);
 		
-		Operation op = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
-		
-		Operand srcReg = new Operand(OperandType.REGISTER, rightSide.getRegisterNum());
-		Operand destReg = null;
-		
 		if (parent.getTable().containsKey(variable.getIdentifier()))
 		{
 			//TODO handle arrays
+			Operation op = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
+			
+			Operand srcReg = new Operand(OperandType.REGISTER, rightSide.getRegisterNum());
 			int regNum = (Integer) parent.getTable().get(variable.getIdentifier());
-			destReg = new Operand(OperandType.REGISTER, regNum);
+			Operand destReg = new Operand(OperandType.REGISTER, regNum);
+			op.setSrcOperand(0, srcReg);
+			op.setDestOperand(0, destReg);
+		
+			parent.getCurrBlock().appendOper(op);
 		}
 		else if (CMinusCompiler.globalHash.containsKey(variable.getIdentifier()))
 		{
 			//TODO handle global vars
 			Data globalReg = (Data) CMinusCompiler.globalHash.get(variable.getIdentifier());
-			//destReg = new Operand(OperandType.STRING);
+			
+			Operation op = new Operation(OperationType.STORE_I, parent.getCurrBlock());
+			Operand data = new Operand(OperandType.REGISTER, rightSide.getRegisterNum());
+			Operand varName = new Operand(OperandType.STRING, globalReg.getName());
+			Operand arrIndex = new Operand(OperandType.INTEGER, 0);
+			op.setSrcOperand(0, data);
+			op.setSrcOperand(1, varName);
+			op.setSrcOperand(2, arrIndex);
+			
+			parent.getCurrBlock().appendOper(op);
 		}
 		
-		op.setSrcOperand(0, srcReg);
-		op.setDestOperand(0, destReg);
-		
-		parent.getCurrBlock().appendOper(op);
 	}
 }

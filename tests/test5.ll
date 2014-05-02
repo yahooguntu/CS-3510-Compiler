@@ -1,10 +1,13 @@
 (DATA  a)
-(FUNCTION  addThem  []
+(FUNCTION  addThem  [(int d) (int e)]
   (BB 2
     (OPER 3 Func_Entry []  [])
+  )
+  (BB 3
     (OPER 4 Add_I [(r 6)]  [(r 1)(r 2)])
     (OPER 5 Mov [(r 4)]  [(r 6)])
     (OPER 6 Mov [(m RetReg)]  [(r 4)])
+    (OPER 7 Jmp []  [(bb 1)])
   )
   (BB 1
     (OPER 1 Func_Exit []  [])
@@ -14,27 +17,28 @@
 (FUNCTION  main  []
   (BB 2
     (OPER 3 Func_Entry []  [])
+  )
+  (BB 3
     (OPER 4 Mov [(r 8)]  [(i 5)])
     (OPER 5 Mov [(r 2)]  [(r 8)])
     (OPER 7 Mov [(r 10)]  [(i 5)])
     (OPER 8 EQ [(r 9)]  [(r 2)(r 10)])
-    (OPER 6 BEQ []  [(r 9)(i 0)(bb 4)])
+    (OPER 6 BEQ []  [(r 9)(i 0)(bb 5)])
   )
-  (BB 3
+  (BB 4
     (OPER 9 Mov [(r 13)]  [(i 3)])
-    (OPER 10 Mov [()
-]  [(r 13)])
+    (OPER 10 Store []  [(r 13)(s a)(i 0)])
   )
-  (BB 5
+  (BB 6
     (OPER 14 Mov [(r 18)]  [(i 0)])
     (OPER 15 Mov [(r 4)]  [(r 18)])
     (OPER 16 Mov [(r 20)]  [(i 1)])
     (OPER 17 Mov [(r 6)]  [(r 20)])
     (OPER 18 Mov [(r 22)]  [(i 8)])
     (OPER 19 LTE [(r 21)]  [(r 6)(r 22)])
-    (OPER 20 BEQ []  [(r 21)(i 0)(bb 7)])
+    (OPER 20 BEQ []  [(r 21)(i 0)(bb 8)])
   )
-  (BB 6
+  (BB 7
     (OPER 21 Add_I [(r 25)]  [(r 4)(r 6)])
     (OPER 22 Mov [(r 4)]  [(r 25)])
     (OPER 23 Mov [(r 28)]  [(i 1)])
@@ -42,9 +46,9 @@
     (OPER 25 Mov [(r 6)]  [(r 27)])
     (OPER 26 Mov [(r 30)]  [(i 8)])
     (OPER 27 LTE [(r 29)]  [(r 6)(r 30)])
-    (OPER 28 BNE []  [(r 29)(i 0)(bb 6)])
+    (OPER 28 BNE []  [(r 29)(i 0)(bb 7)])
   )
-  (BB 7
+  (BB 8
     (OPER 29 Mov [(r 33)]  [(i 3)])
     (OPER 30 Div_I [(r 32)]  [(r 4)(r 33)])
     (OPER 31 Mov [(r 5)]  [(r 32)])
@@ -67,15 +71,15 @@
     (OPER 48 Mov [(r 43)]  [(m RetReg)])
     (OPER 49 Mov [(r 44)]  [(i 0)])
     (OPER 50 Mov [(m RetReg)]  [(r 44)])
+    (OPER 51 Jmp []  [(bb 1)])
   )
   (BB 1
     (OPER 1 Func_Exit []  [])
     (OPER 2 Return []  [(m RetReg)])
   )
-  (BB 4
+  (BB 5
     (OPER 11 Mov [(r 16)]  [(i 4)])
-    (OPER 12 Mov [()
-]  [(r 16)])
-    (OPER 13 Jmp []  [(bb 5)])
+    (OPER 12 Store []  [(r 16)(s a)(i 0)])
+    (OPER 13 Jmp []  [(bb 6)])
   )
 )
