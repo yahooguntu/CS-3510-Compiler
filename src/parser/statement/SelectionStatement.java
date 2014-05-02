@@ -71,6 +71,10 @@ public class SelectionStatement extends Statement
 	 */
 	@Override
 	public void genLLCode(Function parent) {
+		
+		if (parent.getCurrBlock().getBlockNum() == 18) {
+			int z = 0;
+		}
 		// make 2-3 blocks THEN, [ELSE], POST
 		BasicBlock Then = new BasicBlock(parent);
 		BasicBlock Else = null;
