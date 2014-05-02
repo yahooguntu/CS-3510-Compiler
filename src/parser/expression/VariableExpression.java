@@ -5,6 +5,8 @@ import java.io.IOException;
 import compiler.CMinusCompiler;
 
 import lowlevel.*;
+import lowlevel.Operand.OperandType;
+import lowlevel.Operation.OperationType;
 
 /**
  * Represents an expression consisting of a single variable.
@@ -74,7 +76,14 @@ public class VariableExpression extends Expression
 		}
 		else if(CMinusCompiler.globalHash.containsKey(identifier))
 		{
-			//TODO global variable
+			Operation op = new Operation(OperationType.LOAD_I, parent.getCurrBlock());
+			Operand srcReg = new Operand(OperandType.STRING, identifier);
+			int newReg = parent.getNewRegNum();
+			setRegisterNum(newReg);
+			Operand destReg = new Operand(OperandType.REGISTER, newReg);
+			op.setSrcOperand(0, srcReg);
+			op.setDestOperand(0, destReg);
+			parent.getCurrBlock().appendOper(op);			
 		}
 		else
 		{
