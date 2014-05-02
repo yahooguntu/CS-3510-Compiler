@@ -9,10 +9,10 @@ fact_bb3:
 	cmpl	%EAX, %R15D
 	jle	fact_bb5
 fact_bb4:
-	movl	$1, %ESI
-	movl	%R15D, %EDX
-	subl	%ESI, %EDX
-	movl	%EDX, %ESI
+	movl	$1, %EDI
+	movl	%R15D, %ESI
+	subl	%EDI, %ESI
+	movl	%ESI, %EDI
 	call	fact
 	movl	%EAX, %EDI
 	movl	%R15D, %EAX
@@ -23,20 +23,19 @@ fact_bb1:
 fact_bb5:
 	movl	$1, %EAX
 	jmp	fact_bb1
-	jmp	fact_bb1
 .globl  main
 main:
 main_bb2:
 main_bb3:
-	movl	$3, %ESI
+	movl	$3, %EDI
 	call	fact
-	movl	%EAX, %ESI
+	movl	%EAX, %EDI
 	movl	$48, %EAX
-	addl	%ESI, %EAX
-	movl	%EAX, %ESI
+	addl	%EDI, %EAX
+	movl	%EAX, %EDI
 	call	putchar
 	movl	$10, %EAX
-	movl	%EAX, %ESI
+	movl	%EAX, %EDI
 	call	putchar
 main_bb1:
 	ret

@@ -27,7 +27,6 @@
     (OPER 15 Mov [(r 9)]  [(i 1)])
     (OPER 16 Mov [(m RetReg)]  [(r 9)])
     (OPER 17 Jmp []  [(bb 1)])
-    (OPER 18 Jmp []  [(bb 6)])
   )
 )
 (FUNCTION  main  []
