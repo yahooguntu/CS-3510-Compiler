@@ -2,6 +2,7 @@ package parser;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import lowlevel.*;
@@ -68,7 +69,7 @@ public class FunctionDeclaration extends Declaration
 	{
 		int funcReturnType = convertType(returnType);
 		
-		Function myFunc;
+		Function myFunc = null;
 		
 		if (parameters.paramList.size() == 0)
 		{
@@ -82,18 +83,23 @@ public class FunctionDeclaration extends Declaration
 			VariableDeclaration curr = it.next();
 			FuncParam head = buildFuncParam(curr);
 			FuncParam tail = head;
+			myFunc = new Function(funcReturnType, name, head);
+			HashMap table = myFunc.getTable();
+			table.put(curr.getId(), curr);
 			
 			while (it.hasNext())
 			{
 				FuncParam nxt = buildFuncParam(it.next());
+				table.put(nxt.getName(), nxt);
 				tail.setNextParam(nxt);
 				tail = tail.getNextParam();
 			}
 			
-			myFunc = new Function(funcReturnType, name, head);
+			
 		}
 		
 		myFunc.createBlock0();
+		myFunc.setCurrBlock(myFunc.getFirstBlock());
 		
 		body.genLLCode(myFunc);
 		

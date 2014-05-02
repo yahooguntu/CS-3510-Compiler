@@ -92,7 +92,7 @@ public class Function extends CodeItem {
     localVarSize = 0;
     spillSize = 0;
     frameSize = 0;
-    maxBlockNum = -1;
+    maxBlockNum = 0;
     maxOperNum = 0;
     currBlock = null;
     symbolTable = new HashMap();

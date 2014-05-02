@@ -808,7 +808,7 @@ public class X64RegisterAllocator {
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(10)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertFirst(insertOper);
+                    currBlock.insertOperBefore(insertOper, newOper);
                     insertOper = newOper;
                 }
                 if (usedRegs[11]) {
@@ -816,7 +816,7 @@ public class X64RegisterAllocator {
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(11)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertFirst(insertOper);
+                    currBlock.insertOperBefore(insertOper, newOper);
                     insertOper = newOper;
                 }
                 if (usedRegs[12]) {
@@ -824,7 +824,7 @@ public class X64RegisterAllocator {
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(12)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertFirst(insertOper);
+		    currBlock.insertOperBefore(insertOper, newOper);
                     insertOper = newOper;
                 }
                 if (usedRegs[13]) {
@@ -832,24 +832,24 @@ public class X64RegisterAllocator {
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(13)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertFirst(insertOper);
-                    //insertOper = newOper;
+                    currBlock.insertOperBefore(insertOper, newOper);
+                    insertOper = newOper;
                 }
                 if (usedRegs[14]) {
                     Operation newOper = new Operation(Operation.OperationType.X86_POP, currBlock);
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(14)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertFirst(insertOper);
-                    //insertOper = newOper;
+                    currBlock.insertOperBefore(insertOper, newOper);
+                    insertOper = newOper;
                 }
                 if (usedRegs[15]) {
                     Operation newOper = new Operation(Operation.OperationType.X86_POP, currBlock);
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(15)));
                     newOper.setDestOperand(0, src);
-                   currBlock.insertFirst(insertOper);
-                    //insertOper = newOper;
+                    currBlock.insertOperBefore(insertOper, newOper);
+                    insertOper = newOper;
                 }
             }
         }

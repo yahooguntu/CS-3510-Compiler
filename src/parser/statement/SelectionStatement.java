@@ -83,7 +83,12 @@ public class SelectionStatement extends Statement
 		// gencode the condition
 		compare.genLLCode(parent);
 		// gencode the branch
-		Operand srcReg = new Operand(OperandType.REGISTER, "RetReg");
+		Operand srcReg1 = new Operand(OperandType.REGISTER, compare.getRegisterNum());
+		Operand srcReg2 = new Operand(OperandType.INTEGER, 0);
+		Operand srcReg3 = new Operand(OperandType.BLOCK, Else);
+		op.setSrcOperand(0, srcReg1);
+		op.setSrcOperand(1, srcReg2);
+		op.setSrcOperand(2, srcReg3);
 		// append THEN block
 		parent.appendBlock(Then);
 		// cb = THEN
