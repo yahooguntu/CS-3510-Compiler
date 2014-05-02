@@ -41,9 +41,10 @@ public class ExpressionStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// TODO Auto-generated method stub
-		// Mitch
+	public void genLLCode(Function parent)
+	{
+		data.genLLCode(parent);
+		setRegisterNum(data.getRegisterNum());
 	}
 	
 }
