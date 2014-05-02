@@ -23,6 +23,7 @@ fact_bb1:
 fact_bb5:
 	movl	$1, %EAX
 	jmp	fact_bb1
+	jmp	fact_bb1
 .globl  main
 main:
 main_bb2:

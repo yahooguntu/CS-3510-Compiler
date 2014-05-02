@@ -65,6 +65,10 @@ public class ReturnStatement extends Statement
 			parent.getCurrBlock().appendOper(op2);
 		}
 		
-		Operation retOp = new Operation(OperationType.RETURN);
+		Operation retOp = new Operation(OperationType.JMP, parent.getCurrBlock());
+		Operand target = new Operand(OperandType.BLOCK, parent.getReturnBlock().getBlockNum());
+		retOp.setSrcOperand(0, target);
+		
+		parent.getCurrBlock().appendOper(retOp);
 	}
 }

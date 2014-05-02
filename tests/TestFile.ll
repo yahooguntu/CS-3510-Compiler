@@ -15,6 +15,7 @@
     (OPER 11 Mov [(r 8)]  [(m RetReg)])
     (OPER 12 Mul_I [(r 5)]  [(r 1)(r 8)])
     (OPER 13 Mov [(m RetReg)]  [(r 5)])
+    (OPER 14 Jmp []  [(bb 1)])
   )
   (BB 6
   )
@@ -23,9 +24,10 @@
     (OPER 2 Return []  [(m RetReg)])
   )
   (BB 5
-    (OPER 14 Mov [(r 9)]  [(i 1)])
-    (OPER 15 Mov [(m RetReg)]  [(r 9)])
-    (OPER 16 Jmp []  [(bb 6)])
+    (OPER 15 Mov [(r 9)]  [(i 1)])
+    (OPER 16 Mov [(m RetReg)]  [(r 9)])
+    (OPER 17 Jmp []  [(bb 1)])
+    (OPER 18 Jmp []  [(bb 6)])
   )
 )
 (FUNCTION  main  []

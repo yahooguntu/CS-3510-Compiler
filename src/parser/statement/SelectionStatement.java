@@ -113,11 +113,14 @@ public class SelectionStatement extends Statement
 				parent.setCurrBlock(Else);
 		//		gencode ELSE statements
 				else_part.genLLCode(parent);
-		//		add jump to POST in ELSE block
-				Operation op2 = new Operation(OperationType.JMP, parent.getCurrBlock());
-				Operand srcBlock = new Operand(OperandType.BLOCK, Post.getBlockNum());
-				op2.setSrcOperand(0, srcBlock);
-				parent.getCurrBlock().appendOper(op2);
+		//		add jump to POST in ELSE block if there isnt a jump already there
+				if (parent.getCurrBlock().getLastOper().getType() != OperationType.JMP)
+				{
+					Operation op2 = new Operation(OperationType.JMP, parent.getCurrBlock());
+					Operand srcBlock = new Operand(OperandType.BLOCK, Post.getBlockNum());
+					op2.setSrcOperand(0, srcBlock);
+					parent.getCurrBlock().appendOper(op2);
+				}
 		//		append ELSE to unconnected chain
 				parent.appendUnconnectedBlock(Else);
 		}
