@@ -4,9 +4,7 @@
     (OPER 3 Func_Entry []  [])
     (OPER 4 Add_I [(r 6)]  [(r 1)(r 2)])
     (OPER 5 Mov [(r 4)]  [(r 6)])
-    (OPER 6 Mov [(r 7)]  [(r 4)])
-    (OPER 7 Mov [(m RetReg)]  [(r 7)])
-    (OPER 8 Return []  [(m RetReg)])
+    (OPER 6 Mov [(m RetReg)]  [(r 4)])
   )
   (BB 1
     (OPER 1 Func_Exit []  [])
@@ -67,10 +65,8 @@
     (OPER 46 Pass []  [(r 42)])
     (OPER 47 JSR []  [(s putchar)])
     (OPER 48 Mov [(r 43)]  [(m RetReg)])
-    (OPER 49 Mov [(r 45)]  [(i 0)])
-    (OPER 50 Mov [(r 44)]  [(r 45)])
-    (OPER 51 Mov [(m RetReg)]  [(r 44)])
-    (OPER 52 Return []  [(m RetReg)])
+    (OPER 49 Mov [(r 44)]  [(i 0)])
+    (OPER 50 Mov [(m RetReg)]  [(r 44)])
   )
   (BB 1
     (OPER 1 Func_Exit []  [])

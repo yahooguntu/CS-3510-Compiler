@@ -16,26 +16,18 @@ fact_bb3:
 	movl	%EAX, %EDI
 	movl	%R15D, %EAX
 	imull	%EDI, %EAX
-	popq	%R15
-	ret
 fact_bb1:
 	popq	%R15
 	ret
 fact_bb4:
 	movl	$1, %EAX
-	ret
 	jmp	fact_bb1
 .globl  main
 main:
 main_bb2:
-	call	read
-	movl	%EAX, %ESI
-	movl	$0, %EAX
-	cmpl	%EAX, %ESI
-	jle	main_bb1
-main_bb3:
+	movl	$3, %ESI
 	call	fact
 	movl	%EAX, %ESI
-	call	write
+	call	putchar
 main_bb1:
 	ret

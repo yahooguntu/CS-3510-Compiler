@@ -48,34 +48,21 @@ public class ReturnStatement extends Statement
 	 * @see parser.statement.Statement#genLLCode(lowlevel.Function)
 	 */
 	@Override
-	public void genLLCode(Function parent) {
-		// Seth
-		int regNum = parent.getNewRegNum();
-		setRegisterNum(regNum);
-		body.genLLCode(parent);
+	public void genLLCode(Function parent)
+	{
 		
-		//put the return statement into register
-		Operation op1 = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
-		Operand srcReg1 = new Operand(OperandType.REGISTER, body.getRegisterNum());
-		Operand desReg1 = new Operand(OperandType.REGISTER, regNum);
-		op1.setSrcOperand(0, srcReg1);
-		op1.setDestOperand(0, desReg1);
+		if (body != null)
+		{
+			body.genLLCode(parent);
+		}
 		
 		//puts the registered return statement into the retreg 
 		Operation op2 = new Operation(OperationType.ASSIGN, parent.getCurrBlock());
-		Operand srcReg2 = new Operand(OperandType.REGISTER, regNum);
-		Operand desReg2 = new Operand(OperandType.MACRO, "RetReg");
-		op2.setSrcOperand(0, srcReg2);
-		op2.setDestOperand(0, desReg2);
+		Operand srcReg = new Operand(OperandType.REGISTER, body.getRegisterNum());
+		Operand desReg = new Operand(OperandType.MACRO, "RetReg");
+		op2.setSrcOperand(0, srcReg);
+		op2.setDestOperand(0, desReg);
 		
-		//returns the retreg register
-		Operation op = new Operation(OperationType.RETURN, parent.getCurrBlock());
-		Operand srcReg = new Operand(OperandType.MACRO, "RetReg");
-		op.setSrcOperand(0, srcReg);
-		
-		
-		parent.getCurrBlock().appendOper(op1);
 		parent.getCurrBlock().appendOper(op2);
-		parent.getCurrBlock().appendOper(op);
 	}
 }

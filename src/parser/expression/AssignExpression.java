@@ -74,13 +74,11 @@ public class AssignExpression extends Expression
 			int regNum = (Integer) parent.getTable().get(variable.getIdentifier());
 			destReg = new Operand(OperandType.REGISTER, regNum);
 		}
-		else
+		else if (CMinusCompiler.globalHash.containsKey(variable.getIdentifier()))
 		{
-			//TODO handle arrays
-			if (CMinusCompiler.globalHash.containsKey(variable.getIdentifier()))
-			{
-				//TODO handle global vars
-			}
+			//TODO handle global vars
+			Data globalReg = (Data) CMinusCompiler.globalHash.get(variable.getIdentifier());
+			//destReg = new Operand(OperandType.STRING);
 		}
 		
 		op.setSrcOperand(0, srcReg);

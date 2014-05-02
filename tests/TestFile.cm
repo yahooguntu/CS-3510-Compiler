@@ -9,6 +9,7 @@ else
 void main (void)
 {
 	int x;
-    x = read();
-	if(x > 0) write (fact(x));
+    x = 3;
+	x = fact(x);
+	putchar(x);
 }     
