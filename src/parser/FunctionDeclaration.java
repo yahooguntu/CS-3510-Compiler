@@ -94,7 +94,7 @@ public class FunctionDeclaration extends Declaration
 				FuncParam nxt = buildFuncParam(it.next());
 				table.put(nxt.getName(), nxt);
 				tail.setNextParam(nxt);
-				tail = tail.getNextParam();
+				tail = nxt;
 			}*/			
 		}
 		
@@ -114,7 +114,7 @@ public class FunctionDeclaration extends Declaration
 		return myFunc;
 	}
 	
-	public static FuncParam buildFuncParam(VariableDeclaration varDecl)
+	/*public static FuncParam buildFuncParam(VariableDeclaration varDecl)
 	{
 		FuncParam toReturn;
 		int paramType = convertType(varDecl.getType());
@@ -131,7 +131,7 @@ public class FunctionDeclaration extends Declaration
 		}
 		
 		return toReturn;
-	}
+	}*/
 	
 	public static int convertType(TokenType type)
 	{
