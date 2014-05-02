@@ -113,7 +113,6 @@ int main (void) {
     }
     else if (h == 0) {
       i = 10;
-	  putchar(84);
     }
     else {
       i = 3;
