@@ -12,9 +12,9 @@
   )
   (BB 5
   )
-  (BB 6
-    (OPER 16 Func_Exit []  [])
-    (OPER 17 Return []  [(m RetReg)])
+  (BB 1
+    (OPER 1 Func_Exit []  [])
+    (OPER 2 Return []  [(m RetReg)])
   )
 )
 (FUNCTION  main  []
@@ -27,8 +27,8 @@
   )
   (BB 4
   )
-  (BB 5
-    (OPER 7 Func_Exit []  [])
-    (OPER 8 Return []  [(m RetReg)])
+  (BB 1
+    (OPER 1 Func_Exit []  [])
+    (OPER 2 Return []  [(m RetReg)])
   )
 )

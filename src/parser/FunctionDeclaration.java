@@ -103,7 +103,7 @@ public class FunctionDeclaration extends Declaration
 		
 		body.genLLCode(myFunc);
 		
-		BasicBlock return_block = myFunc.genReturnBlock();
+		BasicBlock return_block = myFunc.getReturnBlock();
 		myFunc.appendBlock(return_block);
 		return myFunc;
 	}
