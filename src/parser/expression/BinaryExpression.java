@@ -95,6 +95,30 @@ public class BinaryExpression extends Expression
 			op = new Operation(OperationType.MUL_I, parent.getCurrBlock());
 			break;
 			
+		case GREATER_THAN:
+			op = new Operation(OperationType.GT, parent.getCurrBlock());
+			break;
+			
+		case LESS_THAN:
+			op = new Operation(OperationType.LT, parent.getCurrBlock());
+			break;
+			
+		case GREATER_EQUAL_THAN:
+			op = new Operation(OperationType.GTE, parent.getCurrBlock());
+			break;
+			
+		case LESS_EQUAL_THAN:
+			op = new Operation(OperationType.LTE, parent.getCurrBlock());
+			break;
+			
+		case EQUALS:
+			op = new Operation(OperationType.EQUAL, parent.getCurrBlock());
+			break;
+			
+		case NOT_EQUALS:
+			op = new Operation(OperationType.NOT_EQUAL, parent.getCurrBlock());
+			break;
+			
 		default:
 			throw new RuntimeException("Illegal operand for BinaryExpression: " + operand.name());
 		}
